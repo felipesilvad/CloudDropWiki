@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {Routes, Route} from 'react-router-dom'
+import './SoC/styles/main.scss';
+import CharsList from './SoC/Chars/CharsList';
+import HeaderComponent from './SoC/Header';
+import CharPage from './SoC/Chars/CharPage';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HeaderComponent />
+      <Routes>
+        <Route path='/chars' element={<CharsList />} exact/>
+        <Route path='/chars/:id' element={<CharPage />} exact/>
+      </Routes>
     </div>
   );
 }
