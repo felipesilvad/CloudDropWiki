@@ -160,6 +160,8 @@
   border-radius: 0.25rem;
 }
 
+
+
 .black-label-div {
   background-color: $mid;
   text-transform: uppercase;
@@ -171,7 +173,22 @@
   font-size: 1.3rem;
   margin-top: -5px;
   z-index: 1;
-  
+}
+
+.skill-detail-bg {
+  background-color: $light;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.skill-detail-div {
+  border: 1px solid $gold;
+  border-radius: 0.25rem;
+}
+
+.skill-detail-rec {
+  border: 1px solid $highlight!important;
 }
 
 .role-img {
@@ -213,22 +230,214 @@
   font-size: 1.3rem;
 }
 
+.skilltree-title-txt {
+  text-shadow: 5px 5px 5px rgba($black-bg, 0.7);
+  font-family: "PT Sans", sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .skill-category {
-  position: absolute;
   font-size: 0.8rem;
-  margin-top: -2.6rem;
-  margin-left: 5.5rem;
-  font-family: "Ardela Edge", sans-serif;
-  background-color: #FEBF26;
+  background-color: $gold;
   padding: 0rem 0.5rem;
   color: black;
-  font-weight:900;
-  font-style: italic;
-  border-radius: 0.2rem;
+  font-weight: 900;
+  border-radius: 0 0 1.5rem 0;
+  padding: 0.1rem 1rem;
+  padding-right: 1.4rem;
+}
+.skill-category-rec {
+  background-color: $highlight;
+}
+
+.skill-category-div {
+  margin-top: -0.25rem;
 }
 
 .skill-range-div {
   margin: 0.2rem;
   border: 1px solid $lighter;
   border-radius: 0.2rem;
+  padding: 0.5rem;
+}
+
+.skill-type-div {
+  background-color: $lighter;
+  border-radius: 0.2rem;
+  text-align: center;
+  width: 50%;
+  margin: 0 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1rem;
+  padding: 0.1rem 0;
+}
+
+.skill-range-hr {
+  margin: 0.2rem 0;
+  color: $gold;
+  opacity: .5;
+}
+
+.skill-range-value {
+  font-size: 0.8rem;
+}
+
+.skill-mana-icon {
+  width: 1.25rem;
+  margin-bottom: 0.15rem;
+}
+
+.skill-mana {
+  margin-top: 0.2rem;
+  margin-bottom: -2rem;
+}
+
+.skill-mana-item {
+  background-color: $lighter;
+  padding: 0rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.skilltree-mobile-container{
+  @media only screen and (max-width: $md) {
+    display: flex;
+  }
+}
+.mobile-border{
+  @media only screen and (max-width: $md) {
+    border: 3px solid #dacfb4;
+    padding-left: 1.25rem;
+    margin: 0.25rem 0;
+    margin-left: -0.75rem;
+    border-radius: 0.5rem;
+  }
+}
+.skilltree-div{
+  flex-wrap: wrap;
+  @media only screen and (min-width: $md) {
+    flex-wrap: nowrap;
+  }
+}
+.skilltree-skill {
+  width: 100%;
+  @media only screen and (min-width: $md) {
+    width: 48%;
+  }
+}
+
+.tree-rank {
+  width:50px;
+  height:50px;
+  position: relative;
+  display: inline-block;
+  z-index: 2!important;
+  margin: 2.5rem 1rem;
+  @media only screen and (max-width: $md) {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    margin-left: -0.25rem;
+  } 
+}
+
+.tree-rank:before {
+  position: absolute;
+  display: block;
+  content: "";
+  width:50px;
+  height:50px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
+  background-color: #e3dacf;
+  border: 0.25rem solid #6284a8;
+  border-radius: 0.5rem;
+  @media only screen and (max-width: $md) {
+    width: 40px;
+    height: 40px;
+    border: 0.20rem solid #6284a8;
+  } 
+}
+
+.tree-rank__txt {
+  line-height: 50px;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  font-size: 1.2rem;
+  width: 100%;
+  color: $txt;
+  font-weight: 700;
+  @media only screen and (max-width: $md) {
+    font-size: 1rem;
+    line-height: 40px;
+    margin-left: 0.15rem;
+  } 
+}
+
+.skilltree-label {
+  font-size: 1.3rem;
+  font-family: "PT Serif", serif;
+  border: 1px solid $gold;
+  border-right: none;
+  border-left: none;
+  color: $gold;
+  width: 50%;
+}
+
+.skilltree-label-right {
+  background-image: linear-gradient(to right, $light, rgba(255,0,0,0));
+  border-radius:2rem 0 0 2rem;
+}
+
+.skilltree-label-left {
+  background-image: linear-gradient(to right, rgba(255,0,0,0), $light);
+  border-radius:0  2rem 2rem 0;
+  margin-right: 0.25rem;
+}
+
+
+
+.tree-rank__vl {
+  border-left: 3px solid #dacfb4;
+  height: 500px;
+  position: absolute;
+  top: -80%;
+  left: 48%;
+  z-index: -1!important;
+  // -webkit-box-shadow:0px 0px 13px 1px rgba($highlight, 0.3);
+  // -moz-box-shadow: 0px 0px 13px 1px rgba($highlight, 0.3);
+  // box-shadow: 0px 0px 13px 1px rgba($highlight, 0.3);
+}
+
+.tree-rank__vl-last {
+  height: 250px!important;
+}
+
+.show-rec-btn {
+  padding: 0.25rem 5rem!important;
+  border-radius: 0.25rem!important;
+  border: 1px solid $lighter!important;
+  background-color: $light!important;
+  cursor: pointer;
+  font-family: "PT Sans", sans-serif!important;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+.show-rec-btn-active {
+  background-color: rgba(255,0,0,0)!important;
+  border: 1px solid $highlight!important;
+}
+
+.show-rec-btn:hover {
+  background-color: rgba($light,0.6)!important;
+  border: 1px solid $highlight!important;
 }

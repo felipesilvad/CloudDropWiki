@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Row,Col, Container, Image} from 'react-bootstrap';
-import { doc, onSnapshot,query, collection} from 'firebase/firestore';
+import {Row,Col, Container, Image, Button} from 'react-bootstrap';
+import { doc, onSnapshot} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
 import StatsItem from './StatsItem';
@@ -8,6 +8,7 @@ import StatsItemMove from './StatsItemMove';
 import FactionImage from './FactionImage';
 import CharTrait from './CharTrait';
 import CharSkill from './CharSkill';
+import SkillTreeLV from './SkillTreeLV';
 
 function CharPage() {
   const id = useParams().id
@@ -15,6 +16,8 @@ function CharPage() {
   const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
   const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
   const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
+
+  const [skillRec, setSkillRec] = useState(false)
 
   const [chars, setChars] = useState([])
   function compare( a, b ) {
@@ -110,9 +113,49 @@ function CharPage() {
             <div className='black-label-div mt-2'>
               INITIAL SKILLS
             </div>
-            {char.basic&&(
-              <CharSkill slug={char.basic} />
+            <div className='w-100'>
+
+            </div>
+            <Row>
+              <Col>
+                {char.basic&&(
+                  <CharSkill slug={char.basic} />
+                )}
+              </Col>
+              <Col>
+                {char.skill&&(
+                  <CharSkill slug={char.skill} />
+                )}
+              </Col>
+            </Row>
+            
+            <div className='black-label-div mt-2'>
+              SKILL TREE
+            </div>
+
+            <div className='d-flex justify-content-center m-1'>
+              <Button onClick={() => setSkillRec(!skillRec)} 
+              className={`show-rec-btn ${skillRec&&("show-rec-btn-active")}`}>
+                Show Skill Recomendations
+              </Button>
+            </div>
+
+            {char.skill_tree_label1&&(
+              <div className='d-none d-md-block'>
+                <div className='d-flex w-100 text-center'>
+                  <div className='skilltree-label skilltree-label-left'>
+                    {char.skill_tree_label1}
+                  </div>
+                  <div className='skilltree-label skilltree-label-right'>
+                    {char.skill_tree_label2}
+                  </div>
+                </div>
+              </div>
             )}
+
+            {char.skill_tree&&(char.skill_tree.map((lv, index) => (
+              <SkillTreeLV skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
+            )))}
             
           </Col>
         </Row>
