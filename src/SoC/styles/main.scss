@@ -14,6 +14,14 @@
   // background-size: cover;
 }
 
+hr {
+  margin: 0.25rem 0!important;
+  color: inherit;
+  border: 0;
+  border-top: var(--bs-border-width) solid;
+  opacity: .25!important;
+}
+
 .custom-row {
   --bs-gutter-x: 0.25rem!important;
 }

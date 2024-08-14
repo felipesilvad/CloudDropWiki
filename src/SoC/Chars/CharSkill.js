@@ -7,7 +7,6 @@ import EffectTxt from '../Effect/EffectTxt';
 function CharSkill({slug, skillRec}) {
 
   const [skill, setSkill] = useState()
-  console.log("games/soc/skills/", slug)
   useEffect(() => {
     onSnapshot(doc(db, "games/soc/skills/", slug), (doc) => {
       setSkill(doc.data());
@@ -18,7 +17,9 @@ function CharSkill({slug, skillRec}) {
   const cd_icon = require('../assets/img/cd_icon.png')
 
   if (skill) {
-    const skillRange = `${skill.range_1}-${skill.range_2}${(skill.range_3)?(`-${skill.range_3}`):("")}${(skill.range_detail)?(`-${skill.range_detail}`):("")}`
+
+    const skillRange = `${skill.range_1}-${skill.range_2}${(skill.range_3)?(`-${skill.range_3}`):("")}${(skill.range_detail)?(`-${skill.range_detail.replace("+","%2B")}`):("")}`
+
     return (
       <div className={`skill-detail-bg`}>
         <div className={`skill-detail-div 
@@ -72,43 +73,49 @@ function CharSkill({slug, skillRec}) {
           </div>
 
           <div className='mx-2'>
-            <EffectTxt txt={skill.effect} />
+            <EffectTxt text={skill.effect} dmg={skill.dmg}/>
           </div>
-
-          <div className='skill-range-div mx-2 d-flex'>
-            <Image src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/ranges%2F${skillRange}.png?alt=media`} />
-            <div className='w-100 mx-2'>
-              <div className='d-flex w-100'>
-                <div className='skill-type-div'>{skill.type}</div>
-                <div className='skill-type-div'>{skill.type2}</div>
-              </div>
-              <div className='skill-range-value mx-2'>
-                <div className='d-flex justify-content-between align-items-center'>
-                  <label>Range</label>
-                  <span>{skill.range_1} - {skill.range_2}</span>
+          
+          {(skill.range_1!==null)&&(
+            <div className='skill-range-div mx-2 d-flex'>
+              <Image className='range-img ml-2' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/ranges%2F${skillRange}.png?alt=media`} />
+              <div className='w-100 mr-2'>
+                <div className='d-flex w-100'>
+                  {skill.type&&skill.type!=="-"&&(
+                    <div className='skill-type-div'>{skill.type}</div>
+                  )}
+                  {skill.type2&&skill.type2!=="-"&&(
+                    <div className='skill-type-div'>{skill.type2}</div>
+                  )}
                 </div>
-                <hr className='skill-range-hr' />
-                {skill.height_range_dw&&(
-                  <>
+                  <div className='skill-range-value mx-2'>
                     <div className='d-flex justify-content-between align-items-center'>
-                      <label>Height Range</label>
-                      <span>⬇{skill.height_range_dw} - ⬆{skill.height_range_up}</span>
+                      <label>Range</label>
+                      <span>{skill.range_1} - {skill.range_2}</span>
                     </div>
                     <hr className='skill-range-hr' />
-                  </>
-                )}
-                {skill.Effect_range_dw&&(
-                  <>
-                    <div className='d-flex justify-content-between align-items-center'>
-                      <label>Effect Height</label>
-                      <span>⬇{skill.Effect_range_dw} - ⬆{skill.Effect_range_up}</span>
-                    </div>
-                    <hr className='skill-range-hr' />
-                  </>
-                )}
+                    {skill.height_range_dw&&(
+                      <>
+                        <div className='d-flex justify-content-between align-items-center'>
+                          <label>Height Range</label>
+                          <span>⬇{skill.height_range_dw} - ⬆{skill.height_range_up}</span>
+                        </div>
+                        <hr className='skill-range-hr' />
+                      </>
+                    )}
+                    {skill.Effect_range_dw&&(
+                      <>
+                        <div className='d-flex justify-content-between align-items-center'>
+                          <label>Effect Height</label>
+                          <span>⬇{skill.Effect_range_dw} - ⬆{skill.Effect_range_up}</span>
+                        </div>
+                        <hr className='skill-range-hr' />
+                      </>
+                    )}
+                  </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     );

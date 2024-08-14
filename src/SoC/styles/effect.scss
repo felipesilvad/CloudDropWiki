@@ -6,7 +6,42 @@ $physical: #d66a62;
 $magical: #da90e9;
 $heal: #35b722;
 $tag: #f6bc55;
+$tag-blue: #5fa1be;
 
 .highlight {
   color: $physical;
+}
+
+.tag-color {
+  color: $tag;
+}
+
+.tag-txt {
+  color: $tag;
+  font-weight: normal;
+}
+
+.tag-txt-blue {
+  color: $tag-blue;
+  font-weight: normal;
+}
+
+.physical-color {
+  color: $physical;
+}
+.magical-color {
+  color: $magical;
+}
+.heal-color {
+  color: $heal;
+}
+
+.debuff-color{
+  background: -webkit-linear-gradient(#d67d5b, #c76c4a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.buff-color {
+  color: #47a531;
 }

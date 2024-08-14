@@ -1,5 +1,5 @@
 .char-container {
-  max-width: 1650px!important;
+  max-width: 1300px!important;
 }
 
 .image-container {
@@ -46,9 +46,9 @@
 .image-container .sprite-layer {
   position: absolute;
   z-index: 4;
-  width: 6rem;
-  height: 8rem;
-  top: 70%;
+  width: 8rem;
+  height: 10rem;
+  top: 71%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -61,7 +61,7 @@
   padding: 0.25rem 0;
   text-align: center;
   border: solid 2px;
-  border-radius: 5rem;
+  border-radius: 0.5rem;
   // color: white;
   font-size: 1rem;
   font-weight: bold;
@@ -73,13 +73,13 @@
 
 
 .image-container .class-icon {
-  z-index: 6; /* Highest z-index to be on top */
-  width: 2rem; /* Adjust size as needed */
-  height: 2rem;
-  top: 3%;
+  z-index: 6;
+  width: 1.6rem;
+  height: 1.6rem;
+  top: 4.5%;
   left: 50%;
   transform: translate(-50%, -50%);
-  object-fit: contain; /* Maintain aspect ratio */
+  object-fit: contain;
 }
 
 .profile-img-div {
@@ -263,6 +263,11 @@
   padding: 0.5rem;
 }
 
+.range-img {
+  width: 5rem;
+  height: 5rem;
+}
+
 .skill-type-div {
   background-color: $lighter;
   border-radius: 0.2rem;
@@ -440,4 +445,42 @@
 .show-rec-btn:hover {
   background-color: rgba($light,0.6)!important;
   border: 1px solid $highlight!important;
+}
+
+.char-row {
+  background: linear-gradient(to left,
+    rgba(black,0),
+    rgba($highlight,0.6),
+  );
+  background-size: cover;
+}
+
+.char-row:hover {
+  background: linear-gradient(to left,
+    rgba(black,0),
+    rgba($highlight,1),
+  );
+}
+
+.char-row-img {
+  width: -webkit-fill-available;
+  object-fit: cover;
+}
+
+.char-row-title {
+  font-family: Ardela Edge, sans-serif;
+  font-style: italic;
+  font-weight: bolder;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  margin-top: .1rem;
+  text-shadow: 3px 3px 4px rgba(0,0,0,.9);
+  height: 2rem;
+  color: white;
+  text-decoration: none;
+}
+
+.char-row-sprite {
+  width: 4.5rem;
+  height: 6rem;
 }

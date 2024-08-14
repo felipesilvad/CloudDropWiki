@@ -1,9 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { Image } from 'react-bootstrap';
-import slugify from 'react-slugify';
-import { doc, onSnapshot,query, collection} from 'firebase/firestore';
+import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
-import { Tooltip } from 'react-tooltip'
 import EffectTxt from '../Effect/EffectTxt';
 
 function CharTrait({slug}) {
@@ -29,7 +27,7 @@ function CharTrait({slug}) {
         </div>
 
         <div>
-          <EffectTxt txt={trait.effects[4]} />
+          <EffectTxt text={trait.effects[4]} />
         </div>
       </div>
     );
