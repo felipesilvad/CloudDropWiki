@@ -20,7 +20,6 @@ function CharPage() {
 
   const [skillRec, setSkillRec] = useState(false)
 
-  const [chars, setChars] = useState([])
   function compare( a, b ) {
     if ( a.id < b.id ){
       return -1;
@@ -30,9 +29,15 @@ function CharPage() {
     }
     return 0;
   }
+  const [chars, setChars] = useState([])
+  const [blueEffects, setBlueEffects] = useState([])
+
   useEffect (() => {
     onSnapshot(query(collection(db, `games/soc/chars`), where("rarity","==","Legendary")), (snapshot) => {
       setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
+    });
+    onSnapshot(query(collection(db, `games/soc/effect_tags`), where("color","==","blue")), (snapshot) => {
+      setBlueEffects(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
   }, [])
 
@@ -111,7 +116,7 @@ function CharPage() {
               TRAIT
             </div>
             {char.trait&&(
-              <CharTrait slug={char.trait} />
+              <CharTrait blueEffects={blueEffects} slug={char.trait} />
             )}
 
             <div className='black-label-div mt-2'>
@@ -123,12 +128,12 @@ function CharPage() {
             <Row>
               <Col>
                 {char.basic&&(
-                  <CharSkill slug={char.basic} />
+                  <CharSkill blueEffects={blueEffects} slug={char.basic} />
                 )}
               </Col>
               <Col>
                 {char.skill&&(
-                  <CharSkill slug={char.skill} />
+                  <CharSkill blueEffects={blueEffects} slug={char.skill} />
                 )}
               </Col>
             </Row>
@@ -158,7 +163,7 @@ function CharPage() {
             )}
 
             {char.skill_tree&&(char.skill_tree.map((lv, index) => (
-              <SkillTreeLV skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
+              <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
             )))}
             
           </Col>

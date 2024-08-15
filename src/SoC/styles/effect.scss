@@ -2,11 +2,11 @@
   font-family: "Roboto", sans-serif!important;
 }
 
-$physical: #d66a62;
+$physical: #ff847b;
 $magical: #da90e9;
 $heal: #35b722;
 $tag: #f6bc55;
-$tag-blue: #5fa1be;
+$tag-blue: #75c5e7;
 
 .highlight {
   color: $physical;
@@ -14,16 +14,16 @@ $tag-blue: #5fa1be;
 
 .tag-color {
   color: $tag;
+  cursor: pointer;
 }
 
 .tag-txt {
   color: $tag;
-  font-weight: normal;
 }
 
 .tag-txt-blue {
   color: $tag-blue;
-  font-weight: normal;
+  cursor: pointer;
 }
 
 .physical-color {
@@ -44,4 +44,9 @@ $tag-blue: #5fa1be;
 
 .buff-color {
   color: #47a531;
+}
+
+.effect-tag-tooltip {
+  font-size: 1rem!important;
+  text-align: left!important;
 }

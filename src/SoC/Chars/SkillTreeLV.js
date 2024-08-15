@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react';
 import CharSkill from './CharSkill';
 import { Row, Col } from 'react-bootstrap';
 
-function SkillTreeLV({lv,index,last, skillRec}) {
+function SkillTreeLV({lv,index,last, skillRec, blueEffects}) {
   // const windowWidth = useRef(window.innerWidth);
 
   if (lv) {
@@ -17,7 +17,7 @@ function SkillTreeLV({lv,index,last, skillRec}) {
           <div className='d-flex skilltree-div w-100'>
 
             <div className='skilltree-skill'>
-              <CharSkill slug={lv.skill0} skillRec={[skillRec, lv.rec,"1"]} />
+              <CharSkill blueEffects={blueEffects} slug={lv.skill0} skillRec={[skillRec, lv.rec,"1"]} />
             </div>
 
             <div className='tree-rank d-none d-md-block'>
@@ -26,7 +26,7 @@ function SkillTreeLV({lv,index,last, skillRec}) {
             </div>
 
             <div className='skilltree-skill'>
-              <CharSkill slug={lv.skill1} skillRec={[skillRec, lv.rec,"2"]} />
+              <CharSkill blueEffects={blueEffects} slug={lv.skill1} skillRec={[skillRec, lv.rec,"2"]} />
             </div>
 
           </div>

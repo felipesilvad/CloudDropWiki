@@ -4,8 +4,6 @@
   width:  20%;
 }
 
-
-/* Sidebar container */
 .sidebar {
   display: none;
   position: fixed;
@@ -34,13 +32,14 @@
 
 .side-bar-disabled {
   opacity: 0.5;
-  cursor: default;
+  cursor:not-allowed;
 }
 
 .side-bar-filter-label {
   font-size: 0.9rem;
   font-weight: bold;
   font-family: "PT Sans", sans-serif;
+  cursor: inherit;
 }
 
 .filter-label {

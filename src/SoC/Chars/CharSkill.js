@@ -4,7 +4,7 @@ import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 import EffectTxt from '../Effect/EffectTxt';
 
-function CharSkill({slug, skillRec}) {
+function CharSkill({slug, skillRec, blueEffects}) {
 
   const [skill, setSkill] = useState()
   useEffect(() => {
@@ -65,15 +65,18 @@ function CharSkill({slug, skillRec}) {
           
           <div className='trait-div d-flex align-items-center mx-1'>
             <div className='trait-title d-flex align-items-center'>
-              <Image className='trait-img' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/skills%2F${skill.img}.png?alt=media&token=a0eb4570-8b1d-4859-8a66-90f4e32b2896`} />
-                <b className='trait-title-txt'>
+              <div className='trait-img-container'>
+                <Image className='trait-img background' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/skills%2F${skill.img}.png?alt=media&token=a0eb4570-8b1d-4859-8a66-90f4e32b2896`} />
+                <Image className='trait-img foreground' src={require(`../assets/img/skill-${(skill.rarity)?(skill.rarity):('Rare')}.png`)} />
+              </div>
+              <b className='trait-title-txt'>
                 {skill.title}
               </b>
             </div>
           </div>
 
           <div className='mx-2'>
-            <EffectTxt text={skill.effect} dmg={skill.dmg}/>
+            <EffectTxt blueEffects={blueEffects} text={skill.effect} dmg={skill.dmg}/>
           </div>
           
           {(skill.range_1!==null)&&(

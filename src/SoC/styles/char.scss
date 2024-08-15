@@ -219,10 +219,28 @@
   font-size: 1rem;
 }
 
-.trait-img {
-  width: 5rem;
+.trait-img-container {
   position: absolute;
-  margin-left: 0.25rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-left: 0.5rem;
+}
+
+.trait-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.background {
+  z-index: 1;
+}
+
+.foreground {
+  z-index: 2;
 }
 
 .trait-div {
@@ -425,7 +443,7 @@
 
 .tree-rank__vl {
   border-left: 3px solid #dacfb4;
-  height: 500px;
+  height: 600px;
   position: absolute;
   top: -80%;
   left: 48%;
