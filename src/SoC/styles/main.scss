@@ -22,9 +22,20 @@ hr {
   opacity: .25!important;
 }
 
-.custom-row {
-  --bs-gutter-x: 0.25rem!important;
+a {
+  color: inherit!important;
+  text-decoration: none!important;
+  text-decoration-line: none!important;
+  // text-decoration-thickness: initial;
+  // text-decoration-style: initials;
+  // text-decoration-color: initial;
 }
+
+.custom-row {
+  --bs-gutter-x: 0.5rem!important;
+}
+
+
 
 .new-container {
   max-width: 1300px!important;

@@ -286,7 +286,7 @@ function CharsList() {
             )))}
           </div>
         ):(
-          <div className='char-list-div d-flex justify-content-around flex-wrap'>
+          <div className='char-list-div d-flex flex-wrap'>
             {chars&&(filteredChars.map(char => (
               <CharsListItem char={char} />
             )))}

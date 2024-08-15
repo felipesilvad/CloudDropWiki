@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Row,Col, Container, Image, Button} from 'react-bootstrap';
-import { doc, onSnapshot} from 'firebase/firestore';
+import { doc, onSnapshot, query, collection, where} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
 import StatsItem from './StatsItem';
@@ -9,6 +9,7 @@ import FactionImage from './FactionImage';
 import CharTrait from './CharTrait';
 import CharSkill from './CharSkill';
 import SkillTreeLV from './SkillTreeLV';
+import CharsListItemRow from './CharsListItemRow';
 
 function CharPage() {
   const id = useParams().id
@@ -29,11 +30,11 @@ function CharPage() {
     }
     return 0;
   }
-  // useEffect (() => {
-  //   onSnapshot(query(collection(db, `games/soc/chars`)), (snapshot) => {
-  //     setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-  //   });
-  // }, [])
+  useEffect (() => {
+    onSnapshot(query(collection(db, `games/soc/chars`), where("rarity","==","Legendary")), (snapshot) => {
+      setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
+    });
+  }, [])
 
   useEffect(() => {
     onSnapshot(doc(db, "games/soc/chars/", id), (doc) => {
@@ -47,8 +48,11 @@ function CharPage() {
       <Container className='char-container py-2'>
         <Row className='custom-row'>
           <Col md={3} className='d-none d-md-block d-lg-block'>
-            {/* <CharSideMenu id={id} chars={chars.sort(compare)} /> */}
-            Chars List
+            <div className='char-list-div w-100  side-char-list'>
+              {chars&&(chars.map(char => (
+                <CharsListItemRow char={char} />
+              )))}
+            </div>
           </Col>
           
           <Col md={9} className='desktop-char-row'>
