@@ -8,7 +8,7 @@ function CharsListItem({char}) {
 
   if (char) {
     return (
-      <Link to={`/chars/${char.slug}`} className='mx-2'>
+      <Link to={`/chars/${char.slug}`} className='mx-1'>
         <div className="image-container mx-1">
           <img src={require(`../assets/img/recruit_bg_${char.rarity}.png`)} alt="Background" className="background-layer" />
           <img src={profile} alt="Character" className="character-layer" />

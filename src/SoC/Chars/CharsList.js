@@ -26,6 +26,7 @@ function CharsList() {
   const [hideEpic, setHideEpic] = useState(false);
   const [hideRare, setHideRare] = useState(false);
   const [hideCommon, setHideCommon] = useState(false);
+  const [hideLegendary, setHideLegendary] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFactions, setActiveFactions] = useState([]);
   const [activeRoles, setActiveRoles] = useState('');
@@ -70,6 +71,7 @@ function CharsList() {
     .filter(char => !hideEpic || char.rarity !== 'Epic')
     .filter(char => !hideRare || char.rarity !== 'Rare')
     .filter(char => !hideCommon || char.rarity !== 'Common')
+    .filter(char => !hideLegendary || char.rarity !== 'Legendary')
     .filter(char => char.name.toLowerCase().includes(searchTerm.toLowerCase())) // Filter by search term
     .filter(char => activeFactions.length === 0 || activeFactions.every(faction => char.factions.includes(faction))) // Filter by factions
     .filter(char => !activeRoles || char.role === activeRoles) // Filter by factions
@@ -255,34 +257,39 @@ function CharsList() {
               />
             </div>
 
-            <div onClick={() => setHideEpic(prevState => !prevState)} className='side-bar-filter px-2'>
+            <div className='side-bar-filter mx-1'>
+              <label className="filter-label mx-2">Filter Rarity</label>
+              <hr/>
+              <img
+                src={(hideLegendary)?(require('../assets/img/stage_ssr_off.png')):(require('../assets/img/stage_ssr_bg.png'))}
+                alt="Legendary"
+                className="sidebar-icon"
+                onClick={() => setHideLegendary(prevState => !prevState)}
+              />
               <img
                 src={(hideEpic)?(require('../assets/img/stage_sr_off.png')):(require('../assets/img/stage_sr_bg.png'))}
                 alt="Epic"
                 className="sidebar-icon"
+                onClick={() => setHideEpic(prevState => !prevState)}
               />
-              <label className='mx-2 side-bar-filter-label'>Hide Epic</label>
-            </div>
-            <div onClick={() => setHideRare(prevState => !prevState)} className='side-bar-filter px-2 side-bar-disabled'>
               <img
-                src={require('../assets/img/stage_r_off.png')}
+                src={(hideRare)?(require('../assets/img/stage_r_off.png')):(require('../assets/img/stage_r_bg.png'))}
                 alt="Rare"
                 className="sidebar-icon"
+                onClick={() => setHideRare(prevState => !prevState)}
               />
-              <label className='mx-2 side-bar-filter-label'>Hide Rare</label>
-            </div>
-            <div onClick={() => setHideCommon(prevState => !prevState)} className='side-bar-filter px-2 side-bar-disabled'>
               <img
-                src={require('../assets/img/stage_n_off.png')}
+                src={(hideCommon)?(require('../assets/img/stage_n_off.png')):(require('../assets/img/stage_n_bg.png'))}
                 alt="Common"
                 className="sidebar-icon"
+                onClick={() => setHideCommon(prevState => !prevState)}
               />
-              <label className='mx-2 side-bar-filter-label'>Hide Common</label>
             </div>
+
             
             <div className='side-bar-filter mx-1'>
               <label className="filter-label mx-2">Filter Role</label>
-              <br/>
+              <hr/>
               {roleOrder.map(role => (
                 <img
                   key={role}
