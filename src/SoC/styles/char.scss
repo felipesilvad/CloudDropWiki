@@ -467,6 +467,7 @@
   text-transform: uppercase;
   font-weight: bolder;
   font-style: italic;
+  transition: 200ms;
 }
 
 .show-rec-btn-active {
@@ -477,6 +478,7 @@
 .show-rec-btn:hover {
   background-color: rgba($light,0.6)!important;
   border: 1px solid $highlight!important;
+  transition: 200ms;
 }
 
 .char-row {
@@ -489,10 +491,12 @@
   overflow: hidden;
   border: 1px solid $light;
   border-radius: 0.2rem;
+  transition: 200ms;
 }
 
 .char-row:hover {
   border-color: $highlight;
+  transition: 200ms;
 }
 
 .char-row-img {
@@ -514,8 +518,8 @@
 }
 
 .char-row-sprite {
-  width: 4.5rem;
-  height: 6rem;
+  width: 5rem;
+  height: 6.5rem;
   position:relative;
   right: 0;
   margin-bottom: -1.1rem;

@@ -1,0 +1,46 @@
+.event-img {
+  width: -webkit-fill-available;
+}
+
+.event-item {
+  width: 33%;
+  @media only screen and (max-width: $md) {
+    width: 100%
+  }
+}
+
+.event-col {
+  background-color: $light;
+  border-radius: 0.25rem;
+  transition: 200ms;
+  cursor: pointer;
+}
+
+.event-col:hover {
+  background-color: lighten($light, 5);
+  transition: 200ms;
+}
+
+.event-div {
+  background-color: rgba($mid, 0.6);
+  border-radius: 0.5rem;
+}
+.event-item-time {
+  opacity: 0.9;
+  font-size: 0.85rem;
+}
+.event-item-time-over {
+  color: $physical;
+}
+
+.negative-margin {
+  margin-top: -0.75rem;
+}
+
+.event-page-img {
+  width: 60%;
+  text-align: center;
+  @media only screen and (max-width: $md) {
+    width: 100%
+  }
+}

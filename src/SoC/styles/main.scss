@@ -2,6 +2,7 @@
 @import './char';
 @import './filter';
 @import './effect';
+@import './event';
 
 .App {
   background-color: $dark;
@@ -12,6 +13,10 @@
   // padding-top: 3rem;
   // background-image: url("../assets/img/bg.jpg");
   // background-size: cover;
+}
+
+.font-sans {
+  font-family: "PT Sans", sans-serif;
 }
 
 hr {

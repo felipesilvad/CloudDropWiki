@@ -36,6 +36,9 @@ function CharsList() {
   const [showRoles, setShowRoles] = useState(false);
   const targetRoles = useRef(null);
 
+  const [showRarities, setShowRarities] = useState(false);
+  const targetRarities = useRef(null);
+
   const toggleFaction = (faction) => {
     setActiveFactions(prevFactions =>
       prevFactions.includes(faction)
@@ -43,6 +46,24 @@ function CharsList() {
         : [...prevFactions, faction]
     );
   };
+
+  const handleShowFactions = () => {
+    setShowFactions(!showFactions)
+    setShowRoles(false)
+    setShowRarities(false)
+  }
+
+  const handleShowRoles = () => {
+    setShowRoles(!showRoles)
+    setShowFactions(false)
+    setShowRarities(false)
+  }
+
+  const handleShowRarities = () => {
+    setShowRarities(!showRarities)
+    setShowFactions(false)
+    setShowRoles(false)
+  }
 
 
   const filteredChars = chars
@@ -53,11 +74,11 @@ function CharsList() {
     .filter(char => activeFactions.length === 0 || activeFactions.every(faction => char.factions.includes(faction))) // Filter by factions
     .filter(char => !activeRoles || char.role === activeRoles) // Filter by factions
     .sort((a, b) => {
-      const roleComparison = roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role);
-      if (roleComparison !== 0) {
-        return roleComparison;
+      const rarityComparison = rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity);
+      if (rarityComparison !== 0) {
+        return rarityComparison;
       }
-      return rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity);
+      return roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role);
     });
   
   
@@ -65,35 +86,59 @@ function CharsList() {
     <Container className='new-container'>
       {/* MOBILE SIDEBAR */}
       <div className="sidebar">
-        <div className='side-bar-filter text-center'>
-          <img
-            src={(hideEpic)?(require('../assets/img/stage_sr_off.png')):(require('../assets/img/stage_sr_bg.png'))}
-            alt="Epic"
-            className="sidebar-icon"
-            onClick={() => setHideEpic(prevState => !prevState)}
-          />
-          <label className='side-bar-filter-label'>Hide Epic</label>
-        </div>
-        <div className='side-bar-filter side-bar-disabled text-center'>
-          <img
-            src={require('../assets/img/stage_r_off.png')}
-            alt="Rare"
-            className="sidebar-icon"
-            onClick={() => setHideRare(prevState => !prevState)}
-          />
-          <label className='side-bar-filter-label'>Hide Rare</label>
-        </div>
-        <div className='side-bar-filter side-bar-disabled text-center'>
-          <img
-            src={require('../assets/img/stage_n_off.png')}
-            alt="Common"
-            className="sidebar-icon"
-            onClick={() => setHideCommon(prevState => !prevState)}
-          />
-          <label className='side-bar-filter-label'>Hide Common</label>
-        </div>
+          <div className='side-bar-filter text-center' ref={targetRarities} onClick={() => handleShowRarities()}>
+            <img
+              src={require('../assets/img/stage_sr_bg.png')}
+              alt="Roles"
+              className="sidebar-icon"
+            />
+            {(showRarities)? (
+              <IoIosArrowBack />
+            ):(
+              <IoIosArrowForward />
+            )}
+            <label className='side-bar-filter-label side-bar-roles'>Rarity</label>
+          </div>
 
-        <div className='side-bar-filter text-center' ref={targetRoles} onClick={() => setShowRoles(!showRoles)}>
+          <Overlay target={targetRarities.current} show={showRarities} placement="right">
+            {({
+              placement: _placement,
+              arrowProps: _arrowProps,
+              show: _showRarities,
+              popper: _popper,
+              hasDoneInitialMeasure: _hasDoneInitialMeasure,
+              ...props
+            }) => (
+              <div
+                {...props}
+                style={{
+                  ...props.style,
+                }}
+                className='side-bar-popover'
+              >
+                <img
+                  src={(hideEpic)?(require('../assets/img/stage_sr_off.png')):(require('../assets/img/stage_sr_bg.png'))}
+                  alt="Epic"
+                  className="sidebar-icon"
+                  onClick={() => setHideEpic(prevState => !prevState)}
+                />
+                <img
+                  src={require('../assets/img/stage_r_off.png')}
+                  alt="Rare"
+                  className="sidebar-icon"
+                  onClick={() => setHideRare(prevState => !prevState)}
+                />
+                <img
+                  src={require('../assets/img/stage_n_off.png')}
+                  alt="Common"
+                  className="sidebar-icon"
+                  onClick={() => setHideCommon(prevState => !prevState)}
+                />
+              </div>
+            )}
+          </Overlay>
+
+        <div className='side-bar-filter text-center' ref={targetRoles} onClick={() => handleShowRoles()}>
           <img
             src="https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2FWatcher.png?alt=media"
             alt="Roles"
@@ -143,8 +188,8 @@ function CharsList() {
             </div>
           )}
         </Overlay>
-        
-        <div className='side-bar-filter text-center' ref={targetFactions} onClick={() => setShowFactions(!showFactions)}>
+
+        <div className='side-bar-filter text-center' ref={targetFactions} onClick={() => handleShowFactions()}>
           <img
             src="https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/faction%2Funittag_player.png?alt=media"
             alt="Factions"

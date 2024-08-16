@@ -33,7 +33,7 @@ function CharPage() {
   const [blueEffects, setBlueEffects] = useState([])
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `games/soc/chars`), where("rarity","==","Legendary")), (snapshot) => {
+    onSnapshot(query(collection(db, `games/soc/chars`)), (snapshot) => {
       setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
     onSnapshot(query(collection(db, `games/soc/effect_tags`), where("color","==","blue")), (snapshot) => {

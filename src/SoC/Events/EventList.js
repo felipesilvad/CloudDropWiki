@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { query, collection, onSnapshot, orderBy} from "firebase/firestore"; 
 import db from '../../firebase';
 import {Container} from 'react-bootstrap';
 import EventItem from './EventItem';
 
-function EventsList() {
+function EventsList({side}) {
   const [events, setEvents] = useState([])
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/events`)), (snapshot) => {
+    onSnapshot(query(collection(db, `/games/soc/events`), orderBy("startDate", "desc")), (snapshot) => {
       setEvents(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
   }, [])
@@ -15,9 +15,11 @@ function EventsList() {
 
   return (
     <Container className='new-container'>
-      {events&&(events.map(event => (
-        <EventItem event={event} />
-      )))}
+      <div className='d-flex flex-wrap'>
+        {events&&(events.map(event => (
+          <EventItem event={event} side={side} />
+        )))}
+      </div>
     </Container>
   )
   
