@@ -20,8 +20,13 @@
 
 .char-list-div {
   width: 80%;
-  overflow: scroll;
   height: 90vh;
+  @media (min-width: 768px) {
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: rgba($color: ($light), $alpha: 0.4);
+    border-radius: 0.25rem;
+  }
 }
 
 .side-bar-filter {

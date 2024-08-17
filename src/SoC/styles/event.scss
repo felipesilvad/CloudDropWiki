@@ -44,3 +44,50 @@
     width: 100%
   }
 }
+
+
+.event-calendar {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  width: 100%;
+  margin: 20px;
+}
+
+.timeline {
+  position: relative;
+}
+
+.days {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+  padding-bottom: 5px;
+}
+
+.day {
+  width: calc(100% / 30); /* Adjust for the number of days in the month */
+  text-align: center;
+  font-size: 12px;
+  border-right: 1px solid #ccc;
+  padding: 0 5px;
+}
+
+.event-row {
+  position: relative;
+  height: 40px; /* Adjust height to fit your needs */
+  border-bottom: 1px solid #ddd;
+}
+
+.event {
+  position: absolute;
+  height: 20px;
+  background-color: #C2B67E;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 12px;
+  padding: 2px 5px;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

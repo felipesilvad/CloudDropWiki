@@ -12,7 +12,6 @@ function EventsList({side}) {
     });
   }, [])
 
-
   return (
     <Container className='new-container'>
       <div className='d-flex flex-wrap'>

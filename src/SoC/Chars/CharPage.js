@@ -53,7 +53,7 @@ function CharPage() {
       <Container className='char-container py-2'>
         <Row className='custom-row'>
           <Col md={3} className='d-none d-md-block d-lg-block'>
-            <div className='char-list-div w-100  side-char-list'>
+            <div className='w-100  side-char-list'>
               {chars&&(chars.map(char => (
                 <CharsListItemRow char={char} />
               )))}
