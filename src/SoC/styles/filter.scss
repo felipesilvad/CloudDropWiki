@@ -29,6 +29,18 @@
   }
 }
 
+.char-list-div::-webkit-scrollbar {
+  width: 6px; /* Mostly for vertical scrollbars */
+  height: 6px; /* Mostly for horizontal scrollbars */
+}
+.char-list-div::-webkit-scrollbar-thumb { /* Foreground */
+  background: lighten($highlight, 15);
+  border-radius: 2rem;
+}
+.char-list-div::-webkit-scrollbar-track { /* Background */
+  background: #333;
+}
+
 .side-bar-filter {
   background-color: $light;
   border-radius: 0.5rem;
