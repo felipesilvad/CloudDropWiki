@@ -11,7 +11,9 @@ function HeaderComponent() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/Chars" >Characters</Nav.Link>
+            <Nav.Link href="/chars" >Characters</Nav.Link>
+            <Nav.Link href="/skills" >Skills</Nav.Link>
+            <Nav.Link href="/Events" >Events</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
