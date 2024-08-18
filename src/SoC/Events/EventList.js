@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { query, collection, onSnapshot, orderBy} from "firebase/firestore"; 
+import { query, collection, onSnapshot, orderBy, limit} from "firebase/firestore"; 
 import db from '../../firebase';
 import {Container} from 'react-bootstrap';
 import EventItem from './EventItem';
@@ -7,7 +7,7 @@ import EventItem from './EventItem';
 function EventsList({side}) {
   const [events, setEvents] = useState([])
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/events`), orderBy("startDate", "desc")), (snapshot) => {
+    onSnapshot(query(collection(db, `/games/soc/events`), orderBy("startDate", "desc"), limit(9)), (snapshot) => {
       setEvents(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
   }, [])

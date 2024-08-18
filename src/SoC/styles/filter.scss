@@ -20,8 +20,8 @@
 
 .char-list-div {
   width: 80%;
-  height: 90vh;
   @media (min-width: 768px) {
+    height: 90vh;
     overflow: scroll;
     overflow-x: hidden;
     background-color: rgba($color: ($light), $alpha: 0.4);
