@@ -8,8 +8,6 @@ import Select from 'react-select';
 function SkillsList() {
   const [skills, setSkills] = useState([])
   const [effectTags, setEffectTags] = useState([])
-  const [blueEffects, setBlueEffects] = useState([])
-  const [effectTagsOptions, setEffectTagsOptions] = useState([])
 
   useEffect (() => {
     onSnapshot(query(collection(db, `/games/soc/skills`), limit(10)), (snapshot) => {
@@ -19,11 +17,6 @@ function SkillsList() {
       setEffectTags(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
   }, [])
-
-  useEffect (() => {
-    setBlueEffects(effectTags.filter(effect => effect.color === "blue"))
-    setEffectTagsOptions()
-  }, [effectTags])
 
   const effectTypes = useMemo(() => {
     const types = skills.map(skill => skill.effect_type);
@@ -35,7 +28,7 @@ function SkillsList() {
     return effectTags.map(tag => ({ value: tag.slug, label: tag.title }));
   }, [effectTags]);
 
-  const [selectedEffectTypes, setSelectedEffectTypes] = useState([]);
+  const [selectedEffectTypes, setSelectedEffectTypes] = useState('any');
   const [selectedEffectTags, setSelectedEffectTags] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -78,8 +71,8 @@ function SkillsList() {
       </div>
 
       <div className='d-flex justify-content-around flex-wrap'>
-        {skills&&blueEffects&&(filteredSkills.map(skill => (
-          <SkillListItem skill={skill} blueEffects={blueEffects} />
+        {skills&&effectTags&&(filteredSkills.map(skill => (
+          <SkillListItem skill={skill} blueEffects={effectTags.filter(effect => effect.color === "blue")} />
         )))}
       </div>
     </Container>
