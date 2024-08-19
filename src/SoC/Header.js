@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function HeaderComponent() {
 
@@ -12,7 +13,15 @@ function HeaderComponent() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/chars" >Characters</Nav.Link>
-            <Nav.Link href="/skills" >Skills</Nav.Link>
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              title="Skills"
+              menuVariant="dark"
+            >
+              <NavDropdown.Item href="/skills" >Skills</NavDropdown.Item>
+              <NavDropdown.Item href="/traits" >Traits</NavDropdown.Item>
+              <NavDropdown.Item href="/effects" >Effects</NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link href="/Events" >Events</Nav.Link>
           </Nav>
         </Navbar.Collapse>

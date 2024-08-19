@@ -1,5 +1,32 @@
 
 .skill-list-item {
   width: 33%;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+}
+.trait-list-item {
+  width: 50%;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+}
 
+
+
+.skill-chars {
+  background-color: rgba($mid, 0.6);
+  text-transform: uppercase;
+  color: white;
+  font-family: "PT Sans", sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+  cursor: pointer;
+  transition: 100ms;
+}
+
+.skill-chars:hover {
+  background-color: rgba($mid, 0.9);
+  transition: 100ms;
 }

@@ -525,3 +525,31 @@
   margin-bottom: -1.1rem;
 }
 
+.char-face-container {
+  position: relative;
+  width: 5rem; /* Adjust to the desired size */
+  height: 5rem; /* Adjust to the desired size */
+  overflow: hidden;
+}
+
+.char-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.char-face-img {
+  position: absolute;
+  width: 125%;
+  right: -2.5%;
+  bottom: 0;
+  mask-image: url('../assets/img/face_bg_mask.png');
+  mask-size: cover;
+  mask-position: center;
+}
+
+.char-face-border {
+  z-index: 3;
+}

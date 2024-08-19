@@ -1,10 +1,23 @@
 import React, {useState,useEffect} from 'react';
 import { Image } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
+import CharFace from '../Chars/CharFace';
 
-function SkillListItem({skill, blueEffects}) {
+function SkillListItem({skill, blueEffects, chars}) {
   const nrg_icon = require('../assets/img/nrg_icon.png')
   const cd_icon = require('../assets/img/cd_icon.png')
+  const [filteredChars, setfilteredChars] = useState([])
+
+
+  const showSkillChars = () => {
+    if (filteredChars.length===0) {
+      setfilteredChars(chars.filter(char => (
+        char.basic === skill.slug ||
+        char.shill === skill.slug ||
+        char.skill_tree.some(x => x.skill0 === skill.slug || x.skill1 === skill.slug)
+      )))
+    }
+  }
 
   if (skill) {
     const skillRange = `${skill.range_1}-${skill.range_2}${(skill.range_3)?(`-${skill.range_3}`):("")}${(skill.range_detail)?(`-${skill.range_detail.replace("+","%2B")}`):("")}`
@@ -102,6 +115,14 @@ function SkillListItem({skill, blueEffects}) {
                 </div>
               </div>
             )}
+            
+
+            <div className='skill-chars' onClick={showSkillChars}>⬇ Character That Can Learn This Skill ⬇</div>
+            <div className="d-flex flex-wrap">
+              {filteredChars&&(filteredChars.map(char => (
+                <CharFace char={char} />
+              )))}
+            </div>
           </div>
         </div>
       </div>

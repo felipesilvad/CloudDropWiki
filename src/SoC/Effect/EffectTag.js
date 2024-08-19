@@ -3,6 +3,8 @@ import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 import slugify from 'react-slugify';
 import { Tooltip, OverlayTrigger, Button } from 'react-bootstrap';
+import EffectTagTxt from './EffectTagTxt';
+
 const EffectTag = ({ value }) => {
 
   const [effectTag, setEffectTag] = useState()

@@ -7,16 +7,36 @@ import Select from 'react-select';
 
 function SkillsList() {
   const [skills, setSkills] = useState([])
+  const [chars, setChars] = useState([])
   const [effectTags, setEffectTags] = useState([])
+  const [searchChanged, setSearchChanged] = useState(false)
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/skills`), limit(10)), (snapshot) => {
+    onSnapshot(query(collection(db, `/games/soc/skills`), limit(30)), (snapshot) => {
       setSkills(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
     onSnapshot(query(collection(db, `/games/soc/effect_tags`)), (snapshot) => {
       setEffectTags(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
+    onSnapshot(query(collection(db, `/games/soc/chars`)), (snapshot) => {
+      setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
+    });
   }, [])
+
+  const [selectedEffectTypes, setSelectedEffectTypes] = useState('any');
+  const [selectedEffectTags, setSelectedEffectTags] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect (() => {
+    if (searchTerm !== '' || selectedEffectTags.length>0 || selectedEffectTypes!=='any')
+      if (!searchChanged) {
+        onSnapshot(query(collection(db, `/games/soc/skills`)), (snapshot) => {
+          setSkills(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
+        });
+        setSearchChanged(true)
+      }
+  }, [selectedEffectTypes, selectedEffectTags, searchTerm])
+
 
   const effectTypes = useMemo(() => {
     const types = skills.map(skill => skill.effect_type);
@@ -28,10 +48,6 @@ function SkillsList() {
     return effectTags.map(tag => ({ value: tag.slug, label: tag.title }));
   }, [effectTags]);
 
-  const [selectedEffectTypes, setSelectedEffectTypes] = useState('any');
-  const [selectedEffectTags, setSelectedEffectTags] = useState([]);
-
-  const [searchTerm, setSearchTerm] = useState('');
 
   const filteredSkills = skills
     .filter(skill => selectedEffectTypes==="any" || !selectedEffectTypes || selectedEffectTypes === skill.effect_type)
@@ -51,7 +67,7 @@ function SkillsList() {
             <Select
               options={effectTypes}
               onChange={selectedOption => setSelectedEffectTypes(selectedOption.value)}
-              placeholder="Select effect types..."
+              placeholder="Select skill types..."
               menuPortalTarget={document.body} 
               styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
             />
@@ -70,9 +86,10 @@ function SkillsList() {
         </Row>
       </div>
 
-      <div className='d-flex justify-content-around flex-wrap'>
+      <div className='d-flex flex-wrap'>
         {skills&&effectTags&&(filteredSkills.map(skill => (
-          <SkillListItem skill={skill} blueEffects={effectTags.filter(effect => effect.color === "blue")} />
+          <SkillListItem skill={skill} chars={chars}
+          blueEffects={[effectTags.filter(effect => effect.color === "blue")]} />
         )))}
       </div>
     </Container>
