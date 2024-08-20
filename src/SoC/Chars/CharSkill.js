@@ -76,7 +76,7 @@ function CharSkill({slug, skillRec, blueEffects}) {
           </div>
 
           <div className='mx-2'>
-            <EffectTxt blueEffects={blueEffects} text={skill.effect} dmg={skill.dmg}/>
+            <EffectTxt blueEffects={blueEffects} colorNumbers={true} text={skill.effect} dmg={skill.dmg}/>
           </div>
           
           {(skill.range_1!==null)&&(

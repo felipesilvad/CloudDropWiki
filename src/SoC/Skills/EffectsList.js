@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { query, collection, onSnapshot, where} from "firebase/firestore"; 
+import { query, collection, onSnapshot} from "firebase/firestore"; 
 import db from '../../firebase';
 import {Container, Table} from 'react-bootstrap';
-import EffectTagTxt from '../Effect/EffectTagTxt';
-
+import EffectTxt from '../Effect/EffectTxt';
+import EffectTagTitle from '../Effect/EffectTagTitle';
 function EffectsList() {
   const [effectTags, setEffectTags] = useState([])
 
@@ -21,8 +21,8 @@ function EffectsList() {
           <tbody>
             {effectTags&&(effectTags.map(effect => (
               <tr>
-                <td>{effect.title}</td>
-                <td><EffectTagTxt effectTxt={EffectTagTxt} /></td>
+                <td><EffectTagTitle text={effect.title} color={effect.color} /></td>
+                <td><EffectTxt text={effect.txt} /></td>
               </tr>
             )))}
           </tbody>

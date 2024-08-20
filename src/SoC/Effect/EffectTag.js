@@ -2,11 +2,10 @@ import React, {useState,useEffect} from 'react';
 import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 import slugify from 'react-slugify';
-import { Tooltip, OverlayTrigger, Button } from 'react-bootstrap';
-import EffectTagTxt from './EffectTagTxt';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 const EffectTag = ({ value }) => {
-
+  console.log(value)
   const [effectTag, setEffectTag] = useState()
   useEffect(() => {
     onSnapshot(doc(db, "games/soc/effect_tags/", slugify(value)), (doc) => {

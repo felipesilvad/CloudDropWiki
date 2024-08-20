@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import EffectTag from './EffectTag';
 
-const EffectTxt = ({ text, dmg, blueEffects}) => {
+const EffectTxt = ({ text, dmg, blueEffects, colorNumbers}) => {
   const [hasBlueEffect, setHasBlueEffect] = useState()
 
   useEffect(() => {
-    blueEffects.map(effect => (
-      (text.includes(`[${effect.title}]`)&&(
-        setHasBlueEffect(true)
-      )))
-    )
+    if (blueEffects) {
+      blueEffects.map(effect => (
+        (text.includes(`[${effect.title}]`)&&(
+          setHasBlueEffect(true)
+        )))
+      )
+    }
   }, [text]);
   
   if (text) { 
@@ -45,27 +47,25 @@ const EffectTxt = ({ text, dmg, blueEffects}) => {
       }, []);
     };
 
-    if (blueEffects) { 
-      return (
-        <div className='effect-txt mx-1'>
+    return (
+      <div className='effect-txt mx-1'>
 
-          {renderText()}
+        {renderText()}
 
-          {hasBlueEffect&&(<hr className='mt-2' />)}
-          
-          {blueEffects.map(effect => (
-            (text.includes(`[${effect.title}]`)&&(
-              <div className='mx-1 my-2'>
-                <b className='tag-txt-blue'>{effect.title}</b>
-                {": "}
-                {effect.txt}
-              </div>
-            )))
-          )}
+        {hasBlueEffect&&(<hr className='mt-2' />)}
+        
+        {blueEffects&&(blueEffects.map(effect => (
+          (text.includes(`[${effect.title}]`)&&(
+            <div className='mx-1 my-2'>
+              <b className='tag-txt-blue'>{effect.title}</b>
+              {": "}
+              {effect.txt}
+            </div>
+          ))))
+        )}
 
-        </div>
-      );
-    }
+      </div>
+    );
   }
 };
 

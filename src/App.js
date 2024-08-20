@@ -10,6 +10,8 @@ import EventPage from './SoC/Events/EventPage';
 import SkillsList from './SoC/Skills/SkillsList';
 import TraitsList from './SoC/Skills/TraitsList';
 import EffectsList from './SoC/Skills/EffectsList';
+import GearsList from './SoC/Gear/GearsList';
+import GearPage from './SoC/Gear/GearPage';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path='/skills' element={<SkillsList />} exact/>
         <Route path='/traits' element={<TraitsList />} exact/>
         <Route path='/effects' element={<EffectsList />} exact/>
+        <Route path='/gears' element={<GearsList />} exact/>
+        <Route path='/gears/:id' element={<GearPage />} exact/>
         <Route path='/events' element={<EventsList />} exact/>
         <Route path='/events/:id' element={<EventPage />} exact/>
       </Routes>

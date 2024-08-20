@@ -1,8 +1,8 @@
 import React from 'react';
 
-const EffectTagTxt = ({ effectTxt }) => {
+const EffectTagTitle = ({ text, color }) => {
   const renderContent = () => {
-    return effectTxt.split(/(\|null\||\|up\||\|dwn\||\|hr\|)/g).map((part, index) => {
+    return text.split(/(\|null\||\|up\||\|dwn\||\|hr\|)/g).map((part, index) => {
       if (part === '|up|'|| part === '|up'||part === 'up|') {
         return <span key={index} alt="up" className='buff-color' >▲</span>;
       } else if (part === '|dwn|'||part === '|dwn'||part === 'dwn|') {
@@ -17,7 +17,15 @@ const EffectTagTxt = ({ effectTxt }) => {
     });
   };
 
-  return (renderContent());
+  return (<span>
+    [<span className={
+      color&&(
+        (color==="blue")?('tag-txt-blue'):('tag-txt')
+      )
+      }>
+      {renderContent()}
+    </span>]
+  </span>);
 };
 
-export default EffectTagTxt;
+export default EffectTagTitle;
