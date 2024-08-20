@@ -17,3 +17,26 @@
   color: $highlight;
   transition: 200ms;
 }
+
+.gear-img {
+  width: 10rem;
+}
+
+.gearpage-title {
+  text-shadow: 5px 5px 5px rgba($black-bg, 0.7);
+  font-family: "PT Sans", sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.bg-lighter {
+  background-color: rgba($lighter, 0.4);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.gear-desc {
+  font-size: 0.85rem;
+}

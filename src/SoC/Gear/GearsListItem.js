@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import { Link } from 'react-router-dom';
 
-function GearsListItem({gear}) {
+function GearsListItem({gear, sideMenu}) {
   const gear_img = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/gear%2F${gear.img}.png?alt=media`
   const bg = require(`../assets/img/face_bg_${gear.rarity}.png`)
   const border = require(`../assets/img/face_border_${gear.rarity}.png`)
@@ -11,7 +11,7 @@ function GearsListItem({gear}) {
   if (gear) {
 
     return (
-      <div className='skill-list-item'>       
+      <div className={`skill-list-item ${sideMenu&&("w-100")}`}>       
         <div className={`skill-detail-bg mx-1`}>
           <div className={`skill-detail-div `}>
 

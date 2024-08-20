@@ -546,8 +546,10 @@
   right: -2.5%;
   bottom: 0;
   mask-image: url('../assets/img/face_bg_mask.png');
-  mask-size: cover;
-  mask-position: center;
+  
+  mask-size: 100%; /* Make the mask size match the image width */
+  mask-position: bottom right; /* Offset the mask position to match the image's new position */
+  mask-origin: content-box; /* Ensure the mask aligns with the content box */
 }
 
 .char-face-border {
