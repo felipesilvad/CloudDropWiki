@@ -19,8 +19,8 @@ function CharPage() {
   const id = useParams().id
   const [char, setChar] = useState([])
   const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
-  const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_awaken.gif?alt=media`
-  const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.gif?alt=media`
+  const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_awaken.png?alt=media`
+  const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.png?alt=media`
   const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
   const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
   const windowWidth = useRef(window.innerWidth);
@@ -247,11 +247,21 @@ function CharPage() {
             </div>
 
             <div className='ligter-bg'>
-              {char.rarity==="Legendary"&&(
-                <div>
-                  <Image src={awaken} />
-                </div>
-              )}
+              <Row>
+                <Col md={8}>
+                  {char.rarity==="Legendary"&&(
+                    <div className='d-flex'>
+                      <Image className='art-img' src={awaken} />
+                    </div>
+                  )}
+                </Col>
+                <Col>
+                  <div>
+                    {char.biography}
+                  </div>
+                </Col>
+              </Row>
+              
             </div>
 
           </Col>
