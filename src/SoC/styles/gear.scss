@@ -22,6 +22,17 @@
   width: 10rem;
 }
 
+
+.gear-list-img {
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 88%;
+  height: 88%;
+  object-fit: cover;
+}
+
+
 .gearpage-title {
   text-shadow: 5px 5px 5px rgba($black-bg, 0.7);
   font-family: "PT Sans", sans-serif;

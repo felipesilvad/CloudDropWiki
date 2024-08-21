@@ -23,7 +23,7 @@ function HeaderComponent() {
               <NavDropdown.Item href="/effects" >Effects</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/gears" >Gears</Nav.Link>
-
+            <Nav.Link href="/tarots" >Tarots</Nav.Link>
             <Nav.Link href="/events" >Events</Nav.Link>
           </Nav>
         </Navbar.Collapse>

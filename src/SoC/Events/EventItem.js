@@ -29,7 +29,6 @@ function EventItem({event, side}) {
     }
   }, [event]);
 
-  console.log(timeRemaining)
   
   if (event) {
     return (

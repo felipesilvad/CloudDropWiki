@@ -12,6 +12,7 @@ import TraitsList from './SoC/Skills/TraitsList';
 import EffectsList from './SoC/Skills/EffectsList';
 import GearsList from './SoC/Gear/GearsList';
 import GearPage from './SoC/Gear/GearPage';
+import TarotsList from './SoC/Gear/TarotList';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/effects' element={<EffectsList />} exact/>
         <Route path='/gears' element={<GearsList />} exact/>
         <Route path='/gears/:id' element={<GearPage />} exact/>
+        <Route path='/tarots' element={<TarotsList />} exact/>
         <Route path='/events' element={<EventsList />} exact/>
         <Route path='/events/:id' element={<EventPage />} exact/>
       </Routes>

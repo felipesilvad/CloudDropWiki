@@ -3,27 +3,34 @@ import { Image } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import CharFace from '../Chars/CharFace';
 
-function SkillListItem({skill, blueEffects, chars}) {
+function SkillListItem({skill, blueEffects, chars, w100}) {
   const nrg_icon = require('../assets/img/nrg_icon.png')
   const cd_icon = require('../assets/img/cd_icon.png')
   const [filteredChars, setfilteredChars] = useState([])
 
-
-  const showSkillChars = () => {
-    if (filteredChars.length===0) {
-      setfilteredChars(chars.filter(char => (
-        char.basic === skill.slug ||
-        char.shill === skill.slug ||
-        char.skill_tree.some(x => x.skill0 === skill.slug || x.skill1 === skill.slug)
-      )))
-    }
-  }
+  useEffect(() => {
+    setfilteredChars(chars.filter(char => (
+      char.basic === skill.slug ||
+      char.shill === skill.slug ||
+      char.skill_tree.some(x => x.skill0 === skill.slug || x.skill1 === skill.slug)
+    )))
+  }, [skill]);
+  
+  // const showSkillChars = () => {
+  //   if (filteredChars.length===0) {
+  //     setfilteredChars(chars.filter(char => (
+  //       char.basic === skill.slug ||
+  //       char.shill === skill.slug ||
+  //       char.skill_tree.some(x => x.skill0 === skill.slug || x.skill1 === skill.slug)
+  //     )))
+  //   }
+  // }
 
   if (skill) {
     const skillRange = `${skill.range_1}-${skill.range_2}${(skill.range_3)?(`-${skill.range_3}`):("")}${(skill.range_detail)?(`-${skill.range_detail.replace("+","%2B")}`):("")}`
 
     return (
-      <div className='skill-list-item'>
+      <div className={`skill-list-item ${w100&&("w-100")}`}>
         <div className={`skill-detail-bg `}>
           <div className={`skill-detail-div `}>
             <div className='d-flex justify-content-between'>
@@ -117,7 +124,10 @@ function SkillListItem({skill, blueEffects, chars}) {
             )}
             
 
-            <div className='skill-chars' onClick={showSkillChars}>⬇ Character That Can Learn This Skill ⬇</div>
+            <div className='skill-chars mt-2' 
+            // onClick={showSkillChars}
+            >Characters That Can Learn This Skill
+            </div>
             <div className="d-flex flex-wrap">
               {filteredChars&&(filteredChars.map(char => (
                 <CharFace char={char} />

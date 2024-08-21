@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Row,Col, Container, Image, Button} from 'react-bootstrap';
+import React, {useState, useEffect, useRef} from 'react';
+import {Row,Col, Container, Image, Form} from 'react-bootstrap';
 import { doc, onSnapshot, query, collection, where} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
@@ -10,25 +10,25 @@ import CharTrait from './CharTrait';
 import CharSkill from './CharSkill';
 import SkillTreeLV from './SkillTreeLV';
 import CharsListItemRow from './CharsListItemRow';
+import SkillTreeNew from './SkillTreeNew';
+import GetActiveSkill from './GetActiveSkill';
+import GetGearItem from '../Gear/GetGearItem';
+import GetTarotItem from '../Gear/GetTarotItem';
 
 function CharPage() {
   const id = useParams().id
   const [char, setChar] = useState([])
   const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
+  const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_awaken.gif?alt=media`
+  const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.gif?alt=media`
   const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
   const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
+  const windowWidth = useRef(window.innerWidth);
 
   const [skillRec, setSkillRec] = useState(false)
+  const [activeSkill, setActiveSkill] = useState()
+  const [skillTreeView, setSkillTreeView] = useState(false)
 
-  function compare( a, b ) {
-    if ( a.id < b.id ){
-      return -1;
-    }
-    if ( a.id > b.id ){
-      return 1;
-    }
-    return 0;
-  }
   const [chars, setChars] = useState([])
   const [blueEffects, setBlueEffects] = useState([])
 
@@ -39,6 +39,9 @@ function CharPage() {
     onSnapshot(query(collection(db, `games/soc/effect_tags`), where("color","==","blue")), (snapshot) => {
       setBlueEffects(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
+    if (windowWidth.current < 768) {
+      setSkillTreeView(true)
+    }
   }, [])
 
   useEffect(() => {
@@ -47,7 +50,13 @@ function CharPage() {
     });
   }, [id]);
 
-
+  useEffect(() => {
+    if (char.skill_tree) {
+      setActiveSkill(char.skill_tree[0].skill0)
+    }
+  }, [char]);
+  console.log(char.weapon_rec)
+  
   if (char) {
     return (
       <Container className='char-container py-2'>
@@ -97,7 +106,7 @@ function CharPage() {
                     <Col md={6} >
                       <div className='d-flex justify-content-center flex-wrap'>
                         {char.base_stats&&(char.base_stats.map(stat => (
-                          <StatsItem stat={stat} base={true} />
+                          <StatsItem stat={stat} chars={chars} />
                         )))}
                       </div>
                     </Col>
@@ -142,30 +151,109 @@ function CharPage() {
               SKILL TREE
             </div>
 
-            <div className='d-flex justify-content-center m-1'>
-              <Button onClick={() => setSkillRec(!skillRec)} 
-              className={`show-rec-btn ${skillRec&&("show-rec-btn-active")}`}>
-                Show Skill Recomendations
-              </Button>
+            <div className='d-flex justify-content-around flex-wrap m-1 bg-lighter'>
+              <Form.Check // prettier-ignore
+                type="switch"
+                id="custom-switch"
+                label="Show Skill Recomendations"
+                onClick={() => setSkillRec(!skillRec)}
+              />
+              <Form.Check // prettier-ignore
+                type="switch"
+                id="custom-switch"
+                label="Show All Skills Effect"
+                onClick={() => setSkillTreeView(!skillTreeView)}
+                className='d-none d-md-clock d-lg-block'
+              />
             </div>
-
-            {char.skill_tree_label1&&(
-              <div className='d-none d-md-block'>
-                <div className='d-flex w-100 text-center'>
-                  <div className='skilltree-label skilltree-label-left'>
-                    {char.skill_tree_label1}
+            
+            {!skillTreeView?(
+              <Row>
+                <Col md={6}>
+                  {char.skill_tree_label1&&(
+                    <div className='d-none d-md-block'>
+                      <div className='d-flex w-100 text-center'>
+                        <div className='skilltree-label skilltree-label-left'>
+                          {char.skill_tree_label1}
+                        </div>
+                        <div className='skilltree-label skilltree-label-right'>
+                          {char.skill_tree_label2}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {char.skill_tree&&(char.skill_tree.map((lv, index) => (
+                    <SkillTreeNew blueEffects={blueEffects} skillRec={skillRec} setActiveSkill={setActiveSkill} activeSkill={activeSkill}
+                    lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
+                    // <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
+                  )))}
+                </Col>
+                <Col md={6}>
+                  {activeSkill&&(
+                    <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} />
+                  )}
+                </Col>
+              </Row>
+            ):(
+              <>  
+                {char.skill_tree_label1&&(
+                  <div className='d-none d-md-block'>
+                    <div className='d-flex w-100 text-center'>
+                      <div className='skilltree-label skilltree-label-left'>
+                        {char.skill_tree_label1}
+                      </div>
+                      <div className='skilltree-label skilltree-label-right'>
+                        {char.skill_tree_label2}
+                      </div>
+                    </div>
                   </div>
-                  <div className='skilltree-label skilltree-label-right'>
-                    {char.skill_tree_label2}
-                  </div>
-                </div>
-              </div>
+                )}
+                {char.skill_tree&&(char.skill_tree.map((lv, index) => (
+                  <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
+                )))}
+              </>
             )}
 
-            {char.skill_tree&&(char.skill_tree.map((lv, index) => (
-              <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
-            )))}
-            
+            {char.weapon_rec&&(
+              <>
+                <div className='black-label-div mt-2'>
+                  GEAR RECOMENDATIONS
+                </div>
+                <Row className='custom-row'>
+                  <Col md={4}>
+                    <div className='skill-detail-bg trait-title text-center '>Weapon</div>
+                    {char.weapon_rec.map(rec => (
+                      <GetGearItem id={rec} />
+                    ))}
+                  </Col>
+                  <Col md={4}>
+                    <div className='skill-detail-bg trait-title text-center '>Trinket</div>
+                    {char.armor_rec.map(rec => (
+                      <GetGearItem id={rec} />
+                    ))}
+                  </Col>
+                  <Col md={4}>
+                    <div className='skill-detail-bg trait-title text-center '>Tarot</div>
+                    {char.tarot_rec.map(rec => (
+                      <GetTarotItem id={rec} />
+                    ))}
+                  </Col>
+                </Row>
+              </>
+            )}
+
+            <div className='black-label-div mt-2'>
+              ART
+            </div>
+
+            <div className='ligter-bg'>
+              {char.rarity==="Legendary"&&(
+                <div>
+                  <Image src={awaken} />
+                </div>
+              )}
+            </div>
+
           </Col>
         </Row>
       </Container>

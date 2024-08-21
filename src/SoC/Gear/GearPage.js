@@ -70,14 +70,12 @@ function GearPage() {
                   <EffectTxt text={gear.skill}/>
                 </div>
 
-                {gear.desc&&(
-                  <div className='gear-desc mt-2'>
-                    Description
-                    <div className='mx-2 text-center bg-lighter'>
-                      {gear.desc}
-                    </div>
+                <div className='gear-desc mt-2'>
+                  Description
+                  <div className='mx-2 text-center bg-lighter'>
+                    {gear.desc}
                   </div>
-                )}
+                </div>
 
                 <div className='mt-2'>
                   Source
@@ -88,7 +86,7 @@ function GearPage() {
               </div>
             </div>
             
-            {gear.type!="Armor"&&(
+            {gear.type!=="Armor"&&(
               <>
                 <div className='black-label-div mt-2'>
                   Werable Characters

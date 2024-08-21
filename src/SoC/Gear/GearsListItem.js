@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import { Image } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import { Link } from 'react-router-dom';
@@ -17,8 +17,10 @@ function GearsListItem({gear, sideMenu}) {
 
             <div className='d-flex justify-content-between'>
               <div className='skill-category-div'>
-                <span className={`skill-category`}
-                >{gear.type}</span>
+                <span className={`skill-category`} 
+                onClick={() =>  navigator.clipboard.writeText(gear.img)}>
+                  {gear.type}
+                </span>
               </div>
             </div>
             <Link className="gear-title" to={`/gears/${gear.img}`}>
@@ -26,7 +28,7 @@ function GearsListItem({gear, sideMenu}) {
                 <div className='trait-title d-flex align-items-center'>
                   <div class="trait-img-container m-1">
                     <Image src={bg} alt='bg' className="trait-img background" />
-                    <Image src={gear_img} alt='gear_img'  className="trait-img foreground" />
+                    <Image src={gear_img} alt='gear_img'  className="gear-list-img foreground" />
                     <Image src={border} alt='border'  className="trait-img char-face-border" />
                   </div>
                   <b className='trait-title-txt gear-title'>
@@ -36,7 +38,7 @@ function GearsListItem({gear, sideMenu}) {
                 </div>
               </div>
             </Link>
-            <div className='mx-2 text-center'>
+            <div className='mx-2 text-center mb-2'>
               <EffectTxt text={gear.skill}/>
             </div>
 

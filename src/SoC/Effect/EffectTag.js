@@ -5,7 +5,6 @@ import slugify from 'react-slugify';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 const EffectTag = ({ value }) => {
-  console.log(value)
   const [effectTag, setEffectTag] = useState()
   useEffect(() => {
     onSnapshot(doc(db, "games/soc/effect_tags/", slugify(value)), (doc) => {

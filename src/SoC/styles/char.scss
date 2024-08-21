@@ -156,6 +156,9 @@
   padding-left: 0.5rem;
   padding-right: 0.25rem;
   margin-right: 0.5rem;
+  @media only screen and (max-width: $md) {
+    margin-right: 0.2rem;
+  }
 }
 
 .stat-icon {
@@ -201,6 +204,31 @@
   border-radius: 0.25rem;
 }
 
+.skill-detail-div_new {
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.new-skill-tree-1 {
+  background-image: linear-gradient(to right, rgba(255,0,0,0), $light);
+  transition: 1s;
+}
+.new-skill-tree-2 {
+  background-image: linear-gradient(to left, rgba(255,0,0,0), $light);
+  transition: 1s;
+}
+
+.new-skill-tree-1:hover, .new-skill-tree-1-active {
+  background-image: linear-gradient(to right, rgba(255,0,0,0), $lighter);
+  transition: 1s;
+}
+.new-skill-tree-2:hover, .new-skill-tree-2-active {
+  background-image: linear-gradient(to left, rgba(255,0,0,0), $lighter);
+  transition: 1s;
+}
+
+
 .skill-detail-rec {
   border: 1px solid $highlight!important;
 }
@@ -208,6 +236,18 @@
 .role-img {
   width: 2rem;
   height: 2rem;
+}
+
+.stat-placement {
+  color: $highlight;
+  font-size: 0.8rem;
+  text-align: end;
+  margin-right: 0.5rem;
+  font-family: "PT Serif", serif;
+  @media only screen and (max-width: $md) {
+    margin-right: 0.25rem;
+    font-size: 0.7rem;
+  }
 }
 
 .stat-value-txt {
@@ -218,6 +258,13 @@
   font-family: "PT Serif", serif;
   font-size: 1rem;
 }
+
+.new-trait-img-container {
+  position: relative;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
 
 .trait-img-container {
   position: absolute;
@@ -260,6 +307,25 @@
   font-style: italic;
   font-weight: bold;
   font-size: 1.3rem;
+}
+
+.tarot-title-txt {
+  margin-left: 4.25rem;
+  text-shadow: 5px 5px 5px rgba($black-bg, 0.7);
+  font-family: "PT Sans", sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.trait-title-txt_new {
+  text-shadow: 5px 5px 5px rgba($black-bg, 0.7);
+  font-family: "PT Sans", sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .skilltree-title-txt {
@@ -379,12 +445,50 @@
   } 
 }
 
+.tree-rank_new {
+  width:40px;
+  height:40px;
+  position: relative;
+  display: inline-block;
+  z-index: 2!important;
+  margin: 1.5rem 1rem;
+  @media only screen and (max-width: $md) {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    margin-left: -0.25rem;
+  } 
+}
+
 .tree-rank:before {
   position: absolute;
   display: block;
   content: "";
   width:50px;
   height:50px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
+  background-color: #e3dacf;
+  border: 0.25rem solid #6284a8;
+  border-radius: 0.5rem;
+  @media only screen and (max-width: $md) {
+    width: 40px;
+    height: 40px;
+    border: 0.20rem solid #6284a8;
+  } 
+}
+
+.tree-rank_new:before {
+  position: absolute;
+  display: block;
+  content: "";
+  width:40px;
+  height:40px;
   left: 0;
   top: 0;
   right: 0;
@@ -418,6 +522,12 @@
   } 
 }
 
+.tree-rank__txt_new {
+  font-size: 1rem;
+  line-height: 40px;
+  margin-left: 0.15rem;
+}
+
 .skilltree-label {
   font-size: 1.3rem;
   font-family: "PT Serif", serif;
@@ -440,21 +550,25 @@
 }
 
 
-
 .tree-rank__vl {
   border-left: 3px solid #dacfb4;
-  height: 600px;
+  height: 550px;
   position: absolute;
   top: -80%;
   left: 48%;
   z-index: -1!important;
-  // -webkit-box-shadow:0px 0px 13px 1px rgba($highlight, 0.3);
-  // -moz-box-shadow: 0px 0px 13px 1px rgba($highlight, 0.3);
-  // box-shadow: 0px 0px 13px 1px rgba($highlight, 0.3);
+}
+
+.tree-rank__vl_new {
+  height: 150px;
 }
 
 .tree-rank__vl-last {
   height: 250px!important;
+}
+
+.tree-rank__vl-last_new {
+  height: 100px!important;
 }
 
 .show-rec-btn {

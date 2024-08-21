@@ -1,8 +1,28 @@
 import React from 'react';
 import { Image } from 'react-bootstrap';
 
-function StatsItem({stat}) {
-  // const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
+function StatsItem({stat, chars}) {
+  
+  function getStatPlacement(currentStatValue, statLabel) {
+    const allStatValues = chars
+      .map((char) => char.base_stats.find((stat) => stat.label === statLabel)?.value)
+      .filter((value) => value !== undefined);
+  
+    allStatValues.sort((a, b) => b - a);
+  
+    // Encontrar a colocação do valor atual
+    const placement = allStatValues.indexOf(currentStatValue) + 1;
+    
+    if (placement === 1) {
+      return '1st'
+    } else if (placement === 2) {
+      return '2nd'
+    } else if (placement === 3) {
+      return '3rd'
+    } else {
+      return `${placement}th`
+    }
+  }
   
   if (stat) {
     return (
@@ -12,6 +32,16 @@ function StatsItem({stat}) {
             <Image className='stat-icon' src={require(`../assets/img/stat_${stat.label.replace(".","").replace(" ","_")}.png`)} />
           </div>
           {stat.value}
+          <div className='w-100 d-flex justify-content-end'>
+            <b className='stat-placement'>
+              {chars&&(
+                <>
+                  {getStatPlacement(stat.value, stat.label)}
+                  /{chars.length}
+                </>
+              )}
+            </b>
+          </div>
         </div>
       </div>
     );
