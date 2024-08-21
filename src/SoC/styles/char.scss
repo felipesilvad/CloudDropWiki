@@ -673,3 +673,25 @@
 .art-img {
   width: -webkit-fill-available;
 }
+.art-img-full {
+  width: auto;
+  max-height: 30rem;
+}
+.char-bio {
+  background-color: $bege;
+  color: $txt;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+
+}
+
+.char-bio-txt {
+  text-align: justify;
+}
+
+.pixel-bio {
+  float: left;
+  margin: 0;
+  width: 8rem;
+  height: auto;
+}

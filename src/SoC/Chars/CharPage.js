@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Row,Col, Container, Image, Form} from 'react-bootstrap';
+import {Row,Col, Container, Image, Form,Tab , Tabs} from 'react-bootstrap';
 import { doc, onSnapshot, query, collection, where} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
@@ -75,7 +75,7 @@ function CharPage() {
               <Col xs={3}>
                 {char.rarity&&(
                   <div className='profile-img-div' style={{
-                    backgroundImage: "url(" + require(`../assets/img/recruit_bg_${char.rarity}.png`) + ")"
+                    backgroundImage: "url(" + require(`../assets/img/unit_bg_${char.rarity}.png`) + ")"
                   }}>
                     <Image className='profile-img' src={profile} />
                   </div>
@@ -85,15 +85,18 @@ function CharPage() {
               <Col xs={9}>
                 <div className='char-detail-bg'>
 
-                  <div className='d-flex justify-content-between pb-1 align-items-center char-name-div'>
-                    <div className='d-flex align-items-center'>
-                      <Image className='role-img mx-1' src={role} />
-                      <h2 className='mt-1 char-name'>{char.name}</h2>
-                    </div>
-                    <div className='d-flex justify-content-start flex-wrap'>
-                      {char.factions&&(char.factions.map(faction => (
-                        <FactionImage slug={faction} />
-                      )))}
+                  <div className='char-name-div'>
+                    <div  
+                    className='char-name-bg-img d-flex justify-content-between pb-1 align-items-center'>
+                      <div className='d-flex align-items-center'>
+                        <Image className='role-img mx-1' src={role} />
+                        <h2 className='mt-1 char-name'>{char.name}</h2>
+                      </div>
+                      <div className='d-flex justify-content-start flex-wrap'>
+                        {char.factions&&(char.factions.map(faction => (
+                          <FactionImage slug={faction} />
+                        )))}
+                      </div>
                     </div>
                   </div>
 
@@ -214,6 +217,19 @@ function CharPage() {
               </>
             )}
 
+            {char.other_skills&&(
+              <>
+                <div className='black-label-div mt-2'>
+                  OTHER SKILLS
+                </div>
+                <div className='d-flex'>
+                  {char.other_skills.map(skill=>(
+                    <GetActiveSkill slug={skill} blueEffects={blueEffects} chars={chars} />
+                  ))}
+                </div>
+              </>
+            )}
+
             {char.weapon_rec&&(
               <>
                 <div className='black-label-div mt-2'>
@@ -246,19 +262,45 @@ function CharPage() {
               ART
             </div>
 
+            
+
             <div className='ligter-bg'>
               <Row>
-                <Col md={8}>
-                  {char.rarity==="Legendary"&&(
+                <Col md={8} >
+                  <Tabs
+                    defaultActiveKey={char.rarity==="Legendary"?('awaken'):('main')}
+                    id="uncontrolled-tab-example"
+                    className='bg-lighter'
+                  > 
+                    {char.rarity==="Legendary"&&(
+                      <Tab eventKey="awaken" title="Awaken">
+                        <div className='art-img-div'>
+                          <Image className='art-img' src={awaken} />
+                        </div>
+                      </Tab>
+                    )}
+                    <Tab eventKey="main" title="Main Art">
+                      <div className='d-flex justify-content-center'>
+                        <Image className='art-img-full' src={full} />
+                      </div>
+                    </Tab>
+                  </Tabs>
+                  {/* {char.rarity==="Legendary"&&(
                     <div className='d-flex'>
                       <Image className='art-img' src={awaken} />
                     </div>
-                  )}
+                  )} */}
                 </Col>
                 <Col>
-                  <div>
-                    {char.biography}
-                  </div>
+                  {char.biography?(  
+                    <div className='char-bio'>
+                      <h3 className='mx-2'>Biography</h3>
+                      <img src={sprite} alt="Description" class="pixel-bio"/>
+                      <p className='char-bio-txt' dangerouslySetInnerHTML={{__html: char.biography}}></p>
+                    </div>
+                  ):(
+                    <img src={sprite} alt="Description" class="pixel-bio"/>
+                  )}
                 </Col>
               </Row>
               

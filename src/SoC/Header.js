@@ -2,9 +2,9 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import { Image } from 'react-bootstrap';
 function HeaderComponent() {
-
+  const char_img = require('./assets/img/menu_chars.png')
   return (
     <Navbar className='navbar-dark' bg="dark" expand="lg" fixed="top">
       <Container className='container'>
@@ -12,7 +12,7 @@ function HeaderComponent() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/chars" >Characters</Nav.Link>
+            <Nav.Link href="/chars" ><Image src={char_img} /> Characters</Nav.Link>
             <NavDropdown
               id="nav-dropdown-dark-example"
               title="Skills"
