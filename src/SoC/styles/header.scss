@@ -9,6 +9,60 @@
   background-color: none!important;
 }
 
-// .menu-icon {
-//   width: ;
-// }
+.nav-link-container {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.menu-navbar{
+  padding: 0!important;
+}
+
+.menu-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  background-color: $menu-blue;
+  border-radius: 2rem;
+  padding: 0.25rem;
+  border: 2px solid $menu-bege;
+  top: 0.45rem;
+  z-index: 1;
+  @media only screen and (max-width: $lg) {
+    top: auto;
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.header-nav {
+  background-color: #424755;
+}
+
+.nav-link {
+  padding: 0.25rem 0.25rem!important;
+  margin: 0.5rem 0.25rem!important;
+  font-size: 1.1rem!important;
+}
+
+.header-link {
+  padding: 0.15rem 0.5rem!important;
+  padding-left: 2.75rem!important;
+  border-radius: 0.5rem!important;
+  transition: 100ms;
+}
+.header-link-home {
+  padding-left: 0.5rem!important;
+  @media only screen and (max-width: $lg) {
+    padding-left: 2.75rem!important;
+  }
+}
+.header-link:hover, .header-link-active {
+  background-color: $menu-blue!important;
+  transition: 100ms;
+}
+
+.dropdown-toggle {
+  margin: 0!important;
+  padding: 0!important;
+  color: white!important;
+}
