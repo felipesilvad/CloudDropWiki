@@ -205,32 +205,34 @@
 }
 
 .skill-detail-div_new {
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: 1s;
+  transition: 500ms;
+  border: 2px solid rgba($color: #000000, $alpha: 0);
+  margin: 0.1rem 0;
 }
 
 .new-skill-tree-1 {
   background-image: linear-gradient(to right, rgba(255,0,0,0), $light);
-  transition: 1s;
+  transition: 500ms;
 }
 .new-skill-tree-2 {
   background-image: linear-gradient(to left, rgba(255,0,0,0), $light);
-  transition: 1s;
+  transition: 500ms;
 }
 
 .new-skill-tree-1:hover, .new-skill-tree-1-active {
   background-image: linear-gradient(to right, rgba(255,0,0,0), $lighter);
-  transition: 1s;
+  transition: 500ms;
 }
 .new-skill-tree-2:hover, .new-skill-tree-2-active {
   background-image: linear-gradient(to left, rgba(255,0,0,0), $lighter);
-  transition: 1s;
+  transition: 500ms;
 }
 
 
 .skill-detail-rec {
-  border: 1px solid $highlight!important;
+  border: 2px solid $highlight!important;
 }
 
 .role-img {

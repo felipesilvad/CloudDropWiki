@@ -217,7 +217,7 @@ function CharPage() {
               </>
             )}
 
-            {char.other_skills&&(
+            {char.other_skills&&char.other_skills.length>0&&(
               <>
                 <div className='black-label-div mt-2'>
                   OTHER SKILLS

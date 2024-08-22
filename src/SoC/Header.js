@@ -3,6 +3,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
+import { FaSearch } from "react-icons/fa";
+
+
 function HeaderComponent() {
   const char_img = require('./assets/img/menu_chars.png')
   const skills_img = require('./assets/img/menu_skills.png')
@@ -15,12 +18,12 @@ function HeaderComponent() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto menu-nav">
-            <Nav.Link className='nav-link' href="/">
+            <Nav.Link className='nav-link nl-border' href="/">
               <div className='header-link header-link-home'>
                 Home
               </div>
             </Nav.Link>
-            <Nav.Link className='nav-link ' href="/chars" >
+            <Nav.Link className='nav-link nl-border' href="/chars" >
               <div className='menu-icon-container'>
                 <Image className='menu-icon' src={char_img} />
               </div>
@@ -28,7 +31,7 @@ function HeaderComponent() {
                 Characters
               </div>
             </Nav.Link>
-            <div className='nav-link'>
+            <div className='nav-link nl-border'>
               <div className='menu-icon-container'>
                 <Image className='menu-icon' src={skills_img} />
               </div>
@@ -43,7 +46,7 @@ function HeaderComponent() {
                 <NavDropdown.Item href="/effects" >Effects</NavDropdown.Item>
               </NavDropdown>
             </div>
-            <Nav.Link className='nav-link' href="/gears" >
+            <Nav.Link className='nav-link nl-border' href="/gears" >
               <div className='menu-icon-container'>
                 <Image className='menu-icon' src={gear_img} />
               </div>
@@ -51,7 +54,7 @@ function HeaderComponent() {
                 Gears
               </div>
             </Nav.Link>
-            <Nav.Link className='nav-link' href="/tarots" >
+            <Nav.Link className='nav-link nl-border' href="/tarots" >
               <div className='menu-icon-container'>
                 <Image className='menu-icon' src={tarot_img} />
               </div>
@@ -59,7 +62,7 @@ function HeaderComponent() {
                 Tarots
               </div>
             </Nav.Link>
-            <Nav.Link className='nav-link' href="/events" >
+            <Nav.Link className='nav-link nl-border' href="/events" >
               <div className='menu-icon-container'>
                 <Image className='menu-icon' src={event_img} />
               </div>
@@ -69,6 +72,14 @@ function HeaderComponent() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <div class="search-box">
+          <form name="search-box">
+            <input type="text" class="search-input" name="txt" onmouseout="this.value = ''; this.blur();"/>
+          </form>
+          <FaSearch />
+
+        </div>
+
       </Container>
     </Navbar>
   );

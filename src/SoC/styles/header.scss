@@ -18,14 +18,14 @@
 }
 
 .menu-icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.3rem;
+  height: 2.3rem;
   position: absolute;
   background-color: $menu-blue;
   border-radius: 2rem;
   padding: 0.25rem;
   border: 2px solid $menu-bege;
-  top: 0.45rem;
+  top: 0.5rem;
   z-index: 1;
   @media only screen and (max-width: $lg) {
     top: auto;
@@ -42,6 +42,10 @@
   padding: 0.25rem 0.25rem!important;
   margin: 0.5rem 0.25rem!important;
   font-size: 1.1rem!important;
+}
+
+.nl-border {
+  border-right: 1px solid $lighter!important;
 }
 
 .header-link {
@@ -65,4 +69,40 @@
   margin: 0!important;
   padding: 0!important;
   color: white!important;
+}
+
+.search-box{
+  position: relative;
+}
+
+.search-input {
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  background: $menu-blue;
+  border: 3px solid $menu-bege;
+  border-radius: 50px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  color: white;
+  outline: none;
+  transition: .5s;
+}
+.search-box:hover input{
+  width: 350px;
+  background: #3b3640;
+  border-radius: 10px;
+}
+.search-box i{
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translate(-50%,-50%);
+  font-size: 1rem;
+  color: white;
+  transition: .2s;
+}
+.search-box:hover i{
+  opacity: 0;
+  z-index: -1;
 }
