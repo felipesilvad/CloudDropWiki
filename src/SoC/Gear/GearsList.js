@@ -8,6 +8,7 @@ import Select from 'react-select';
 function GearsList() {
   const [gears, setGears] = useState([])
   const [selectedWeaponType, setSelectedWeaponType] = useState('any');
+  const [selectedRarity, setSelectedRarity] = useState('any');
 
   useEffect (() => {
     onSnapshot(query(collection(db, `/games/soc/gears`)), (snapshot) => {
@@ -16,6 +17,7 @@ function GearsList() {
   }, [])
 
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
+  const rarityOptions = [{value:'Legendary', label: 'Legendary'}, {value:'Epic', label: 'Epic'}, {value:'Rare', label: 'Rare'}, {value:'Common', label: 'Common'}];
 
   const gearTypes = useMemo(() => {
     const types = gears.map(gear => gear.type);
@@ -25,6 +27,7 @@ function GearsList() {
 
   const filteredGears = gears
     .filter(gear => selectedWeaponType==="any" || !selectedWeaponType || selectedWeaponType === gear.type)
+    .filter(gear => selectedRarity==="any" || !selectedRarity || selectedRarity === gear.rarity)
 
   return (
     <Container className='new-container'>
@@ -35,6 +38,16 @@ function GearsList() {
             <Select
               options={gearTypes}
               onChange={selectedOption => setSelectedWeaponType(selectedOption.value)}
+              placeholder="Select skill types..."
+              menuPortalTarget={document.body} 
+              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+            />
+          </Col>
+          <Col>
+            <label>Filter Rarity</label>
+            <Select
+              options={rarityOptions}
+              onChange={selectedOption => setSelectedRarity(selectedOption.value)}
               placeholder="Select skill types..."
               menuPortalTarget={document.body} 
               styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}

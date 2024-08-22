@@ -29,7 +29,11 @@
   opacity: 0.9;
   font-size: 0.85rem;
 }
+
 .event-item-time-over {
+  color: gray;
+}
+.event-item-time-ending {
   color: $physical;
 }
 

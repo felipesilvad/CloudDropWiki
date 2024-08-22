@@ -41,7 +41,7 @@ function EventItem({event, side}) {
           </div>
           <div className="text-end negative-margin">
             {(timeRemaining.days===0&&timeRemaining.hours>0)?(
-              <span className="event-item-time event-item-time-over mx-2">
+              <span className="event-item-time event-item-time-ending mx-2">
                 {timeRemaining.hours}H left
               </span>
             ):(

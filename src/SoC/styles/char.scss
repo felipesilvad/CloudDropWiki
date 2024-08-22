@@ -420,18 +420,23 @@
   }
 }
 .skilltree-div{
+  flex-wrap: nowrap;
+}
+.skilltree-div-mobile {
   flex-wrap: wrap;
   @media only screen and (min-width: $md) {
     flex-wrap: nowrap;
   }
 }
 .skilltree-skill {
+  width: 48%;
+}
+.skilltree-skill-mobile {
   width: 100%;
   @media only screen and (min-width: $md) {
     width: 48%;
   }
 }
-
 .tree-rank {
   width:50px;
   height:50px;
@@ -455,10 +460,9 @@
   z-index: 2!important;
   margin: 1.5rem 1rem;
   @media only screen and (max-width: $md) {
-    width: 40px;
-    height: 40px;
-    margin: 0;
-    margin-left: -0.25rem;
+    width: 30px;
+    height: 30px;
+    margin: 1.5rem 1rem;
   } 
 }
 
@@ -505,6 +509,7 @@
     width: 40px;
     height: 40px;
     border: 0.20rem solid #6284a8;
+    margin-left: -0.2rem;
   } 
 }
 
@@ -520,7 +525,7 @@
   @media only screen and (max-width: $md) {
     font-size: 1rem;
     line-height: 40px;
-    margin-left: 0.15rem;
+    margin-right: 0.15rem;
   } 
 }
 
@@ -528,6 +533,11 @@
   font-size: 1rem;
   line-height: 40px;
   margin-left: 0.15rem;
+  @media only screen and (max-width: $md) {
+    font-size: 1rem;
+    line-height: 40px;
+    margin-left: 0;
+  } 
 }
 
 .skilltree-label {
@@ -696,4 +706,38 @@
   margin: 0;
   width: 8rem;
   height: auto;
+}
+
+.skill-modal {
+  background-color: $light!important;
+  color: white!important;
+  border-color:  $light!important;
+}
+
+.modal-content, .modal-dialog {
+  background-color: $light!important;
+  border: none!important;
+  padding: 0!important;
+  border-color:  $light!important;
+  color: white!important;
+}
+
+.btn-close {
+  --bs-btn-close-color: white!important;
+}
+
+.art-nav {
+  color: white!important;
+}
+
+.art-bg {
+  background-color: $light;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+}
+
+.art-active {
+  background-color: $lighter;
 }

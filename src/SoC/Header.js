@@ -1,10 +1,10 @@
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
-import { FaSearch } from "react-icons/fa";
-
+// import SearchBar from './Search/SearchBar';
 
 function HeaderComponent() {
   const char_img = require('./assets/img/menu_chars.png')
@@ -12,6 +12,7 @@ function HeaderComponent() {
   const event_img = require('./assets/img/menu_events.png')
   const gear_img = require('./assets/img/menu_gears.png')
   const tarot_img = require('./assets/img/menu_tarots.png')
+
   return (
     <Navbar className='navbar-dark menu-navbar' bg="dark" expand="lg" fixed="top">
       <Container className='container'>
@@ -72,13 +73,8 @@ function HeaderComponent() {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <div class="search-box">
-          <form name="search-box">
-            <input type="text" class="search-input" name="txt" onmouseout="this.value = ''; this.blur();"/>
-          </form>
-          <FaSearch />
-
-        </div>
+        
+        {/* <SearchBar /> */}
 
       </Container>
     </Navbar>

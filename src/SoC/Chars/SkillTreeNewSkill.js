@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 
-function SkillTreeNewSkill({slug, skillRec, side, setActiveSkill, activeSkill}) {
+function SkillTreeNewSkill({slug, skillRec, side, handleOnClickSkill, activeSkill}) {
 
   const [skill, setSkill] = useState()
   useEffect(() => {
@@ -16,7 +16,7 @@ function SkillTreeNewSkill({slug, skillRec, side, setActiveSkill, activeSkill}) 
   if (skill) {
 
     return (
-      <div onClick={() => setActiveSkill(slug)}>
+      <div onClick={() => handleOnClickSkill(slug)}>
         <div className={`
           skill-detail-div_new px-2
           ${(activeSkill===slug)&&((side===1)?('new-skill-tree-1-active'):('new-skill-tree-2-active'))}

@@ -13,6 +13,7 @@ import EffectsList from './SoC/Skills/EffectsList';
 import GearsList from './SoC/Gear/GearsList';
 import GearPage from './SoC/Gear/GearPage';
 import TarotsList from './SoC/Gear/TarotList';
+// import SearchPage from './SoC/Search/SearchPage';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path='/tarots' element={<TarotsList />} exact/>
         <Route path='/events' element={<EventsList />} exact/>
         <Route path='/events/:id' element={<EventPage />} exact/>
+        {/* <Route path="/search" element={<SearchPage />} /> */}
       </Routes>
     </div>
   );

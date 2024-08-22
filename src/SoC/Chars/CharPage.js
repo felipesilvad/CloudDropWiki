@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Row,Col, Container, Image, Form,Tab , Tabs} from 'react-bootstrap';
+import {Row,Col,Container,Image,Form,Tab,Tabs,Modal} from 'react-bootstrap';
 import { doc, onSnapshot, query, collection, where} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
@@ -32,6 +32,23 @@ function CharPage() {
   const [chars, setChars] = useState([])
   const [blueEffects, setBlueEffects] = useState([])
 
+  // FOR MOBILE ONLY MODAL
+  const [show, setShow] = useState(false);
+  const handleCloseModal = () => setShow(false);
+  const handleShowModal = () => setShow(true);
+
+  const handleOnClickSkill = (slug) => {
+    if (windowWidth.current < 768) {
+      setActiveSkill(slug)
+      handleShowModal(true)
+    } else {
+      setActiveSkill(slug)
+    }
+  }
+
+  const [art, setArt] = useState('');
+
+
   useEffect (() => {
     onSnapshot(query(collection(db, `games/soc/chars`)), (snapshot) => {
       setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
@@ -39,9 +56,6 @@ function CharPage() {
     onSnapshot(query(collection(db, `games/soc/effect_tags`), where("color","==","blue")), (snapshot) => {
       setBlueEffects(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
-    if (windowWidth.current < 768) {
-      setSkillTreeView(true)
-    }
   }, [])
 
   useEffect(() => {
@@ -54,8 +68,12 @@ function CharPage() {
     if (char.skill_tree) {
       setActiveSkill(char.skill_tree[0].skill0)
     }
+    if (char.rarity === "Legendary") {
+      setArt("Awaken")
+    } else {
+      setArt("Main")
+    }
   }, [char]);
-  console.log(char.weapon_rec)
   
   if (char) {
     return (
@@ -164,9 +182,8 @@ function CharPage() {
               <Form.Check // prettier-ignore
                 type="switch"
                 id="custom-switch"
-                label="Show All Skills Effect"
+                label="Show All Skills Effects"
                 onClick={() => setSkillTreeView(!skillTreeView)}
-                className='d-none d-md-clock d-lg-block'
               />
             </div>
             
@@ -174,7 +191,7 @@ function CharPage() {
               <Row>
                 <Col md={6}>
                   {char.skill_tree_label1&&(
-                    <div className='d-none d-md-block'>
+                    <div className=''>
                       <div className='d-flex w-100 text-center'>
                         <div className='skilltree-label skilltree-label-left'>
                           {char.skill_tree_label1}
@@ -186,12 +203,22 @@ function CharPage() {
                     </div>
                   )}
                   {char.skill_tree&&(char.skill_tree.map((lv, index) => (
-                    <SkillTreeNew blueEffects={blueEffects} skillRec={skillRec} setActiveSkill={setActiveSkill} activeSkill={activeSkill}
+                    <SkillTreeNew blueEffects={blueEffects} skillRec={skillRec} handleOnClickSkill={handleOnClickSkill} activeSkill={activeSkill}
                     lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
                     // <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
                   )))}
+                  
+                  {/* MOBILE ONLY MODAL */}
+                  <Modal show={show}  onHide={handleCloseModal}>
+                    <Modal.Header className='skill-modal' closeButton>
+                      
+                    </Modal.Header>
+                    <div>
+                      <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} />
+                    </div>
+                  </Modal>
                 </Col>
-                <Col md={6}>
+                <Col md={6} className='d-none d-md-clock d-lg-block'>
                   {activeSkill&&(
                     <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} />
                   )}
@@ -262,34 +289,28 @@ function CharPage() {
               ART
             </div>
 
-            
-
             <div className='ligter-bg'>
               <Row>
                 <Col md={8} >
-                  <Tabs
-                    defaultActiveKey={char.rarity==="Legendary"?('awaken'):('main')}
-                    id="uncontrolled-tab-example"
-                    className='bg-lighter'
-                  > 
+                  <div className='d-flex'>
                     {char.rarity==="Legendary"&&(
-                      <Tab eventKey="awaken" title="Awaken">
-                        <div className='art-img-div'>
-                          <Image className='art-img' src={awaken} />
-                        </div>
-                      </Tab>
+                      <div className={`art-bg mx-1 px-2 ardela ${(art==="Awaken")&&('art-active')}`}
+                       onClick={() => setArt("Awaken")}>Awaken</div>
                     )}
-                    <Tab eventKey="main" title="Main Art">
-                      <div className='d-flex justify-content-center'>
-                        <Image className='art-img-full' src={full} />
-                      </div>
-                    </Tab>
-                  </Tabs>
-                  {/* {char.rarity==="Legendary"&&(
-                    <div className='d-flex'>
+                    <div className={`art-bg mx-1 px-2 ardela ${(art==="Main")&&('art-active')}`}
+                     onClick={() => setArt("Main")}>Main Art</div>
+                  </div>
+                  
+                  {(art==="Awaken")&&(
+                    <div className='art-img-div'>
                       <Image className='art-img' src={awaken} />
                     </div>
-                  )} */}
+                  )}
+                  {(art==="Main")&&(
+                    <div className='d-flex justify-content-center'>
+                      <Image className='art-img-full' src={full} />
+                    </div>
+                  )}
                 </Col>
                 <Col>
                   {char.biography?(  

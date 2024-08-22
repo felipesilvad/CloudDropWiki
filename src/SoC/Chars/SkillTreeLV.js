@@ -14,9 +14,9 @@ function SkillTreeLV({lv,index,last, skillRec, blueEffects}) {
         </div>
 
         <div className='mobile-border'>
-          <div className='d-flex skilltree-div w-100'>
+          <div className='d-flex skilltree-div-mobile w-100'>
 
-            <div className='skilltree-skill'>
+            <div className='skilltree-skill-mobile'>
               <CharSkill blueEffects={blueEffects} slug={lv.skill0} skillRec={[skillRec, lv.rec,"1"]} />
             </div>
 
@@ -25,7 +25,7 @@ function SkillTreeLV({lv,index,last, skillRec, blueEffects}) {
               <b className='tree-rank__txt'>RK{lv.lv}</b>
             </div>
 
-            <div className='skilltree-skill'>
+            <div className='skilltree-skill-mobile'>
               <CharSkill blueEffects={blueEffects} slug={lv.skill1} skillRec={[skillRec, lv.rec,"2"]} />
             </div>
 
