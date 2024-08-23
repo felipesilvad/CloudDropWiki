@@ -6,12 +6,13 @@
 @import './skills';
 @import './gear';
 @import './header';
+@import './stages';
 
 .App {
   background-color: $dark;
   padding-top: 4rem;
   color: white;
-  min-height: 100vh;
+  min-height: 95vh;
   font-family: "Merriweather", serif;
   // padding-top: 3rem;
   // background-image: url("../assets/img/bg.jpg");
@@ -41,6 +42,13 @@ a {
 
 .custom-row {
   --bs-gutter-x: 0.5rem!important;
+}
+
+.w-33 {
+  width: 33%;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 }
 
 .new-container {

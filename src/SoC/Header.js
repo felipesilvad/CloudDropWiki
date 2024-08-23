@@ -12,7 +12,8 @@ function HeaderComponent() {
   const event_img = require('./assets/img/menu_events.png')
   const gear_img = require('./assets/img/menu_gears.png')
   const tarot_img = require('./assets/img/menu_tarots.png')
-
+  const stage_img = require('./assets/img/menu_stages.png')
+  
   return (
     <Navbar className='navbar-dark menu-navbar' bg="dark" expand="lg" fixed="top">
       <Container className='container'>
@@ -63,6 +64,21 @@ function HeaderComponent() {
                 Tarots
               </div>
             </Nav.Link>
+            <div className='nav-link nl-border'>
+              <div className='menu-icon-container'>
+                <Image className='menu-icon' src={stage_img} />
+              </div>
+              <NavDropdown
+                id="nav-dropdown-dark-example"
+                title="Voyage"
+                menuVariant="dark"
+                className='header-link'
+              >
+                <NavDropdown.Item href="/enemies" >Bosses</NavDropdown.Item>
+                <NavDropdown.Item href="" disabled >Puzzles</NavDropdown.Item>
+                <NavDropdown.Item href="" disabled >Items & Terrain</NavDropdown.Item>
+              </NavDropdown>
+            </div>
             <Nav.Link className='nav-link nl-border' href="/events" >
               <div className='menu-icon-container'>
                 <Image className='menu-icon' src={event_img} />

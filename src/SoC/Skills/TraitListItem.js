@@ -3,11 +3,11 @@ import { Image, Row, Col } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import CharsListItemRow from '../Chars/CharsListItemRow';
 
-function TraitListItem({trait,blueEffects, char}) {
+function TraitListItem({trait,blueEffects, char, boss}) {
 
   if (trait) {
     return (
-      <div className='trait-list-item'>
+      <div className={`trait-list-item ${boss&&("w-33")}`}>
         <div className='char-detail-bg m-1 px-2'>
           {char.length>0&&(
             <CharsListItemRow char={char[0]} />

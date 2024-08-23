@@ -14,26 +14,32 @@ import GearsList from './SoC/Gear/GearsList';
 import GearPage from './SoC/Gear/GearPage';
 import TarotsList from './SoC/Gear/TarotList';
 // import SearchPage from './SoC/Search/SearchPage';
+import EnemiesList from './SoC/Stages/EnemiesList';
+import FooterComponent from './SoC/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <HeaderComponent />
-      <Routes>
-        <Route path='/' element={<Home />} exact/>
-        <Route path='/chars' element={<CharsList />} exact/>
-        <Route path='/chars/:id' element={<CharPage />} exact/>
-        <Route path='/skills' element={<SkillsList />} exact/>
-        <Route path='/traits' element={<TraitsList />} exact/>
-        <Route path='/effects' element={<EffectsList />} exact/>
-        <Route path='/gears' element={<GearsList />} exact/>
-        <Route path='/gears/:id' element={<GearPage />} exact/>
-        <Route path='/tarots' element={<TarotsList />} exact/>
-        <Route path='/events' element={<EventsList />} exact/>
-        <Route path='/events/:id' element={<EventPage />} exact/>
-        {/* <Route path="/search" element={<SearchPage />} /> */}
-      </Routes>
-    </div>
+    <>
+      <div className="App">
+        <HeaderComponent />
+        <Routes>
+          <Route path='/' element={<Home />} exact/>
+          <Route path='/chars' element={<CharsList />} exact/>
+          <Route path='/chars/:id' element={<CharPage />} exact/>
+          <Route path='/skills' element={<SkillsList />} exact/>
+          <Route path='/traits' element={<TraitsList />} exact/>
+          <Route path='/effects' element={<EffectsList />} exact/>
+          <Route path='/gears' element={<GearsList />} exact/>
+          <Route path='/gears/:id' element={<GearPage />} exact/>
+          <Route path='/tarots' element={<TarotsList />} exact/>
+          <Route path='/events' element={<EventsList />} exact/>
+          <Route path='/events/:id' element={<EventPage />} exact/>
+          <Route path='/enemies' element={<EnemiesList />} exact/>
+          {/* <Route path="/search" element={<SearchPage />} /> */}
+        </Routes>
+      </div>
+      <FooterComponent />
+    </>
   );
 }
 

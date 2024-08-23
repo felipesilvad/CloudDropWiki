@@ -4,7 +4,7 @@ import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 import SkillListItem from '../Skills/SkillListItem';
 
-function GetActiveSkill({slug, blueEffects, chars}) {
+function GetActiveSkill({slug, blueEffects, chars, w100}) {
   const [skill, setSkill] = useState()
   useEffect(() => {
     onSnapshot(doc(db, "games/soc/skills/", slug), (doc) => {
@@ -14,7 +14,7 @@ function GetActiveSkill({slug, blueEffects, chars}) {
 
   if (skill) {
     return (
-      <SkillListItem skill={skill} blueEffects={blueEffects} chars={chars} w100={true} />
+      <SkillListItem skill={skill} blueEffects={blueEffects} chars={chars} w100={w100} />
     );
   }
 }

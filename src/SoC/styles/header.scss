@@ -97,3 +97,37 @@
   color: #f6f3d7;
   transition: .2s;
 }
+
+
+.footer {
+  background-color: $darker;
+  width: 100%;
+  position: relative;
+  clear: both;
+}
+
+.footer-img {
+  width: 3.5rem;
+}
+.footer-btn {
+  background-color: $menu-blue!important;
+  padding: 0.25rem 0.5rem!important;
+}
+
+.header-cool {
+  background-image: url('../assets/img/stage03.png');
+  background-size: cover;
+  height: 12rem;
+  background-position: center;
+  @media (max-width: 767px) {
+    height: 4rem;
+  }
+}
+
+.overlay-dark {
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  height: 12rem;
+  @media (max-width: 767px) {
+    height: 4rem;
+  }
+}

@@ -224,13 +224,13 @@ function CharPage() {
                       
                     </Modal.Header>
                     <div>
-                      <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} />
+                      <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} w100={true} />
                     </div>
                   </Modal>
                 </Col>
                 <Col md={6} className='d-none d-md-clock d-lg-block'>
                   {activeSkill&&(
-                    <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} />
+                    <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} w100={true} />
                   )}
                 </Col>
               </Row>
@@ -261,7 +261,7 @@ function CharPage() {
                 </div>
                 <div className='d-flex'>
                   {char.other_skills.map(skill=>(
-                    <GetActiveSkill slug={skill} blueEffects={blueEffects} chars={chars} />
+                    <GetActiveSkill slug={skill} blueEffects={blueEffects} chars={chars} w100={true} />
                   ))}
                 </div>
               </>
