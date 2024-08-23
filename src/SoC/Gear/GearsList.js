@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { query, collection, onSnapshot} from "firebase/firestore"; 
 import db from '../../firebase';
-import {Container,Form,Row,Col} from 'react-bootstrap';
+import {Helmet} from "react-helmet";
+import {Container,Row,Col} from 'react-bootstrap';
 import GearsListItem from './GearsListItem';
 import Select from 'react-select';
 
@@ -31,30 +32,32 @@ function GearsList() {
 
   return (
     <Container className='new-container'>
-      <div>
+      <Helmet>
+        <title>Gears List - SoC Wiki</title>
+        <meta name="description" content="Sword of Convallaria Equipments List, All Weapons, Armor, Trinkets." />
+      </Helmet>
       <Row>
-          <Col>
-            <label>Filter Gear Type</label>
-            <Select
-              options={gearTypes}
-              onChange={selectedOption => setSelectedWeaponType(selectedOption.value)}
-              placeholder="Select skill types..."
-              menuPortalTarget={document.body} 
-              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-            />
-          </Col>
-          <Col>
-            <label>Filter Rarity</label>
-            <Select
-              options={rarityOptions}
-              onChange={selectedOption => setSelectedRarity(selectedOption.value)}
-              placeholder="Select skill types..."
-              menuPortalTarget={document.body} 
-              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-            />
-          </Col>
-        </Row>
-      </div>
+        <Col>
+          <label>Filter Gear Type</label>
+          <Select
+            options={gearTypes}
+            onChange={selectedOption => setSelectedWeaponType(selectedOption.value)}
+            placeholder="Select skill types..."
+            menuPortalTarget={document.body} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+          />
+        </Col>
+        <Col>
+          <label>Filter Rarity</label>
+          <Select
+            options={rarityOptions}
+            onChange={selectedOption => setSelectedRarity(selectedOption.value)}
+            placeholder="Select skill types..."
+            menuPortalTarget={document.body} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+          />
+        </Col>
+      </Row>
       <div className='d-flex flex-wrap'>
         {filteredGears.sort((a, b) => {
           const rarityComparison = rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity);

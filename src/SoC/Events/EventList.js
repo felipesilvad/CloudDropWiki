@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { query, collection, onSnapshot, orderBy, limit} from "firebase/firestore"; 
 import db from '../../firebase';
+import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import EventItem from './EventItem';
 
@@ -14,6 +15,10 @@ function EventsList({side}) {
 
   return (
     <Container className='new-container'>
+      {/* <Helmet>
+        <title>Events List - SoC Wiki</title>
+        <meta name="description" content="Sword of Convallaria All Events and Summon Date Calendar" />
+      </Helmet> */}
       <div className='d-flex flex-wrap'>
         {events&&(events.map(event => (
           <EventItem event={event} side={side} />

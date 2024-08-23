@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { query, collection, onSnapshot, where} from "firebase/firestore"; 
 import db from '../../firebase';
+import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import TraitListItem from './TraitListItem';
 
@@ -27,6 +28,10 @@ function TraitsList() {
 
   return (
     <Container className='new-container'>
+      <Helmet>
+        <title>Traits List - SoC Wiki</title>
+        <meta name="description" content="Sword of Convallaria All Traits, Characters Unique Passive effects" />
+      </Helmet>
       {/* <div>
         <div className={`side-bar-filter`}>
           <Form.Control type="text"placeholder="Search"

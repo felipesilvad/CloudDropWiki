@@ -12,11 +12,12 @@
 }
 
 .tag-txt {
-  color: $tag;
+  color: $tag!important;
+  cursor: pointer;
 }
 
 .tag-txt-blue {
-  color: $tag-blue;
+  color: $tag-blue!important;
   cursor: pointer;
 }
 

@@ -3,6 +3,7 @@ import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 import slugify from 'react-slugify';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import EffectTxt from './EffectTxt';
 
 const EffectTag = ({ value }) => {
   const [effectTag, setEffectTag] = useState()
@@ -30,9 +31,11 @@ const EffectTag = ({ value }) => {
 
   const tooltip = (
     <Tooltip id="tooltip" className='effect-tag-tooltip'>
-      <div className='effect-tag-tooltip'>
-        {effectTag&&(effectTag.txt)}
-      </div>
+      {effectTag&&(
+        <div className='effect-tag-tooltip'>
+          <EffectTxt text={effectTag.txt} />
+        </div>
+      )}
     </Tooltip>
   );
   
@@ -41,13 +44,16 @@ const EffectTag = ({ value }) => {
     <span>
       <OverlayTrigger placement="top" overlay={tooltip}>
         <span>
-          [<span className={
-            effectTag&&(
-              (effectTag.color==="blue")?('tag-txt-blue'):('tag-txt')
-            )
+          [<a href={effectTag&&(effectTag.title&&(
+            effectTag.title==="Luxite Skill"
+            ?('#skills'):('')))}
+            className={
+              effectTag&&(
+                (effectTag.color==="blue")?('tag-txt-blue'):('tag-txt')
+              )
             }>
             {renderContent()}
-          </span>]
+          </a>]
         </span>
       </OverlayTrigger>
     </span>

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { doc, onSnapshot, where, query, collection, limit} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
+import {Helmet} from "react-helmet";
 import { Col, Container, Image,Row } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import CharFace from '../Chars/CharFace';
@@ -42,6 +43,12 @@ function GearPage() {
 
     return (
       <Container className='new-container'>
+        {gear&&(
+          <Helmet>
+            <title>{gear.title} - SoC Wiki</title>
+            <meta name="description" content={`Sword of Convallaria Gear Stat & Effects, Where to get ${gear.title} Equipment`} />
+          </Helmet>
+        )}
         <Row className='custom-row'>
           <Col md={9}>
             <div className={`skill-detail-bg mx-1 d-flex`}>

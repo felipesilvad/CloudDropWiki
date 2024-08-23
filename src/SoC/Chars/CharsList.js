@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { query, collection, onSnapshot, orderBy} from "firebase/firestore"; 
 import db from '../../firebase';
+import {Helmet} from "react-helmet";
 import {Container,Form, Overlay} from 'react-bootstrap';
 import CharsListItem from './CharsListItem';
 import CharsListItemRow from './CharsListItemRow';
@@ -86,6 +87,11 @@ function CharsList() {
   
   return (
     <Container className='new-container'>
+      <Helmet>
+        <title>Characters List - SoC Wiki</title>
+        <meta name="description" content="Sword of Convallaria Characters List, All Rarities: Epic, Rare, Common units" />
+      </Helmet>
+
       {/* MOBILE SIDEBAR */}
       <div className="sidebar">
           <div className='side-bar-filter text-center' ref={targetRarities} onClick={() => handleShowRarities()}>

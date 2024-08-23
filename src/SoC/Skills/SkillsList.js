@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { query, collection, onSnapshot, limit} from "firebase/firestore"; 
 import db from '../../firebase';
+import {Helmet} from "react-helmet";
 import {Container,Form,Row,Col} from 'react-bootstrap';
 import SkillListItem from './SkillListItem';
 import Select from 'react-select';
@@ -56,6 +57,10 @@ function SkillsList() {
 
   return (
     <Container className='new-container'>
+      <Helmet>
+        <title>Skills List - SoC Wiki</title>
+        <meta name="description" content="Sword of Convallaria All Skills Effects, Characters that Learn, Skill Tree" />
+      </Helmet>
       <div>
         <div className={`side-bar-filter`}>
           <Form.Control type="text"placeholder="Search"

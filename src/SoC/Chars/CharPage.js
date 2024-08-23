@@ -3,6 +3,7 @@ import {Row,Col,Container,Image,Form,Tab,Tabs,Modal} from 'react-bootstrap';
 import { doc, onSnapshot, query, collection, where} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
+import {Helmet} from "react-helmet";
 import StatsItem from './StatsItem';
 import StatsItemMove from './StatsItemMove';
 import FactionImage from './FactionImage';
@@ -73,11 +74,20 @@ function CharPage() {
     } else {
       setArt("Main")
     }
+    // if (char.name) {
+    //   document.title = char.name;
+    // }
   }, [char]);
   
   if (char) {
     return (
       <Container className='char-container py-2'>
+        {char.name&&(
+          <Helmet>
+            <title>{char.name} Stats and Build - SoC Wiki</title>
+            <meta name="description" content={`${char.name}Skills Recommendations and Priority, Recommended Gear, Tarots, Weapons, and Trinkets. Stats comparison and Trait Detail. - Sword of Convallaria Wiki Database`} />
+          </Helmet>
+        )}
         <Row className='custom-row'>
           <Col md={3} className='d-none d-md-block d-lg-block'>
             <div className='w-100  side-char-list'>
@@ -246,7 +256,7 @@ function CharPage() {
 
             {char.other_skills&&char.other_skills.length>0&&(
               <>
-                <div className='black-label-div mt-2'>
+                <div className='black-label-div mt-2' id='skills'>
                   OTHER SKILLS
                 </div>
                 <div className='d-flex'>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { query, collection, onSnapshot} from "firebase/firestore"; 
 import db from '../../firebase';
+import {Helmet} from "react-helmet";
 import {Container, Table} from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import EffectTagTitle from '../Effect/EffectTagTitle';
@@ -16,6 +17,10 @@ function EffectsList() {
 
   return (
     <Container className='new-container'>
+      <Helmet>
+        <title>Effects List - SoC Wiki</title>
+        <meta name="description" content="Sword of Convallaria All Skill Effects, Buff, Debuff explained" />
+      </Helmet>
       <div className='d-flex flex-wrap'>
         <Table striped bordered hover variant="dark">
           <tbody>

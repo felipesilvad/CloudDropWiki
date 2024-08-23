@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import { query, collection, onSnapshot, orderBy} from "firebase/firestore"; 
-import db from '../firebase';
+import React from 'react';
+import {Helmet} from "react-helmet";
 import Container from 'react-bootstrap/Container';
 import EventsList from './Events/EventList';
-import EventCalendar from './Events/EventCalendar';
 
 function Home() {
 
   return (
     <Container className='new-container mt-2'>
+      <Helmet>
+        <title>Sword of Convallaria Wiki</title>
+        <meta name="description" content="SoC Database, All Characters, Skills, Items, Stages, and Bosses Information." />
+      </Helmet>
       <div className='black-label-div'>
         Latest Events
       </div>
