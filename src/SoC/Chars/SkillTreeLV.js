@@ -1,6 +1,5 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import CharSkill from './CharSkill';
-import { Row, Col } from 'react-bootstrap';
 
 function SkillTreeLV({lv,index,last, skillRec, blueEffects}) {
   // const windowWidth = useRef(window.innerWidth);

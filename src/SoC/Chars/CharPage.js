@@ -49,7 +49,6 @@ function CharPage() {
 
   const [art, setArt] = useState('');
 
-
   useEffect (() => {
     onSnapshot(query(collection(db, `games/soc/chars`)), (snapshot) => {
       setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
@@ -228,7 +227,7 @@ function CharPage() {
                     </div>
                   </Modal>
                 </Col>
-                <Col md={6} className='d-none d-md-clock d-lg-block'>
+                <Col md={6} className='d-none d-md-block d-lg-block'>
                   {activeSkill&&(
                     <GetActiveSkill slug={activeSkill} blueEffects={blueEffects} chars={chars} w100={true} />
                   )}

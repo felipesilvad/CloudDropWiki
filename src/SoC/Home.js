@@ -4,7 +4,6 @@ import Container from 'react-bootstrap/Container';
 import EventsList from './Events/EventList';
 
 function Home() {
-  const img = require('./assets/img/character_zzzhuoqiantest.png')
 
   return (
     <>
