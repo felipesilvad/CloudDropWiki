@@ -259,9 +259,9 @@ function CharPage() {
                 <div className='black-label-div mt-2' id='skills'>
                   OTHER SKILLS
                 </div>
-                <div className='d-flex'>
+                <div className='d-flex flex-wrap'>
                   {char.other_skills.map(skill=>(
-                    <GetActiveSkill slug={skill} blueEffects={blueEffects} chars={chars} w100={true} />
+                    <GetActiveSkill slug={skill} blueEffects={blueEffects} chars={chars}  />
                   ))}
                 </div>
               </>

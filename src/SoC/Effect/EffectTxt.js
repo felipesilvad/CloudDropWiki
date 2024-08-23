@@ -57,7 +57,12 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers}) => {
         {blueEffects&&(blueEffects.map(effect => (
           (text.includes(`[${effect.title}]`)&&(
             <div className='mx-1 my-2'>
-              <b className='tag-txt-blue'>{effect.title}</b>
+              <a href={effect&&(effect.txt&&(
+                effect.txt.includes('[Skill]')
+                ?('#skills'):('javascript:void(0);')))}
+                className='tag-txt-blue'>
+                {effect.title}
+              </a>
               {": "}
               {effect.txt}
             </div>

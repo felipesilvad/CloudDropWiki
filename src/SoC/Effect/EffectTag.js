@@ -44,8 +44,8 @@ const EffectTag = ({ value }) => {
     <span>
       <OverlayTrigger placement="top" overlay={tooltip}>
         <span>
-          [<a href={effectTag&&(effectTag.title&&(
-            effectTag.title==="Luxite Skill"
+          [<a href={effectTag&&(effectTag.txt&&(
+            effectTag.txt.includes('[Skill]')
             ?('#skills'):('#')))}
             className={
               effectTag&&(
