@@ -18,6 +18,7 @@ function GearPage() {
     onSnapshot(doc(db, "games/soc/gears/", id), (doc) => {
       setGear(doc.data());
     });
+    window.scrollTo(0, 0)
   }, [id]);
 
   useEffect(() => {

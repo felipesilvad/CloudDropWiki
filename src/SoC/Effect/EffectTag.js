@@ -46,7 +46,7 @@ const EffectTag = ({ value }) => {
         <span>
           [<a href={effectTag&&(effectTag.title&&(
             effectTag.title==="Luxite Skill"
-            ?('#skills'):('')))}
+            ?('#skills'):('#')))}
             className={
               effectTag&&(
                 (effectTag.color==="blue")?('tag-txt-blue'):('tag-txt')

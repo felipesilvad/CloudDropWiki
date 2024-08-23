@@ -16,12 +16,15 @@ function EventPage() {
     onSnapshot(doc(db, "games/soc/events/", id), (doc) => {
       setEvent(doc.data());
     });
+    window.scrollTo(0, 0)
   }, [id]);
   
 
   useEffect(() => {
     if (event.title) {
-      setMatches(event.title.match(/"([^"]*)"/g).map(match => match.replace(/"/g, '')))
+      if (event.title.match(/"([^"]*)"/g)) {
+        setMatches(event.title.match(/"([^"]*)"/g).map(match => match.replace(/"/g, '')))
+      }
     }
   }, [event]);
 

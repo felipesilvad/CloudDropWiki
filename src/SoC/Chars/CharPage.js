@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Row,Col,Container,Image,Form,Tab,Tabs,Modal} from 'react-bootstrap';
+import {Row,Col,Container,Image,Form,Modal} from 'react-bootstrap';
 import { doc, onSnapshot, query, collection, where} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
 import db from '../../firebase';
@@ -62,6 +62,7 @@ function CharPage() {
     onSnapshot(doc(db, "games/soc/chars/", id), (doc) => {
       setChar(doc.data());
     });
+    window.scrollTo(0, 0)
   }, [id]);
 
   useEffect(() => {
