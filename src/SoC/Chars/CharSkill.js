@@ -23,17 +23,17 @@ function CharSkill({slug, skillRec, blueEffects}) {
     return (
       <div className={`skill-detail-bg`}>
         <div className={`skill-detail-div 
-          ${(skillRec&&skillRec[1])&&(
-            (skillRec[0]&&skillRec[1].includes(skillRec[2]))&&('skill-detail-rec')
-          )}`}
+          ${(skillRec&&skillRec[1])&&((skillRec[0]&&
+            skillRec[1].includes("1"))?('skill-detail-rec'):
+            ((skillRec[0]&&skillRec[1].includes("2"))?('skill-detail-rec2'):('')))}`}
         >
           <div className='d-flex justify-content-between'>
 
             <div className='skill-category-div'>
               <span className={`skill-category
-                  ${(skillRec&&skillRec[1])&&(
-                (skillRec[0]&&skillRec[1].includes(skillRec[2]))&&('skill-category-rec')
-              )}`}
+                ${(skillRec&&skillRec[1])&&((skillRec[0]&&
+                  skillRec[1].includes("1"))?('skill-detail-rec'):
+                  ((skillRec[0]&&skillRec[1].includes("2"))?('skill-detail-rec2'):('')))}`}
               >{skill.category}</span>
             </div>
 
@@ -92,10 +92,12 @@ function CharSkill({slug, skillRec, blueEffects}) {
                   )}
                 </div>
                   <div className='skill-range-value mx-2'>
-                    <div className='d-flex justify-content-between align-items-center'>
-                      <label>Range</label>
-                      <span>{skill.range_1} - {skill.range_2}</span>
-                    </div>
+                    {skill.range_1+skill.range_2>0&&(
+                      <div className='d-flex justify-content-between align-items-center'>
+                        <label>Range</label>
+                        <span>{skill.range_1} - {skill.range_2}</span>
+                      </div>
+                    )}
                     <hr className='skill-range-hr' />
                     {skill.height_range_dw&&(
                       <>
@@ -106,11 +108,11 @@ function CharSkill({slug, skillRec, blueEffects}) {
                         <hr className='skill-range-hr' />
                       </>
                     )}
-                    {skill.Effect_range_dw&&(
+                    {skill.effect_range_dw&&(
                       <>
                         <div className='d-flex justify-content-between align-items-center'>
                           <label>Effect Height</label>
-                          <span>⬇{skill.Effect_range_dw} - ⬆{skill.Effect_range_up}</span>
+                          <span>⬇{skill.effect_range_dw} - ⬆{skill.effect_range_up}</span>
                         </div>
                         <hr className='skill-range-hr' />
                       </>
