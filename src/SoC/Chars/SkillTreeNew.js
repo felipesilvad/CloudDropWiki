@@ -11,7 +11,7 @@ function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill}
 
             <div className='skilltree-skill'>
               <SkillTreeNewSkill activeSkill={activeSkill} side={1} slug={lv.skill0}
-              skillRec={[skillRec, lv.rec,"1"]} handleOnClickSkill={handleOnClickSkill} />
+              skillRec={[skillRec, lv.rec0]} handleOnClickSkill={handleOnClickSkill} />
             </div>
 
             <div className='tree-rank_new'>
@@ -21,7 +21,7 @@ function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill}
 
             <div className='skilltree-skill'>
               <SkillTreeNewSkill activeSkill={activeSkill} side={2} slug={lv.skill1}
-              skillRec={[skillRec, lv.rec,"2"]} handleOnClickSkill={handleOnClickSkill} />
+              skillRec={[skillRec, lv.rec1]} handleOnClickSkill={handleOnClickSkill} />
             </div>
 
           </div>

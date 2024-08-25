@@ -234,6 +234,25 @@
 .skill-detail-rec {
   border: 2px solid $highlight!important;
 }
+.skill-detail-rec2 {
+  border: 2px solid $golden;
+}
+.rec-label-color {
+  font-size: 1.5rem;
+  line-height: 1.25rem;
+}
+.bg-op {
+  color: $highlight!important;
+  
+}
+.bg-rec {
+  color: $golden!important;
+}
+.rec-label {
+  font-family: "Roboto", sans-serif!important;
+  margin-right: 0.75rem;
+}
+
 
 .role-img {
   width: 2rem;
@@ -351,7 +370,9 @@
 .skill-category-rec {
   background-color: $highlight;
 }
-
+.skill-category-rec2 {
+  background-color: $golden;
+}
 .skill-category-div {
   margin-top: -0.25rem;
 }
@@ -626,6 +647,7 @@
 }
 
 .char-row-img {
+  max-width: -moz-max-content;
   width: -webkit-fill-available;
   object-fit: cover;
 }
@@ -666,13 +688,21 @@
   height: 100%;
 }
 
+.char-face-img-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
+
+
 .char-face-img {
   position: absolute;
   width: 125%;
   right: -2.5%;
   bottom: 0;
   mask-image: url('../assets/img/face_bg_mask.png');
-  
   mask-size: 100%; /* Make the mask size match the image width */
   mask-position: bottom right; /* Offset the mask position to match the image's new position */
   mask-origin: content-box; /* Ensure the mask aligns with the content box */
@@ -683,7 +713,9 @@
 }
 
 .art-img {
+  max-width: -moz-max-content;
   width: -webkit-fill-available;
+  object-fit: cover;
 }
 .art-img-full {
   width: auto;
@@ -740,4 +772,16 @@
 
 .art-active {
   background-color: $lighter;
+}
+
+.sources-bg {
+  background-color: rgba($light, 0.5);
+  border-radius: 0.25rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0.25rem;
+}
+.source-txt{
+  text-transform: uppercase;
+  font-style: italic;
+  font-size: 0.9rem;
 }

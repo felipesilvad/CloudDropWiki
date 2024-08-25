@@ -18,7 +18,12 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers}) => {
     const renderText = () => {
 
       return text.split(/(\d+%?|\[.*?\])/g).reduce((acc, part, index, array) => {
-        if (array[index - 1]?.endsWith('Heals ') || array[index - 1]?.endsWith('Heals the target by ')) {
+        if (array[index - 1]?.endsWith('Heals ') ||
+          array[index - 1]?.endsWith('Heals the target by ')||
+          array[index - 1]?.endsWith('Heals all allies within ')||
+          array[index - 1]?.endsWith('the DMG taken is decreased by ')||
+          array[index - 1]?.endsWith('healing skill by ')
+         ) {
           // Se a parte anterior termina com "Heals " ou "Heals the target by ", o número atual deve ser verde
           acc.push(
             <span key={index} className="heal-color">

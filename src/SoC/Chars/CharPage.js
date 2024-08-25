@@ -15,10 +15,12 @@ import SkillTreeNew from './SkillTreeNew';
 import GetActiveSkill from './GetActiveSkill';
 import GetGearItem from '../Gear/GetGearItem';
 import GetTarotItem from '../Gear/GetTarotItem';
+import SourceItem from './SourceItem';
 
 function CharPage() {
   const id = useParams().id
   const [char, setChar] = useState([])
+  const [reversedSkillTree, setReversedSkillTree] = useState([])
   const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
   const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_awaken.png?alt=media`
   const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.png?alt=media`
@@ -74,12 +76,13 @@ function CharPage() {
     } else {
       setArt("Main")
     }
-    // if (char.name) {
-    //   document.title = char.name;
-    // }
+    if (char.skill_tree) {
+      setReversedSkillTree(char.skill_tree.reverse())
+    }
   }, [char]);
   
   if (char) {
+    
     return (
       <Container className='char-container py-2'>
         {char.name&&(
@@ -197,6 +200,15 @@ function CharPage() {
               />
             </div>
             
+            {skillRec&&(
+              <div className='d-flex mb-2 rec-bg align-items-center'>
+                <div className='bg-lighter mx-1 px-2'>
+                  <b className='rec-label-color bg-op'>▉</b><span className='rec-label' >Optional</span>
+                  <b className='rec-label-color bg-rec'>▉</b><span className='rec-label' >Highly Recommended</span>
+                </div>
+              </div>
+            )}
+
             {!skillTreeView?(
               <Row>
                 <Col md={6}>
@@ -212,7 +224,7 @@ function CharPage() {
                       </div>
                     </div>
                   )}
-                  {char.skill_tree&&(char.skill_tree.map((lv, index) => (
+                  {reversedSkillTree&&(reversedSkillTree.map((lv, index) => (
                     <SkillTreeNew blueEffects={blueEffects} skillRec={skillRec} handleOnClickSkill={handleOnClickSkill} activeSkill={activeSkill}
                     lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
                     // <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
@@ -248,10 +260,21 @@ function CharPage() {
                     </div>
                   </div>
                 )}
-                {char.skill_tree&&(char.skill_tree.map((lv, index) => (
+                {reversedSkillTree&&(reversedSkillTree.map((lv, index) => (
                   <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
                 )))}
               </>
+            )}
+
+            {char.sources&&(
+              <div className='sources-bg d-flex align-items-center m-1'>
+                <span className='source-txt'>Main research sources for Build & Recommendations: </span>
+                <div className='d-flex flex-wrap'>
+                  {char.sources.map(source => (
+                    <SourceItem sourceTitle={source} />
+                  ))}
+                </div>
+              </div>
             )}
 
             {char.other_skills&&char.other_skills.length>0&&(
@@ -298,7 +321,7 @@ function CharPage() {
             <div className='black-label-div mt-2'>
               ART
             </div>
-
+            
             <div className='ligter-bg'>
               <Row>
                 <Col md={8} >

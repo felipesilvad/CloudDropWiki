@@ -12,7 +12,9 @@ function CharFace({char}) {
       <Link to={`/chars/${char.slug}`} key={char.slug} id={char.slug} target="_blank" >
         <div class="char-face-container m-1">
           <img alt="bg" src={bg} class="char-face background" />
-          <img alt="face" src={face}  class="char-face-img foreground" />
+          <div className='char-face-img-container'>
+            <img alt="face" src={face}  class="char-face-img foreground" />
+          </div>
           <img alt="border" src={border}  class="char-face char-face-border" />
         </div>
         <Tooltip anchorSelect={`#${char.slug}`} place="bottom-end">

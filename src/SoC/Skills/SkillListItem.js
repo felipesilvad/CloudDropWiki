@@ -95,10 +95,12 @@ function SkillListItem({skill, blueEffects, chars, w100}) {
                     )}
                   </div>
                     <div className='skill-range-value mx-2'>
+                    {skill.range_1+skill.range_2>0&&(
                       <div className='d-flex justify-content-between align-items-center'>
                         <label>Range</label>
                         <span>{skill.range_1} - {skill.range_2}</span>
                       </div>
+                    )}
                       <hr className='skill-range-hr' />
                       {skill.height_range_dw&&(
                         <>
@@ -109,11 +111,11 @@ function SkillListItem({skill, blueEffects, chars, w100}) {
                           <hr className='skill-range-hr' />
                         </>
                       )}
-                      {skill.Effect_range_dw&&(
+                      {skill.effect_range_dw&&(
                         <>
                           <div className='d-flex justify-content-between align-items-center'>
                             <label>Effect Height</label>
-                            <span>⬇{skill.Effect_range_dw} - ⬆{skill.Effect_range_up}</span>
+                            <span>⬇{skill.effect_range_dw} - ⬆{skill.effect_range_up}</span>
                           </div>
                           <hr className='skill-range-hr' />
                         </>
@@ -123,16 +125,19 @@ function SkillListItem({skill, blueEffects, chars, w100}) {
               </div>
             )}
             
-
-            <div className='skill-chars mt-2' 
-            // onClick={showSkillChars}
-            >Characters That Can Learn This Skill
-            </div>
-            <div className="d-flex flex-wrap">
-              {filteredChars&&(filteredChars.map(char => (
-                <CharFace char={char} />
-              )))}
-            </div>
+            {filteredChars.length>0&&(
+              <>
+                <div className='skill-chars mt-2' 
+                // onClick={showSkillChars}
+                >Characters That Can Learn This Skill
+                </div>
+                <div className="d-flex flex-wrap">
+                  {filteredChars.map(char => (
+                    <CharFace char={char} />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
