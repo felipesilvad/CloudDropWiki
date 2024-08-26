@@ -24,13 +24,14 @@ function CharsList() {
   const roleOrder = ['Watcher', 'Destroyer', 'Seeker', 'Defender', 'Breaker'];
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
 
-  const [hideEpic, setHideEpic] = useState(false);
-  const [hideRare, setHideRare] = useState(false);
-  const [hideCommon, setHideCommon] = useState(false);
-  const [hideLegendary, setHideLegendary] = useState(false);
+  // const [hideEpic, setHideEpic] = useState(false);
+  // const [hideRare, setHideRare] = useState(false);
+  // const [hideCommon, setHideCommon] = useState(false);
+  // const [hideLegendary, setHideLegendary] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFactions, setActiveFactions] = useState([]);
   const [activeRoles, setActiveRoles] = useState('');
+  const [activeRarities, setActiveRarities] = useState('');
   
   const [showFactions, setShowFactions] = useState(false);
   const targetFactions = useRef(null);
@@ -48,6 +49,14 @@ function CharsList() {
         : [...prevFactions, faction]
     );
   };
+
+  // const toggleRarity = (rarity) => {
+  //   setActiveRarities(prevRarities =>
+  //     prevRarities.includes(rarity)
+  //       ? prevRarities.filter(f => f !== rarity)
+  //       : [...prevRarities, rarity]
+  //   );
+  // };
 
   const handleShowFactions = () => {
     setShowFactions(!showFactions)
@@ -69,13 +78,14 @@ function CharsList() {
 
 
   const filteredChars = chars
-    .filter(char => !hideEpic || char.rarity !== 'Epic')
-    .filter(char => !hideRare || char.rarity !== 'Rare')
-    .filter(char => !hideCommon || char.rarity !== 'Common')
-    .filter(char => !hideLegendary || char.rarity !== 'Legendary')
+    // .filter(char => !hideEpic || char.rarity !== 'Epic')
+    // .filter(char => !hideRare || char.rarity !== 'Rare')
+    // .filter(char => !hideCommon || char.rarity !== 'Common')
+    // .filter(char => !hideLegendary || char.rarity !== 'Legendary')
     .filter(char => char.name.toLowerCase().includes(searchTerm.toLowerCase())) // Filter by search term
     .filter(char => activeFactions.length === 0 || activeFactions.every(faction => char.factions.includes(faction))) // Filter by factions
     .filter(char => !activeRoles || char.role === activeRoles) // Filter by factions
+    .filter(char => !activeRarities || char.rarity === activeRarities) // Filter by factions
     .sort((a, b) => {
       const rarityComparison = rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity);
       if (rarityComparison !== 0) {
@@ -84,7 +94,7 @@ function CharsList() {
       return roleOrder.indexOf(a.role) - roleOrder.indexOf(b.role);
     });
   
-  
+  console.log(activeRarities)
   return (
     <Container className='new-container'>
       <Helmet>
@@ -96,7 +106,7 @@ function CharsList() {
       <div className="sidebar">
           <div className='side-bar-filter text-center' ref={targetRarities} onClick={() => handleShowRarities()}>
             <img
-              src={require('../assets/img/stage_sr_bg.png')}
+              src={require('../assets/img/stage_Epic.png')}
               alt="Roles"
               className="sidebar-icon"
             />
@@ -124,24 +134,23 @@ function CharsList() {
                 }}
                 className='side-bar-popover'
               >
-                <img
-                  src={(hideEpic)?(require('../assets/img/stage_sr_off.png')):(require('../assets/img/stage_sr_bg.png'))}
-                  alt="Epic"
-                  className="sidebar-icon"
-                  onClick={() => setHideEpic(prevState => !prevState)}
-                />
-                <img
-                  src={require('../assets/img/stage_r_off.png')}
-                  alt="Rare"
-                  className="sidebar-icon"
-                  onClick={() => setHideRare(prevState => !prevState)}
-                />
-                <img
-                  src={require('../assets/img/stage_n_off.png')}
-                  alt="Common"
-                  className="sidebar-icon"
-                  onClick={() => setHideCommon(prevState => !prevState)}
-                />
+                {rarityOrder.map(rarity => (
+                  <img
+                    key={rarity}
+                    alt={rarity}
+                    src={require(`../assets/img/stage_${rarity}.png`)}
+                    style={{
+                      width: '30px',
+                      marginLeft: '5px',
+                      cursor: 'pointer',
+                      opacity: activeRarities.includes(rarity) ? '1' : '0.6',
+                    }}
+                    onClick={(activeRarities===rarity)?
+                      (() => setActiveRarities('')):
+                      (() => setActiveRarities(rarity))
+                    }
+                  />
+                ))}
               </div>
             )}
           </Overlay>
@@ -266,30 +275,23 @@ function CharsList() {
             <div className='side-bar-filter mx-1'>
               <label className="filter-label mx-2">Filter Rarity</label>
               <hr/>
-              <img
-                src={(hideLegendary)?(require('../assets/img/stage_ssr_off.png')):(require('../assets/img/stage_ssr_bg.png'))}
-                alt="Legendary"
-                className="sidebar-icon"
-                onClick={() => setHideLegendary(prevState => !prevState)}
-              />
-              <img
-                src={(hideEpic)?(require('../assets/img/stage_sr_off.png')):(require('../assets/img/stage_sr_bg.png'))}
-                alt="Epic"
-                className="sidebar-icon"
-                onClick={() => setHideEpic(prevState => !prevState)}
-              />
-              <img
-                src={(hideRare)?(require('../assets/img/stage_r_off.png')):(require('../assets/img/stage_r_bg.png'))}
-                alt="Rare"
-                className="sidebar-icon"
-                onClick={() => setHideRare(prevState => !prevState)}
-              />
-              <img
-                src={(hideCommon)?(require('../assets/img/stage_n_off.png')):(require('../assets/img/stage_n_bg.png'))}
-                alt="Common"
-                className="sidebar-icon"
-                onClick={() => setHideCommon(prevState => !prevState)}
-              />
+              {rarityOrder.map(rarity => (
+                <img
+                  key={rarity}
+                  alt={rarity}
+                  src={require(`../assets/img/stage_${rarity}.png`)}
+                  style={{
+                    width: '30px',
+                    marginLeft: '5px',
+                    cursor: 'pointer',
+                    opacity: activeRarities.includes(rarity) ? '1' : '0.6',
+                  }}
+                  onClick={(activeRarities===rarity)?
+                    (() => setActiveRarities('')):
+                    (() => setActiveRarities(rarity))
+                  }
+                />
+              ))}
             </div>
 
             

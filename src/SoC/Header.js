@@ -90,8 +90,12 @@ function HeaderComponent() {
               </div>
             </Nav.Link>
           </Nav>
-            <Image className='discord-img m-1' target="_blank" rel="noopener" href="https://ko-fi.com/clouddropwiki" src={kofi} />
+            <a target="_blank" rel="noopener" href="https://ko-fi.com/clouddropwiki">
+              <Image className='discord-img m-1'  src={kofi} />
+            </a>
+            <a target="_blank" rel="noopener" href="https://discord.gg/tbdmmUFN">
             <Image className='discord-img m-1' target="_blank" rel="noopener" href="https://discord.gg/tbdmmUFN" src={discord} />
+            </a>
         </Navbar.Collapse>
         
         {/* <SearchBar /> */}

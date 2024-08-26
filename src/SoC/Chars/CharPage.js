@@ -266,16 +266,6 @@ function CharPage() {
               </>
             )}
 
-            {char.sources&&(
-              <div className='sources-bg d-flex align-items-center m-1'>
-                <span className='source-txt'>Main research sources for Build & Recommendations: </span>
-                <div className='d-flex flex-wrap'>
-                  {char.sources.map(source => (
-                    <SourceItem sourceTitle={source} />
-                  ))}
-                </div>
-              </div>
-            )}
 
             {char.other_skills&&char.other_skills.length>0&&(
               <>
@@ -316,6 +306,15 @@ function CharPage() {
                   </Col>
                 </Row>
               </>
+            )}
+
+            {char.sources&&(
+              <div className='sources-bg align-items-centerflex-wrap m-1'>
+                <span className='source-txt'>Main research sources for Build & Recommendations: </span>
+                {char.sources.map(source => (
+                  <SourceItem sourceTitle={source} />
+                ))}
+              </div>
             )}
 
             <div className='black-label-div mt-2'>
