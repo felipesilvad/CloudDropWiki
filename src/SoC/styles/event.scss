@@ -1,7 +1,8 @@
 .event-img {
-  max-width: -moz-max-content;
-  width: -webkit-fill-available;
-  object-fit: cover;
+  width: 100%;
+  width: -moz-available;          /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  width: fill-available;
 }
 
 .event-item {

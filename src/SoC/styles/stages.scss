@@ -1,8 +1,9 @@
 .boss-img {
-  max-width: -moz-max-content;
-  max-width: -moz-max-content;
-  width: -webkit-fill-available;
+  width: 100%;
+  width: -moz-available;          /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  width: fill-available;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
-  object-fit: cover;
+  display: table;
 }

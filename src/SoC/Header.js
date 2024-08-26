@@ -13,10 +13,12 @@ function HeaderComponent() {
   const gear_img = require('./assets/img/menu_gears.png')
   const tarot_img = require('./assets/img/menu_tarots.png')
   const stage_img = require('./assets/img/menu_stages.png')
+  const discord = require('./assets/img/discord.png')
+  const kofi = require('./assets/img/kofi.png')
   
   return (
     <Navbar className='navbar-dark menu-navbar' bg="dark" expand="lg" fixed="top">
-      <Container className='container'>
+      <Container className='char-container d-flex align-items-center'>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto menu-nav">
@@ -88,6 +90,8 @@ function HeaderComponent() {
               </div>
             </Nav.Link>
           </Nav>
+            <Image className='discord-img m-1' target="_blank" rel="noopener" href="https://ko-fi.com/clouddropwiki" src={kofi} />
+            <Image className='discord-img m-1' target="_blank" rel="noopener" href="https://discord.gg/tbdmmUFN" src={discord} />
         </Navbar.Collapse>
         
         {/* <SearchBar /> */}
