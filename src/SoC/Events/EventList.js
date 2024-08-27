@@ -5,10 +5,11 @@ import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import EventItem from './EventItem';
 
-function EventsList({side}) {
+function EventsList({side, limitN=30}) {
   const [events, setEvents] = useState([])
+
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/events`), orderBy("startDate", "desc"), limit(9)), (snapshot) => {
+    onSnapshot(query(collection(db, `/games/soc/events`), orderBy("startDate", "desc"), limit(limitN)), (snapshot) => {
       setEvents(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
     });
   }, [])

@@ -18,7 +18,7 @@ function Home() {
         <div className='black-label-div'>
           Latest Events
         </div>
-        <EventsList />
+        <EventsList limitN={9} />
       </Container>
     </>
   );

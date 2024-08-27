@@ -23,6 +23,10 @@
   background-color: lighten($light, 5);
   transition: 200ms;
 }
+.event-col-coming {
+  background-color: darken($light,2.5);
+  border-radius: 0.25rem;
+}
 
 .event-div {
   background-color: rgba($mid, 0.6);
@@ -38,6 +42,9 @@
 }
 .event-item-time-ending {
   color: $physical;
+}
+.event-item-time-coming {
+  color: $golden;
 }
 
 .negative-margin {

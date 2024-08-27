@@ -4,6 +4,7 @@ import { Image } from 'react-bootstrap';
 
 function EventItem({event, side}) {
   const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0 });
+  const today = new Date();
 
   useEffect(() => {
     if (event.endDate) {  
@@ -29,36 +30,52 @@ function EventItem({event, side}) {
     }
   }, [event]);
 
-  
-  if (event) {
-    return (
-      <Link to={`/events/${event.id}`} className={`event-item ${side&&("w-100")}`}>
-        <div className='event-col mt-2 mx-1'>  
-          <Image className='event-img' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`} />
-          {/* <div dangerouslySetInnerHTML={{__html: event.content}}></div> */}
-          <div className='mx-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
-            <h5 className="">{event.title}</h5>
-          </div>
-          <div className="text-end negative-margin">
-            {(timeRemaining.days===0&&timeRemaining.hours>0)?(
-              <span className="event-item-time event-item-time-ending mx-2">
-                {timeRemaining.hours}H left
-              </span>
-            ):(
-              (timeRemaining.days+timeRemaining.hours===0)?(
-                <span className="event-item-time event-item-time-over mx-2">
-                  OVER
+  if (event.startDate) {
+    if (event.startDate.toDate() < today) {
+      return (
+        <Link to={`/events/${event.id}`} className={`event-item ${side&&("w-100")}`}>
+          <div className='event-col mt-2 mx-1'>  
+            <Image className='event-img' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`} />
+            <div className='mx-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
+              <h5 className="">{event.title}</h5>
+            </div>
+            <div className="text-end negative-margin">
+              {(timeRemaining.days===0&&timeRemaining.hours>0)?(
+                <span className="event-item-time event-item-time-ending mx-2">
+                  {timeRemaining.hours}H left
                 </span>
               ):(
-                <span className="event-item-time mx-2">
-                  {timeRemaining.days}D {timeRemaining.hours}H left
+                (timeRemaining.days+timeRemaining.hours===0)?(
+                  <span className="event-item-time event-item-time-over mx-2">
+                    OVER
+                  </span>
+                ):(
+                  <span className="event-item-time mx-2">
+                    {timeRemaining.days}D {timeRemaining.hours}H left
+                  </span>
+                )
+              )}
+            </div>
+          </div>
+        </Link>
+      );
+    } else {
+      return (
+        <div className={`event-item ${side&&("w-100")}`} >
+          <div className='event-col-coming mt-2 mx-1' >  
+            <Image className='event-img' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`} />
+            <div className='mx-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
+              <h5 className="">{event.title}</h5>
+            </div>
+            <div className="text-end negative-margin">
+                <span className="event-item-time event-item-time-coming mx-2">
+                  Coming: {event.startDate.toDate().toLocaleString()}
                 </span>
-              )
-            )}
+            </div>
           </div>
         </div>
-      </Link>
-    );
+      )
+    }
   }
 }
 
