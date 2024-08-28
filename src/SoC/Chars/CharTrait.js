@@ -5,13 +5,15 @@ import db from '../../firebase';
 import EffectTxt from '../Effect/EffectTxt';
 
 function CharTrait({slug,blueEffects}) {
-  const [trait, seTrait] = useState()
+  const [trait, setTrait] = useState()
+  const [showStars, setShowStars] = useState(false)
 
   useEffect(() => {
     onSnapshot(doc(db, "games/soc/traits/", slug), (doc) => {
-      seTrait(doc.data());
+      setTrait(doc.data());
     });
   }, [slug]);
+
 
   if (trait) {
     return (
@@ -27,10 +29,28 @@ function CharTrait({slug,blueEffects}) {
             </b>
           </div>
         </div>
-
+        <b className='star-margin'>⭐⭐⭐⭐⭐</b>
+        
+        
         <div>
           <EffectTxt blueEffects={blueEffects} text={trait.effects[0]} />
         </div>
+
+        {trait.effects[1]&&(
+          <>
+            <div onClick={() => setShowStars(!showStars)} className='skill-chars trait-lvs mt-2 mb-1'>
+              {showStars?("▲ Show All Levels ▲"):("▼ Show All Levels ▼")}
+            </div>
+            <div className='px-2'>
+              {showStars&&(trait.effects.slice(1).map((effect, i) => (
+                <div>
+                  {"⭐".repeat(Math.abs(i-trait.effects.length)-1)}
+                  <EffectTxt text={effect} />
+                </div>
+              )))}
+            </div>
+          </>
+        )}
       </div>
     );
   }

@@ -25,6 +25,12 @@
   transition: 100ms;
 }
 
+.trait-lvs {
+  cursor: pointer;
+}
+.trait-lvs:hover {
+  background-color: rgba($mid, 0.4);
+}
 
 .castlia-rec-img {
   width: 3rem;
@@ -41,4 +47,8 @@
   @media only screen and (max-width: $md) {
     justify-content: center;
   }
+}
+
+.star-margin {
+  margin-top: -0.5rem;
 }
