@@ -19,7 +19,7 @@ function TarotsList() {
     <Container className='new-container'>
       <Helmet>
         <title>Tarot List - SoC Wiki</title>
-        <meta name="description" content="Sword of Convallaria All Tarot Effects" />
+        <meta name="description" content="Sword of Convallaria All Tarot Whisper Effects and Hidden Lv.60 Unlocked Effects" />
       </Helmet>
       <div className='d-flex flex-wrap'>
         {tarots&&(tarots.map(tarot => (
