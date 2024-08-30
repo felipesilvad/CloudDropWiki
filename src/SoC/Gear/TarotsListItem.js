@@ -4,7 +4,7 @@ import EffectTxt from '../Effect/EffectTxt';
 
 function TarotsListItem({tarot, sideMenu, compact}) {
   const tarot_img = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/tarot%2F${tarot.img}.png?alt=media`
-
+  const gem = require('../assets/img/icon_charm_ssr.png')
   if (tarot) {
 
     return (
@@ -26,6 +26,16 @@ function TarotsListItem({tarot, sideMenu, compact}) {
 
             <div className='mx-2 text-center'>
               <EffectTxt text={tarot.effect}/>
+            </div>
+
+            <div className='tarot-gem-div d-flex align-items-center'>
+              <Image className='mx-2 tarot-gem' src={gem} />
+              <b className='tarot-gem-txt d-flex align-items-center'>
+                Hidden Effect at Lv.60
+              </b>
+            </div>
+            <div className='mx-2 text-center'>
+              <EffectTxt text={tarot.effect_new}/>
             </div>
 
             {!compact&&(

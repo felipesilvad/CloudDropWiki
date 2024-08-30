@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -90,11 +90,11 @@ function HeaderComponent() {
               </div>
             </Nav.Link>
           </Nav>
-            <a target="_blank" rel="noopener" href="https://ko-fi.com/clouddropwiki">
+            <a target="_blank" href="https://ko-fi.com/clouddropwiki" rel="noreferrer">
               <Image className='discord-img m-1'  src={kofi} />
             </a>
-            <a target="_blank" rel="noopener" href="https://discord.gg/tbdmmUFN">
-            <Image className='discord-img m-1' target="_blank" rel="noopener" href="https://discord.gg/tbdmmUFN" src={discord} />
+            <a target="_blank" href="https://discord.gg/tbdmmUFN" rel="noreferrer">
+            <Image className='discord-img m-1' href="https://discord.gg/tbdmmUFN" src={discord} />
             </a>
         </Navbar.Collapse>
         

@@ -62,3 +62,19 @@
 .gear-desc {
   font-size: 0.85rem;
 }
+
+.tarot-gem {
+  width: 1.5rem;
+}
+
+.tarot-gem-div {
+  background-image: linear-gradient(to right, $lighter, $lighter,rgba(255,0,0,0));
+  text-align: left!important;
+}
+
+.tarot-gem-txt {
+  font-size: 0.9rem;
+  font-family: "PT Sans", sans-serif;
+  font-style: italic;
+
+}
