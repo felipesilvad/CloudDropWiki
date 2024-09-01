@@ -75,7 +75,7 @@ function GearPage() {
                   Skill
                 </div>
                 <div className='mx-2 text-center bg-lighter'>
-                  <EffectTxt text={gear.skill}/>
+                  <EffectTxt text={gear.skill} chars={chars}/>
                 </div>
 
                 <div className='gear-desc mt-2'>

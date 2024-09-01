@@ -4,7 +4,7 @@ import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 import EffectTxt from '../Effect/EffectTxt';
 
-function CharTrait({slug,blueEffects}) {
+function CharTrait({slug,blueEffects,chars}) {
   const [trait, setTrait] = useState()
   const [showStars, setShowStars] = useState(false)
 
@@ -33,7 +33,7 @@ function CharTrait({slug,blueEffects}) {
         
         
         <div>
-          <EffectTxt blueEffects={blueEffects} text={trait.effects[0]} />
+          <EffectTxt blueEffects={blueEffects} text={trait.effects[0]} chars={chars} />
         </div>
 
         {trait.effects[1]&&(
@@ -45,7 +45,7 @@ function CharTrait({slug,blueEffects}) {
               {showStars&&(trait.effects.slice(1).map((effect, i) => (
                 <div>
                   {"⭐".repeat(Math.abs(i-trait.effects.length)-1)}
-                  <EffectTxt text={effect} />
+                  <EffectTxt text={effect} chars={chars} />
                 </div>
               )))}
             </div>

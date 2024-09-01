@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import EffectTag from './EffectTag';
+import FactionTitle from '../Chars/FactionTitle';
 
-const EffectTxt = ({ text, dmg, blueEffects, colorNumbers}) => {
+const EffectTxt = ({ text, dmg, blueEffects, colorNumbers, chars}) => {
   const [hasBlueEffect, setHasBlueEffect] = useState()
-
+  const factions = ["Aggression","Alacrity","Discipline","Drifter","Fortitude",
+  "Iria","Papal States","Sword of Convallaria","The Union", "Vlder"]
   useEffect(() => {
     if (blueEffects) {
       blueEffects.map(effect => (
@@ -16,7 +18,6 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers}) => {
   
   if (text) { 
     const renderText = () => {
-
       return text.split(/(\d+%?|\[.*?\])/g).reduce((acc, part, index, array) => {
         if (array[index - 1]?.endsWith('Heals ') ||
           array[index - 1]?.endsWith('Heals the target by ')||
@@ -42,10 +43,19 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers}) => {
           // Substituir texto entre colchetes por componente React
           const value = part.slice(1, -1); // Remove os colchetes
           acc.push(<EffectTag key={index} value={value} />);
-        }   else if (part.match(/\|hr\|/)) {
+        } else if (part.match(/\|hr\|/)) {
           acc.push(<><hr />{part.replace('|hr|','')}</>);
+        } else if (part.match(/<br\s*\/?>/i)) {
+          acc.push(<><br />{part.replace('<br />','')}</>);
         } else {
-          acc.push(part); // Retornar parte original do texto
+          part.split(`"`).forEach(x => {
+            if (factions.includes(x)||x==="Sword of Convallaria") {
+              acc.push(<><FactionTitle slug={x} chars={chars} effect={true} /></>)
+            } else {
+              acc.push(x); // Retornar parte original do texto
+            }
+          });
+          // acc.push(part)
         }
   
         return acc;

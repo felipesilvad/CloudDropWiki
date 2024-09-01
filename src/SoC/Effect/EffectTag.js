@@ -33,7 +33,7 @@ const EffectTag = ({ value }) => {
     <Tooltip id="tooltip" className='effect-tag-tooltip'>
       {effectTag&&(
         <div className='effect-tag-tooltip'>
-          <EffectTxt text={effectTag.txt} />
+          <EffectTxt text={effectTag.txt}  />
         </div>
       )}
     </Tooltip>

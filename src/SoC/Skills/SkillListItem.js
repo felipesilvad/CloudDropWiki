@@ -79,7 +79,7 @@ function SkillListItem({skill, blueEffects, chars, w100}) {
             </div>
 
             <div className='mx-2'>
-              <EffectTxt blueEffects={blueEffects} text={skill.effect} dmg={skill.dmg}/>
+              <EffectTxt blueEffects={blueEffects} text={skill.effect} dmg={skill.dmg} chars={chars} />
             </div>
             
             {(skill.range_1!==null)&&(

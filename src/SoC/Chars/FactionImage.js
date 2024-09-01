@@ -4,9 +4,9 @@ import slugify from 'react-slugify';
 import { doc, onSnapshot,} from 'firebase/firestore';
 import db from '../../firebase';
 import { Tooltip } from 'react-tooltip'
+import CharFace from './CharFace';
 
-
-function FactionImage({slug}) {
+function FactionImage({slug,chars}) {
   const [faction, setFaction] = useState()
 
   useEffect(() => {
@@ -17,11 +17,16 @@ function FactionImage({slug}) {
 
   if (faction) {
     return (
-      <div key={faction.slug}>
-        <Tooltip anchorSelect={`#${faction.slug}`} place="bottom-end">
-          {faction.title}
+      <div key={slugify(slug, { delimiter: '_' })}>
+        <Tooltip className='tooltip' anchorSelect={`#${slugify(slug, { delimiter: '_' })}`} place="bottom-end">
+          <b>{faction.title}</b>
+          <div className='d-flex flex-wrap'>
+            {chars&&(chars.filter(x => x.factions.includes(slug)).map(char => (
+              <CharFace char={char} />              
+            )))}
+          </div>
         </Tooltip>
-        <Image className='faction-icon' id={faction.slug} src={faction.img} />
+        <Image className='faction-icon' id={slugify(slug, { delimiter: '_' })} src={faction.img} />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { query, collection, onSnapshot, limit} from "firebase/firestore"; 
 import db from '../../firebase';
 import {Helmet} from "react-helmet";
@@ -11,7 +11,7 @@ function SkillsList() {
   const [chars, setChars] = useState([])
   const [effectTags, setEffectTags] = useState([])
   const [searchChanged, setSearchChanged] = useState(false)
-
+    
   useEffect (() => {
     onSnapshot(query(collection(db, `/games/soc/skills`), limit(30)), (snapshot) => {
       setSkills(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
@@ -26,17 +26,18 @@ function SkillsList() {
 
   const [selectedEffectTypes, setSelectedEffectTypes] = useState('any');
   const [selectedEffectTags, setSelectedEffectTags] = useState([]);
+  const [selectedFactions, setSelectedFactions] = useState('none');
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect (() => {
-    if (searchTerm !== '' || selectedEffectTags.length>0 || selectedEffectTypes!=='any')
+    if (searchTerm !== '' || selectedEffectTags.length>0 || selectedEffectTypes!=='any' || selectedFactions!=='none')
       if (!searchChanged) {
         onSnapshot(query(collection(db, `/games/soc/skills`)), (snapshot) => {
           setSkills(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
         });
         setSearchChanged(true)
       }
-  }, [selectedEffectTypes, selectedEffectTags, searchTerm])
+  }, [selectedEffectTypes, selectedEffectTags, searchTerm, selectedFactions])
 
 
   const effectTypes = useMemo(() => {
@@ -48,13 +49,28 @@ function SkillsList() {
   const effectTagOptions = useMemo(() => {
     return effectTags.map(tag => ({ value: tag.slug, label: tag.title }));
   }, [effectTags]);
-
+  const factions = useMemo(() => {
+    return ["Aggression","Alacrity","Discipline","Drifter","Fortitude",
+      "Iria","Papal States","Sword of Convallaria","The Union", "Vlder"]
+  }, []);
+  const factionOptions = useMemo(() => {
+    return [{ value: 'none', label: 'None' }, { value: 'any', label: 'Any' }, 
+      ...factions.map(faction => ({ value: faction, label: faction }))];
+  }, [factions]);
 
   const filteredSkills = skills
     .filter(skill => selectedEffectTypes==="any" || !selectedEffectTypes || selectedEffectTypes === skill.effect_type)
     .filter(skill => selectedEffectTags.length === 0 || selectedEffectTags.every(tag => skill.effect.includes(`[${tag}]`)))
-    .filter(skill => skill.title.toLowerCase().includes(searchTerm.toLowerCase())) // Filter by search term
-
+    .filter(skill => skill.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(skill => {  
+      if (selectedFactions === "none") {
+        return true;
+      } else if (selectedFactions === "any") {
+        return factions.some(faction => skill.effect.toLowerCase().includes(faction.toLowerCase()));
+      } else {
+        return skill.effect.toLowerCase().includes(selectedFactions.toLowerCase());
+      }
+    });
   return (
     <Container className='new-container'>
       <Helmet>
@@ -84,6 +100,16 @@ function SkillsList() {
               options={effectTagOptions}
               onChange={selectedOptions => setSelectedEffectTags(selectedOptions.map(option => option.label))}
               placeholder="Select effect tags..."
+              menuPortalTarget={document.body} 
+              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+            />
+          </Col>
+          <Col>
+            <label>Filter Faction Effect</label>
+            <Select
+              options={factionOptions}
+              onChange={selectedOptions => setSelectedFactions(selectedOptions.value)}
+              placeholder="Select faction..."
               menuPortalTarget={document.body} 
               styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
             />

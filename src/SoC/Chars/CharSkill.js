@@ -4,7 +4,7 @@ import { doc, onSnapshot} from 'firebase/firestore';
 import db from '../../firebase';
 import EffectTxt from '../Effect/EffectTxt';
 
-function CharSkill({slug, skillRec, blueEffects}) {
+function CharSkill({slug, skillRec, blueEffects, chars}) {
 
   const [skill, setSkill] = useState()
   useEffect(() => {
@@ -81,7 +81,7 @@ function CharSkill({slug, skillRec, blueEffects}) {
           </div>
 
           <div className='mx-2'>
-            <EffectTxt blueEffects={blueEffects} colorNumbers={true} text={skill.effect} dmg={skill.dmg}/>
+            <EffectTxt blueEffects={blueEffects} colorNumbers={true} text={skill.effect} chars={chars} dmg={skill.dmg}/>
           </div>
           
           {(skill.range_1!==null)&&(

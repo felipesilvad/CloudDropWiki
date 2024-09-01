@@ -1,7 +1,7 @@
 import React from 'react';
 import CharSkill from './CharSkill';
 
-function SkillTreeLV({lv,index,last, skillRec, blueEffects}) {
+function SkillTreeLV({lv,index,last, skillRec, blueEffects,chars}) {
   // const windowWidth = useRef(window.innerWidth);
 
   if (lv) {
@@ -16,7 +16,7 @@ function SkillTreeLV({lv,index,last, skillRec, blueEffects}) {
           <div className='d-flex skilltree-div-mobile w-100'>
 
             <div className='skilltree-skill-mobile'>
-              <CharSkill blueEffects={blueEffects} slug={lv.skill0} skillRec={[skillRec, lv.rec0]} />
+              <CharSkill blueEffects={blueEffects} slug={lv.skill0} skillRec={[skillRec, lv.rec0]} chars={chars} />
             </div>
 
             <div className='tree-rank d-none d-md-block'>
@@ -25,7 +25,7 @@ function SkillTreeLV({lv,index,last, skillRec, blueEffects}) {
             </div>
 
             <div className='skilltree-skill-mobile'>
-              <CharSkill blueEffects={blueEffects} slug={lv.skill1} skillRec={[skillRec, lv.rec1]} />
+              <CharSkill blueEffects={blueEffects} slug={lv.skill1} skillRec={[skillRec, lv.rec1]} chars={chars} />
             </div>
 
           </div>

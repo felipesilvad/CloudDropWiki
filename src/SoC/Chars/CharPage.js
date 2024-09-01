@@ -16,6 +16,7 @@ import GetActiveSkill from './GetActiveSkill';
 import GetGearItem from '../Gear/GetGearItem';
 import GetTarotItem from '../Gear/GetTarotItem';
 import SourceItem from './SourceItem';
+import FactionTitle from './FactionTitle';
 
 function CharPage() {
   const id = useParams().id
@@ -26,7 +27,9 @@ function CharPage() {
   const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.png?alt=media`
   const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
   const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
+  const cut = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_cut.png?alt=media`
   const windowWidth = useRef(window.innerWidth);
+  const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
 
   const [skillRec, setSkillRec] = useState(false)
   const [activeSkill, setActiveSkill] = useState()
@@ -118,25 +121,41 @@ function CharPage() {
 
                   <div className='char-name-div'>
                     <div  
-                    className='char-name-bg-img d-flex justify-content-between pb-1 align-items-center'>
+                    className='char-name-bg-img d-flex pb-1-mobile justify-content-between align-items-center'>
                       <div className='d-flex align-items-center'>
                         <Image className='role-img mx-1' src={role} />
                         <h2 className='mt-1 char-name'>{char.name}</h2>
                       </div>
-                      <div className='d-flex justify-content-start flex-wrap'>
-                        {char.factions&&(char.factions.map(faction => (
-                          <FactionImage slug={faction} />
-                        )))}
-                      </div>
+                      {(windowWidth.current < 768)?(
+                        <div className='d-flex justify-content-start flex-wrap'>
+                          {char.factions&&(char.factions.map(faction => (
+                            <FactionImage slug={faction} chars={chars.sort((a, b) => {
+                              return rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity);
+                            })} />
+                          )))}
+                        </div>
+                      ):(
+                        <div className='char-cut-div d-flex align-items-center'>
+                          <Image className='char-cut-img' src={cut} />
+                        </div>
+                      )}
                     </div>
                   </div>
-
                   
+                  {windowWidth.current > 768 &&(
+                    <div className='d-flex justify-content-start flex-wrap mx-1'>
+                      {char.factions&&(char.factions.map(faction => (
+                        <FactionTitle slug={faction} chars={chars.sort((a, b) => {
+                          return rarityOrder.indexOf(a.rarity) - rarityOrder.indexOf(b.rarity);
+                        })} />
+                      )))}
+                    </div>
+                  )}
 
                   <div className='black-label-div'>
                     STATS
                   </div>
-                  <Row>
+                  <Row className='custom-row'>
                     <Col md={6} >
                       <div className='d-flex justify-content-center flex-wrap'>
                         {char.base_stats&&(char.base_stats.map(stat => (
@@ -159,7 +178,7 @@ function CharPage() {
               TRAIT
             </div>
             {char.trait&&(
-              <CharTrait blueEffects={blueEffects} slug={char.trait} />
+              <CharTrait blueEffects={blueEffects} slug={char.trait} chars={chars} />
             )}
 
             <div className='black-label-div mt-2'>
@@ -171,12 +190,12 @@ function CharPage() {
             <Row>
               <Col>
                 {char.basic&&(
-                  <CharSkill blueEffects={blueEffects} slug={char.basic} />
+                  <CharSkill blueEffects={blueEffects} slug={char.basic} chars={chars} />
                 )}
               </Col>
               <Col>
                 {char.skill&&(
-                  <CharSkill blueEffects={blueEffects} slug={char.skill} />
+                  <CharSkill blueEffects={blueEffects} slug={char.skill}  chars={chars}/>
                 )}
               </Col>
             </Row>
@@ -261,7 +280,8 @@ function CharPage() {
                   </div>
                 )}
                 {reversedSkillTree&&(reversedSkillTree.map((lv, index) => (
-                  <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} />
+                  <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} chars={chars}
+                  index={index} last={char.skill_tree&&(char.skill_tree.length)} />
                 )))}
               </>
             )}

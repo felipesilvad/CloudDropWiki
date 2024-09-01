@@ -167,7 +167,57 @@
 
 .faction-icon {
   width: 2rem;
+  -webkit-filter: drop-shadow(1px 1px 1px #222);
+  filter: drop-shadow(1px 1px 1px #222);
 }
+.faction-img {
+  width: 3rem;
+  position: absolute;
+  -webkit-filter: drop-shadow(1px 1px 1px #222);
+  filter: drop-shadow(1px 1px 1px #222);
+  margin-top: -0.15rem;
+  margin-left: -0.25rem;
+}
+.faction-img-effect {
+  width: 2.5rem;
+  margin-top: 0;
+}
+.faction-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-style: italic;
+  margin-left: 2.75rem;
+  padding-right: 0.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  line-height: 1.2;
+}
+.faction-title-effect {
+  font-size: 1rem;
+  margin-left: 2.4rem;
+}
+.faction-title-div {
+  border-radius: 0.25rem;
+  border: 2px solid rgba($gold, 0);
+  cursor: pointer;
+  transition: 200ms;
+  -webkit-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.6);
+  -moz-box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.6);
+  box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.6);
+}
+.faction-title-div:hover {
+  border: 2px solid rgba($gold, 1);
+  transition: 200ms;
+}
+.the-union-bg {background-color: #415B75;}
+.fortitude-bg {background-color: #9A6250;}
+.drifter-bg {background-color: #705B41;}
+.aggression-bg {background-color: #A16755;}
+.papal-states-bg {background-color: #dad091;}
+.sword-of-convallaria-bg {background-color: #5F8678;}
+.alacrity-bg {background-color: #778FB0;}
+.vlder-bg {background-color: #689081;}
+.discipline-bg {background-color: #778FB0;}
+.iria-bg {background-color: #CB8976;}
 
 .char-detail-bg {
   position: relative;
@@ -665,6 +715,19 @@
   color: white;
   text-decoration: none!important;
 }
+.char-cut-div {
+  position: relative;
+  overflow: hidden;
+  height: 3.5rem;
+}
+.char-cut-img {
+  opacity: 0.7;
+  right: 0;
+  overflow: hidden;
+  width: 22rem;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 
 .char-row-sprite {
   width: 5rem;
@@ -676,9 +739,10 @@
 
 .char-face-container {
   position: relative;
-  width: 5rem; /* Adjust to the desired size */
-  height: 5rem; /* Adjust to the desired size */
-  // overflow: hidden;
+  width: 4.5rem;
+  height: 4.5rem;
+  opacity: 1!important;
+  overflow: hidden;
 }
 
 .char-face {
@@ -687,6 +751,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  opacity: 1!important;
 }
 
 .char-face-img-container {
@@ -695,18 +760,19 @@
   height: 100%;
   bottom: 0;
   overflow: hidden;
+  opacity: 1!important;
 }
-
 
 .char-face-img {
   position: absolute;
-  width: 125%;
-  right: -2.5%;
+  width: 135%;
+  right: -5.8%;
   bottom: 0;
   mask-image: url('../assets/img/face_bg_mask.png');
-  mask-size: 100%; /* Make the mask size match the image width */
+  mask-size: 80%;
   mask-position: bottom right; /* Offset the mask position to match the image's new position */
   mask-origin: content-box; /* Ensure the mask aligns with the content box */
+  opacity: 1!important;
 }
 
 .char-face-border {

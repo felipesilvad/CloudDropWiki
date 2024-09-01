@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { query, collection, onSnapshot, orderBy, limit} from "firebase/firestore"; 
 import db from '../../firebase';
-import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import EventItem from './EventItem';
 
