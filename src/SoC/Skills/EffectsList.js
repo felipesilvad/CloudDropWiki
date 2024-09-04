@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { query, collection, onSnapshot} from "firebase/firestore"; 
-import db from '../../firebase';
+import axios from 'axios';
 import {Helmet} from "react-helmet";
 import {Container, Table} from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
@@ -9,9 +8,11 @@ function EffectsList() {
   const [effectTags, setEffectTags] = useState([])
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/effect_tags`)), (snapshot) => {
-      setEffectTags(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"effect_tags","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setEffectTags(res.data.documents)
+    }).catch(err => console.warn(err));
 
   }, [])
 

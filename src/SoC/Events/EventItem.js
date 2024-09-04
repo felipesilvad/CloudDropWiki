@@ -5,14 +5,14 @@ import { Image } from 'react-bootstrap';
 function EventItem({event, side}) {
   const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0 });
   const today = new Date();
+  const startDate = new Date(event.startDate);
+  const endDate = new Date(event.endDate);
 
   useEffect(() => {
-    if (event.endDate) {  
+    if (endDate) {  
       const calculateTimeRemaining = () => {
         const currentTime = new Date();
-        const targetTime = new Date(event.endDate.seconds * 1000); // Convert seconds to milliseconds
-  
-        const timeDifference = targetTime - currentTime; // Difference in milliseconds
+        const timeDifference = endDate - currentTime; // Difference in milliseconds
   
         if (timeDifference > 0) {
           const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -31,7 +31,7 @@ function EventItem({event, side}) {
   }, [event]);
 
   if (event.startDate) {
-    if (event.startDate.toDate() < today) {
+    if (startDate < today) {
       return (
         <Link to={`/events/${event.id}`} className={`event-item ${side&&("w-100")}`}>
           <div className='event-col mt-2 mx-1'>  
@@ -69,7 +69,7 @@ function EventItem({event, side}) {
             </div>
             <div className="text-end negative-margin">
                 <span className="event-item-time event-item-time-coming mx-2">
-                  Coming: {event.startDate.toDate().toLocaleString()}
+                  Coming: {startDate.toLocaleString()}
                 </span>
             </div>
           </div>

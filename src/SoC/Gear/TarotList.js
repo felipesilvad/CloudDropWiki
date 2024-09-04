@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { query, collection, onSnapshot, orderBy} from "firebase/firestore"; 
-import db from '../../firebase';
+import axios from 'axios';
 import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import TarotsListItem from './TarotsListItem';
 
 function TarotsList() {
-  const [tarots, setTarotTags] = useState([])
+  const [tarots, setTarots] = useState([])
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/tarots`), orderBy("series")), (snapshot) => {
-      setTarotTags(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
 
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"tarots","database":"soc","dataSource":"Sword", 
+      "sort": {
+          "series": 1
+        }
+      }
+    }).then(res => {
+      setTarots(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
 
   return (

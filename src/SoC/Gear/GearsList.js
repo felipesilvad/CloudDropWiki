@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { query, collection, onSnapshot} from "firebase/firestore"; 
-import db from '../../firebase';
+import axios from 'axios';
 import {Helmet} from "react-helmet";
 import {Container,Row,Col} from 'react-bootstrap';
 import GearsListItem from './GearsListItem';
@@ -12,9 +11,11 @@ function GearsList() {
   const [selectedRarity, setSelectedRarity] = useState('any');
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/gears`)), (snapshot) => {
-      setGears(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"gears","database":"soc","dataSource":"Sword",}
+    }).then(res => {
+      setGears(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
 
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];

@@ -1,27 +1,26 @@
 import React, {useState,useEffect} from 'react';
-
-import { collection, onSnapshot, query, where} from 'firebase/firestore';
-import db from '../../firebase';
+import axios from 'axios';
 
 function SourceItem({sourceTitle}) {
 
   const [source, setSource] = useState()
   useEffect(() => {
-    if (sourceTitle) {
-      onSnapshot(query(collection(db, `sources/`), where("title","==",sourceTitle)), (snapshot) => {
-        setSource(snapshot.docs.map(doc => ({...doc.data()})))
-      });
-    }
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"sources","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "title": sourceTitle
+        }}
+    }).then(res => {
+      setSource(res.data.document)
+    }).catch(err => console.warn(err));
   }, [sourceTitle]);
 
   if (source) {
-    if (source[0]) {
-      return (
-        <a href={source[0].url} target="_blank" rel="noopener" className="bg-lighter-link m-1">
-          {sourceTitle}
-        </a>
-      );
-    }
+    return (
+      <a href={source.url} target="_blank" rel="noopener" className="bg-lighter-link m-1">
+        {sourceTitle}
+      </a>
+    );
   }
 }
 

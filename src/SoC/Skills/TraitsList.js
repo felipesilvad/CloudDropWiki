@@ -1,29 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { query, collection, onSnapshot, where} from "firebase/firestore"; 
-import db from '../../firebase';
+import axios from 'axios';
 import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import TraitListItem from './TraitListItem';
 
 function TraitsList() {
-  const [skills, setSkills] = useState([])
-  // const [searchChanged, setSearchChanged] = useState(false)
+  const [traits, setTraits] = useState([])
   const [blueEffects, setBlueEffects] = useState([])
   const [chars, setChars] = useState([])
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/traits`)), (snapshot) => {
-      setSkills(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
-    onSnapshot(query(collection(db, `games/soc/effect_tags`), where("color","==","blue")), (snapshot) => {
-      setBlueEffects(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
-    onSnapshot(query(collection(db, `/games/soc/chars`)), (snapshot) => {
-      setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"traits","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setTraits(res.data.documents)
+    }).catch(err => console.warn(err));
+
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setChars(res.data.documents)
+    }).catch(err => console.warn(err));
+
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "color": "blue"
+        }}
+    }).then(res => {
+      setBlueEffects(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
 
-  const filteredSkills = skills
+  const filteredTraits = traits
     // .filter(skill => skill.title.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
@@ -40,7 +49,7 @@ function TraitsList() {
       </div> */}
 
       <div className='d-flex flex-wrap'>
-        {skills&&(filteredSkills.map(trait => (
+        {traits&&(filteredTraits.map(trait => (
           <TraitListItem trait={trait} char={chars.filter(char => char.trait === trait.slug)}
           blueEffects={blueEffects} />
         )))}

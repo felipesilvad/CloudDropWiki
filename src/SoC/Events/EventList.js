@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { query, collection, onSnapshot, orderBy, limit} from "firebase/firestore"; 
-import db from '../../firebase';
+import axios from 'axios';
 import {Container} from 'react-bootstrap';
 import EventItem from './EventItem';
 
@@ -8,11 +7,17 @@ function EventsList({side, limitN=30}) {
   const [events, setEvents] = useState([])
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/events`), orderBy("startDate", "desc"), limit(limitN)), (snapshot) => {
-      setEvents(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"events","database":"soc","dataSource":"Sword","limit":limitN,
+        "sort": {
+          "startDate": -1
+        }
+      }
+    }).then(res => {
+      setEvents(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
-
+  
   return (
     <Container className='new-container'>
       {/* <Helmet>

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { doc, onSnapshot, where, query, collection, limit} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
-import db from '../../firebase';
+import axios from 'axios';
 import {Helmet} from "react-helmet";
 import { Col, Container, Image,Row } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
@@ -15,23 +14,39 @@ function GearPage() {
   const [gears, setGears] = useState([])
 
   useEffect(() => {
-    onSnapshot(doc(db, "games/soc/gears/", id), (doc) => {
-      setGear(doc.data());
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"gears","database":"soc","dataSource":"Sword", 
+      "filter": {
+          "img": id
+        }
+      }
+    }).then(res => {
+      setGear(res.data.document)
+    }).catch(err => console.warn(err));
+
     window.scrollTo(0, 0)
   }, [id]);
 
   useEffect(() => {
-    if (gear.type) {
-      onSnapshot(query(collection(db, `/games/soc/chars`), where('weapon_type', '==', gear.type)), (snapshot) => {
-        setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-      })
-    }
-    if (gear.img) {
-      onSnapshot(query(collection(db, `/games/soc/gears`), where("img", ">", gear.img), limit(3)), (snapshot) => {
-        setGears(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-      });
-    }
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword",
+        "filter": {
+          "weapon_type": gear.type
+        }
+      }
+    }).then(res => {
+      setChars(res.data.documents)
+    }).catch(err => console.warn(err));
+
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"gears","database":"soc","dataSource":"Sword","limit":4,
+        "filter": {
+          "img": { $gt: gear.img }
+        }
+      }
+    }).then(res => {
+      setGears(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [gear]);
 
   

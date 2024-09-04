@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { query, collection, onSnapshot, orderBy} from "firebase/firestore"; 
-import db from '../../firebase';
 import {Helmet} from "react-helmet";
 import {Container,Form, Overlay} from 'react-bootstrap';
 import CharsListItem from './CharsListItem';
 import CharsListItemRow from './CharsListItemRow';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import axios from 'axios';
 
 function CharsList() {
   const [chars, setChars] = useState([])
@@ -13,12 +12,17 @@ function CharsList() {
   const windowWidth = useRef(window.innerWidth);
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/chars`), orderBy("role")), (snapshot) => {
-      setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
-    onSnapshot(query(collection(db, `/games/soc/factions`)), (snapshot) => {
-      setFactions(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setChars(res.data.documents)
+    }).catch(err => console.warn(err));
+
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"factions","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setFactions(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
 
   const roleOrder = ['Watcher', 'Destroyer', 'Seeker', 'Defender', 'Breaker'];
@@ -261,14 +265,13 @@ function CharsList() {
         <div sm={2} className='filter-div'>
           <div className='d-none d-md-block d-lg-block'>
             
-            <div
-              className={`side-bar-filter`}
-            >
-              <Form.Control 
+            <div className={`m-1`}>
+              <input
                 type="text"
                 placeholder="Search"
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
+                className='dark-input my-1'
               />
             </div>
 
@@ -319,7 +322,7 @@ function CharsList() {
 
             <div className='side-bar-filter mx-1'>
               <label className="filter-label mx-2">Filter Factions</label>
-              <br/>
+              <hr/>
               {factions.map(faction => (
                 <img
                   key={faction.slug}

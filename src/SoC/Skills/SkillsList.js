@@ -1,58 +1,187 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { query, collection, onSnapshot, limit} from "firebase/firestore"; 
-import db from '../../firebase';
+import React, { useState, useEffect, useMemo} from 'react';
+import axios from 'axios';
 import {Helmet} from "react-helmet";
-import {Container,Form,Row,Col} from 'react-bootstrap';
+import {Container,Row,Col} from 'react-bootstrap';
 import SkillListItem from './SkillListItem';
 import Select from 'react-select';
+import { FaSearch } from "react-icons/fa";
 
 function SkillsList() {
   const [skills, setSkills] = useState([])
   const [chars, setChars] = useState([])
   const [effectTags, setEffectTags] = useState([])
-  const [searchChanged, setSearchChanged] = useState(false)
-    
+  const [focused, setFocused] = React.useState(false);
+  const onFocus = () => setFocused(!focused);
+  const onBlur = () => setFocused(false);
+
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/skills`), limit(30)), (snapshot) => {
-      setSkills(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
-    onSnapshot(query(collection(db, `/games/soc/effect_tags`)), (snapshot) => {
-      setEffectTags(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
-    onSnapshot(query(collection(db, `/games/soc/chars`)), (snapshot) => {
-      setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"skills","database":"soc","dataSource":"Sword","limit":30}
+    }).then(res => {
+      setSkills(res.data.documents)
+    }).catch(err => console.warn(err));
+
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"effect_tags","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setEffectTags(res.data.documents)
+    }).catch(err => console.warn(err));
+
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setChars(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
 
   const [selectedEffectTypes, setSelectedEffectTypes] = useState('any');
+  const [selectedStatsTags, setSelectedStatsTags] = useState([]);
   const [selectedEffectTags, setSelectedEffectTags] = useState([]);
   const [selectedFactions, setSelectedFactions] = useState('none');
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeSearchTerm, setActiveSearchTerm] = useState('');
 
+  const handleEffectTypes = (value) => {
+    setSelectedEffectTypes(value)
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"skills","database":"soc","dataSource":"Sword",
+        "filter": {
+          "effect_type": value,
+          "slug": { $nin: skills.map(skill => skill.slug) }
+        }}
+    }).then(res => {
+      setSkills([...skills, ...res.data.documents])
+    }).catch(err => console.warn(err));
+  }
+
+  const handleStatsTags = (value) => {
+    setSelectedStatsTags(value)
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"skills","database":"soc","dataSource":"Sword",
+        "filter": {
+          $and: value.map(effectTag => ({"effect": {$regex : `\\${effectTag}`}})),
+          "slug": { $nin: skills.map(skill => skill.slug) }
+        }}
+    }).then(res => {
+      setSkills([...skills, ...res.data.documents])
+    }).catch(err => console.warn(err));
+  }
+
+  const handleEffectTags = (value) => {
+    setSelectedEffectTags(value)
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"skills","database":"soc","dataSource":"Sword",
+        "filter": {
+          $and: value.map(effectTag => ({"effect": {$regex : `\\[${effectTag}\]`}})),
+          "slug": { $nin: skills.map(skill => skill.slug) }
+        }}
+    }).then(res => {
+      setSkills([...skills, ...res.data.documents])
+    }).catch(err => console.warn(err));
+  }
+
+  const handleFactions = (value) => {
+    setSelectedFactions(value)
+    if (value === "any") {
+      axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+        data: {"collection":"skills","database":"soc","dataSource":"Sword",
+          "filter": {
+            $and: factions.map(faction => ({"effect": {$regex : `${faction}`}})),
+            "slug": { $nin: skills.map(skill => skill.slug) }
+          }}
+      }).then(res => {
+        setSkills([...skills, ...res.data.documents])
+      }).catch(err => console.warn(err));
+    } else if (value === "none") {}
+    else {
+      axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+        data: {"collection":"skills","database":"soc","dataSource":"Sword",
+          "filter": {
+            "effect": {$regex : `${value}`},
+            "slug": { $nin: skills.map(skill => skill.slug) }
+          }}
+      }).then(res => {
+        setSkills([...skills, ...res.data.documents])
+      }).catch(err => console.warn(err));
+    }
+  }
+
+  const handleSearch = (value) => {
+    setActiveSearchTerm(value)
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"skills","database":"soc","dataSource":"Sword",
+        "filter": {
+          "title": {$regex : value},
+          "slug": { $nin: skills.map(skill => skill.slug) }
+        }}
+    }).then(res => {
+      setSkills([...skills, ...res.data.documents])
+    }).catch(err => console.warn(err));
+  }
+  console.log(skills.map(skill => skill._id))
   useEffect (() => {
-    if (searchTerm !== '' || selectedEffectTags.length>0 || selectedEffectTypes!=='any' || selectedFactions!=='none')
-      if (!searchChanged) {
-        onSnapshot(query(collection(db, `/games/soc/skills`)), (snapshot) => {
-          setSkills(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-        });
-        setSearchChanged(true)
-      }
-  }, [selectedEffectTypes, selectedEffectTags, searchTerm, selectedFactions])
+    if (searchTerm === '') {
+      setActiveSearchTerm('')
+    }
+  }, [searchTerm])
 
 
   const effectTypes = useMemo(() => {
-    const types = skills.map(skill => skill.effect_type);
-    const uniqueTypes = [...new Set(types)];
-    return [{ value: 'any', label: 'Any' }, ...uniqueTypes.map(type => ({ value: type, label: type }))];
-  }, [skills]);
+    return [ {value: 'any', label: 'Any'},
+      {value: "Leader's Aura", label: "Leader's Aura"},
+      {value: 'Support', label: 'Support'},
+      {value: 'Reaction', label: 'Reaction'},
+      {value: 'Passive', label: 'Passive'},
+      {value: 'Healing', label: 'Healing'},
+      {value: 'Aura', label: 'Aura'},
+      {value: 'Basic Attack', label: 'Basic Attack'},
+      {value: 'Physical DMG', label: 'Physical DMG'},
+      {value: 'Magical DMG', label: 'Magical DMG'},
+      {value: 'Piercing DMG', label: 'Piercing DMG'},
+      {value: 'Mixed DMG', label: 'Mixed DMG'},
+      {value: 'Debuff', label: 'Debuff'},
+      {value: 'Decision', label: 'Decision'},
+      {value: 'Gear Skill', label: 'Gear Skill'},
+    ];
+  }, []);
 
+  const statsTags = useMemo(() => {
+    return [
+      {value: 'DMG Reduction', label: 'DMG Reduction'},
+      {value: '|dwn|DMG', label: '▼DMG'},
+      {value: '|dwn|ATK', label: '▼ATK'},
+      {value: '|dwn|P.ATK', label: '▼P.ATK'},
+      {value: '|dwn|M.ATK', label: '▼M.ATK'},
+      {value: '|dwn|DEF', label: '▼DEF'},
+      {value: '|dwn|M.DEF', label: '▼M.DEF'},
+      {value: '|dwn|P.DEF', label: '▼P.DEF'},
+      {value: '|dwn|SPD', label: '▼SPD'},
+      {value: '|dwn|Move', label: '▼Move'},
+      {value: '|dwn|Healing Received', label: '▼Healing Received'},
+      {value: '|up|DMG', label: '▲DMG'},
+      {value: '|up|ATK', label: '▲ATK'},
+      {value: '|up|P.ATK', label: '▲P.ATK'},
+      {value: '|up|M.ATK', label: '▲M.ATK'},
+      {value: '|up|DEF', label: '▲DEF'},
+      {value: '|up|P.DEF', label: '▲P.DEF'},
+      {value: '|up|M.DEF', label: '▲M.DEF'},
+      {value: '|up|SPD', label: '▲SPD'},
+      {value: '|up|Move', label: '▲Move'},
+      {value: '|up|Crit', label: '▲Crit'},
+      {value: '|up|Crit DMG', label: '▲Crit DMG'},
+      {value: '|up|Healing', label: '▲Healing'},
+    ];
+  }, []);
+  
   const effectTagOptions = useMemo(() => {
-    return effectTags.map(tag => ({ value: tag.slug, label: tag.title }));
-  }, [effectTags]);
+    return [...statsTags, ...effectTags.filter(tag => !tag.title.includes("|")).map(tag => ({ value: tag.title, label: tag.title }))];
+  }, [effectTags, statsTags]);
+  
   const factions = useMemo(() => {
     return ["Aggression","Alacrity","Discipline","Drifter","Fortitude",
       "Iria","Papal States","Sword of Convallaria","The Union", "Vlder"]
   }, []);
+
   const factionOptions = useMemo(() => {
     return [{ value: 'none', label: 'None' }, { value: 'any', label: 'Any' }, 
       ...factions.map(faction => ({ value: faction, label: faction }))];
@@ -60,8 +189,9 @@ function SkillsList() {
 
   const filteredSkills = skills
     .filter(skill => selectedEffectTypes==="any" || !selectedEffectTypes || selectedEffectTypes === skill.effect_type)
+    .filter(skill => selectedStatsTags.length === 0 || selectedStatsTags.every(tag => skill.effect.includes(tag)))
     .filter(skill => selectedEffectTags.length === 0 || selectedEffectTags.every(tag => skill.effect.includes(`[${tag}]`)))
-    .filter(skill => skill.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(skill => skill.title.toLowerCase().includes(activeSearchTerm.toLowerCase()))
     .filter(skill => {  
       if (selectedFactions === "none") {
         return true;
@@ -71,58 +201,98 @@ function SkillsList() {
         return skill.effect.toLowerCase().includes(selectedFactions.toLowerCase());
       }
     });
+
+  const customSelectTheme = (theme) => ({
+    ...theme,
+    borderRadius: "0.25rem",
+    zIndex: 9999,
+    colors: {
+      ...theme.colors,
+      primary25: '#424755', // change Background color of options on hover
+      primary: '#66F3F5', // change the Background color of the selected option
+      neutral0: "#282F38",
+      neutral90: "white",
+      neutral80: "white",
+      neutral70: "white",
+      neutral20: "#9e9e9e",
+      neutral10: "#4B545C",
+    },
+  });
+
   return (
-    <Container className='new-container'>
+    <Container className='skill-list-container'>
       <Helmet>
         <title>Skills List - SoC Wiki</title>
         <meta name="description" content="Sword of Convallaria All Skills Effects, Characters that Learn, Skill Tree" />
       </Helmet>
-      <div>
-        <div className={`side-bar-filter`}>
-          <Form.Control type="text"placeholder="Search"
-          value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
-        </div>
-        <Row>
-          <Col>
-            <label>Filter Skill Type</label>
+      
+      <Row className='custom-row'>
+        <Col md={2} className='filter-bg py-2'>
+          <div className="d-flex align-items-center">
+            <input className='dark-input filter-search-input' type="text" placeholder="Search" onBlur={onBlur}
+            value={searchTerm} onChange={e => setSearchTerm(e.target.value)} onFocus={onFocus}/>
+            <div 
+              className={`filter-search-icon-div d-flex align-items-center 
+              ${focused&&("filter-search-icon-div-focus")}`}
+              onClick={() => handleSearch(searchTerm)}
+            >
+              <FaSearch className='filter-search-icon' />
+            </div>
+          </div>
+          <div className='mt-2'>
+            <label className="filter-label mx-2">Filter Type</label>
             <Select
               options={effectTypes}
-              onChange={selectedOption => setSelectedEffectTypes(selectedOption.value)}
-              placeholder="Select skill types..."
-              menuPortalTarget={document.body} 
-              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+              onChange={selectedOption => handleEffectTypes(selectedOption.value)}
+              placeholder="Select"
+              styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
+              theme={customSelectTheme}
             />
-          </Col>
-          <Col>
-            <label>Filter Effects</label>
+          </div>
+          <div>
+            <label className="filter-label mx-2">Filter Stats Effects</label>
+            <Select
+              isMulti
+              options={statsTags}
+              onChange={selectedOptions =>  handleStatsTags(selectedOptions.map(option => option.value))}
+              placeholder="Select"
+              styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
+              theme={customSelectTheme}
+            />
+          </div>
+          <div>
+            <label className="filter-label mx-2">Filter Other Effects</label>
             <Select
               isMulti
               options={effectTagOptions}
-              onChange={selectedOptions => setSelectedEffectTags(selectedOptions.map(option => option.label))}
-              placeholder="Select effect tags..."
-              menuPortalTarget={document.body} 
-              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+              onChange={selectedOptions =>  handleEffectTags(selectedOptions.map(option => option.value))}
+              placeholder="Select"
+              styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
+              theme={customSelectTheme}
             />
-          </Col>
-          <Col>
-            <label>Filter Faction Effect</label>
+          </div>
+          <div>
+            <label className="filter-label mx-2">Filter Faction</label>
             <Select
               options={factionOptions}
-              onChange={selectedOptions => setSelectedFactions(selectedOptions.value)}
-              placeholder="Select faction..."
-              menuPortalTarget={document.body} 
-              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+              onChange={selectedOptions => handleFactions(selectedOptions.value)}
+              placeholder="Select"
+              styles={{menu: provided => ({ ...provided, zIndex: 9999 })}}
+              theme={customSelectTheme}
             />
-          </Col>
-        </Row>
-      </div>
+          </div>
+        </Col>
 
-      <div className='d-flex flex-wrap'>
-        {skills&&effectTags&&(filteredSkills.map(skill => (
-          <SkillListItem skill={skill} chars={chars}
-          blueEffects={[effectTags.filter(effect => effect.color === "blue")]} />
-        )))}
-      </div>
+        <Col md={10}>
+          {skills.length} Results {selectedStatsTags}
+          <div className='d-flex flex-wrap'>
+            {skills&&effectTags&&(filteredSkills.map(skill => (
+              <SkillListItem skill={skill} chars={chars}
+              blueEffects={[effectTags.filter(effect => effect.color === "blue")]} />
+            )))}
+          </div>
+        </Col>
+      </Row>
     </Container>
   )
   

@@ -1,16 +1,20 @@
 import React, {useState,useEffect} from 'react';
-import { doc, onSnapshot} from 'firebase/firestore';
-import db from '../../firebase';
-import slugify from 'react-slugify';
+import axios from 'axios';
+// import slugify from 'react-slugify';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import EffectTxt from './EffectTxt';
 
 const EffectTag = ({ value }) => {
   const [effectTag, setEffectTag] = useState()
   useEffect(() => {
-    onSnapshot(doc(db, "games/soc/effect_tags/", slugify(value)), (doc) => {
-      setEffectTag(doc.data());
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"effect_tags","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "title": value
+        }}
+    }).then(res => {
+      setEffectTag(res.data.document)
+    }).catch(err => console.warn(err));
   }, [value]);
 
   const renderContent = () => {
@@ -21,9 +25,11 @@ const EffectTag = ({ value }) => {
         return <span key={index} alt="down" className='debuff-color'>▼</span>;
       } else if (part === '|null|'||part === 'null|'||part === '|null') {
         return <span key={index} alt="null" >🚫</span>;
-      } else if (part === '|hr|'||part === 'hr|'||part === '|hr') {
+      } else if (part === '|hr|') {
         return <hr />;
-      }else {
+      } else if (part === '|br|') {
+        return <br />;
+      } else {
         return part;
       }
     });

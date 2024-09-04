@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { doc, onSnapshot} from 'firebase/firestore';
 import {useParams} from 'react-router-dom';
-import db from '../../firebase';
+import axios from 'axios';
 import { Col, Container, Image,Row } from 'react-bootstrap';
 import EventsList from './EventList';
 import EventFeaturedChar from './EventFeaturedChar';
@@ -13,9 +12,11 @@ function EventPage() {
   const [matches, setMatches] = useState([])
 
   useEffect(() => {
-    onSnapshot(doc(db, "games/soc/events/", id), (doc) => {
-      setEvent(doc.data());
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"events","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setEvent(res.data.document)
+    }).catch(err => console.warn(err));
     window.scrollTo(0, 0)
   }, [id]);
   

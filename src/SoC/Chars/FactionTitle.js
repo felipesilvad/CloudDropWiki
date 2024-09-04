@@ -1,8 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { Image } from 'react-bootstrap';
 import slugify from 'react-slugify';
-import { doc, onSnapshot,} from 'firebase/firestore';
-import db from '../../firebase';
+import axios from 'axios';
 import { Tooltip } from 'react-tooltip'
 import CharFace from './CharFace';
 
@@ -11,9 +10,14 @@ function FactionTitle({slug,chars,effect}) {
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
 
   useEffect(() => {
-    onSnapshot(doc(db, "games/soc/factions/", slugify(slug, { delimiter: '_' })), (doc) => {
-      setFaction(doc.data());
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"factions","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "title": slug
+        }}
+    }).then(res => {
+      setFaction(res.data.document)
+    }).catch(err => console.warn(err));
   }, [slug]);
 
   if (faction) {

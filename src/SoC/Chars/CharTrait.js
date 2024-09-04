@@ -1,7 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import { Image } from 'react-bootstrap';
-import { doc, onSnapshot} from 'firebase/firestore';
-import db from '../../firebase';
+import axios from 'axios';
 import EffectTxt from '../Effect/EffectTxt';
 
 function CharTrait({slug,blueEffects,chars}) {
@@ -9,9 +8,14 @@ function CharTrait({slug,blueEffects,chars}) {
   const [showStars, setShowStars] = useState(false)
 
   useEffect(() => {
-    onSnapshot(doc(db, "games/soc/traits/", slug), (doc) => {
-      setTrait(doc.data());
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"traits","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "slug": slug
+        }}
+    }).then(res => {
+      setTrait(res.data.document)
+    }).catch(err => console.warn(err));
   }, [slug]);
 
 

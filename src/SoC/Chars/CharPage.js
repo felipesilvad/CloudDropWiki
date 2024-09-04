@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {Row,Col,Container,Image,Form,Modal} from 'react-bootstrap';
-import { doc, onSnapshot, query, collection, where} from 'firebase/firestore';
+import axios from 'axios';
 import {useParams} from 'react-router-dom';
-import db from '../../firebase';
 import {Helmet} from "react-helmet";
 import StatsItem from './StatsItem';
 import StatsItemMove from './StatsItemMove';
@@ -22,12 +21,6 @@ function CharPage() {
   const id = useParams().id
   const [char, setChar] = useState([])
   const [reversedSkillTree, setReversedSkillTree] = useState([])
-  const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
-  const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_awaken.png?alt=media`
-  const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.png?alt=media`
-  const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
-  const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
-  const cut = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_cut.png?alt=media`
   const windowWidth = useRef(window.innerWidth);
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
 
@@ -51,41 +44,62 @@ function CharPage() {
       setActiveSkill(slug)
     }
   }
-
   const [art, setArt] = useState('');
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `games/soc/chars`)), (snapshot) => {
-      setChars(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
-    onSnapshot(query(collection(db, `games/soc/effect_tags`), where("color","==","blue")), (snapshot) => {
-      setBlueEffects(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setChars(res.data.documents)
+    }).catch(err => console.warn(err));
+
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "color": "blue"
+        }}
+    }).then(res => {
+      setBlueEffects(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
 
   useEffect(() => {
-    onSnapshot(doc(db, "games/soc/chars/", id), (doc) => {
-      setChar(doc.data());
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "slug": id
+        }}
+    }).then(res => {
+      setChar(res.data.document)
+    }).catch(err => console.warn(err));
+    
     window.scrollTo(0, 0)
   }, [id]);
 
   useEffect(() => {
-    if (char.skill_tree) {
-      setActiveSkill(char.skill_tree[0].skill0)
-    }
-    if (char.rarity === "Legendary") {
-      setArt("Awaken")
-    } else {
-      setArt("Main")
-    }
-    if (char.skill_tree) {
-      setReversedSkillTree(char.skill_tree.reverse())
+    if (char) {
+      if (char.skill_tree) {
+        setActiveSkill(char.skill_tree[0].skill0)
+      }
+      if (char.rarity === "Legendary") {
+        setArt("Awaken")
+      } else {
+        setArt("Main")
+      }
+      if (char.skill_tree) {
+        setReversedSkillTree(char.skill_tree.reverse())
+      }
     }
   }, [char]);
   
   if (char) {
-    
+    const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
+    const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_awaken.png?alt=media`
+    const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.png?alt=media`
+    const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
+    const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
+    const cut = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_cut.png?alt=media`
+
     return (
       <Container className='char-container py-2'>
         {char.name&&(
@@ -368,7 +382,7 @@ function CharPage() {
                   {char.biography?(  
                     <div className='char-bio'>
                       <h3 className='mx-2'>Biography</h3>
-                      <img src={sprite} alt="Description" class="pixel-bio"/>
+                      <img src={sprite} alt="Description" className="pixel-bio"/>
                       <p className='char-bio-txt' dangerouslySetInnerHTML={{__html: char.biography}}></p>
                     </div>
                   ):(

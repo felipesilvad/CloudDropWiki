@@ -1,14 +1,19 @@
 import React, {useState,useEffect} from 'react';
-import { doc, onSnapshot} from 'firebase/firestore';
-import db from '../../firebase';
+import axios from 'axios';
 import TarotsListItem from '../Gear/TarotsListItem';
 
 function GetTarotItem({id}) {
   const [tarot, setTarot] = useState()
   useEffect(() => {
-    onSnapshot(doc(db, "games/soc/tarots/", id), (doc) => {
-      setTarot(doc.data());
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
+      data: {"collection":"tarots","database":"soc","dataSource":"Sword", 
+      "filter": {
+          "slug": id
+        }
+      }
+    }).then(res => {
+      setTarot(res.data.document)
+    }).catch(err => console.warn(err));
   }, [id]);
 
   if (tarot) {

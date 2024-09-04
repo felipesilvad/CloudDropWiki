@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { query, collection, onSnapshot, where} from "firebase/firestore"; 
-import db from '../../firebase';
+import axios from 'axios';
 import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import EnemiesListItem from './EnemiesListItem';
@@ -10,12 +9,19 @@ function EnemiesList() {
   const [blueEffects, setBlueEffects] = useState([])
 
   useEffect (() => {
-    onSnapshot(query(collection(db, `/games/soc/enemies`)), (snapshot) => {
-      setEnemies(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
-    onSnapshot(query(collection(db, `games/soc/effect_tags`), where("color","==","blue")), (snapshot) => {
-      setBlueEffects(snapshot.docs.map(doc => ({...doc.data(), id: doc.id})))
-    });
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"enemies","database":"soc","dataSource":"Sword"}
+    }).then(res => {
+      setEnemies(res.data.documents)
+    }).catch(err => console.warn(err));
+    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+      data: {"collection":"chars","database":"soc","dataSource":"Sword", 
+        "filter": {
+          "color": "blue"
+        }}
+    }).then(res => {
+      setBlueEffects(res.data.documents)
+    }).catch(err => console.warn(err));
   }, [])
 
   return (
