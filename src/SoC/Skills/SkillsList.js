@@ -59,7 +59,7 @@ function SkillsList() {
     axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
       data: {"collection":"skills","database":"soc","dataSource":"Sword",
         "filter": {
-          $and: value.map(effectTag => ({"effect": {$regex : `\\${effectTag}`}})),
+          $and: value.map(effectTag => ({"effect": {$regex : effectTag.replaceAll('|','\\|')}})),
           "slug": { $nin: skills.map(skill => skill.slug) }
         }}
     }).then(res => {
@@ -174,7 +174,7 @@ function SkillsList() {
   }, []);
   
   const effectTagOptions = useMemo(() => {
-    return [...statsTags, ...effectTags.filter(tag => !tag.title.includes("|")).map(tag => ({ value: tag.title, label: tag.title }))];
+    return effectTags.filter(tag => !tag.title.includes("|")).map(tag => ({ value: tag.title, label: tag.title }));
   }, [effectTags, statsTags]);
   
   const factions = useMemo(() => {
@@ -284,7 +284,7 @@ function SkillsList() {
         </Col>
 
         <Col md={10}>
-          {skills.length} Results {selectedStatsTags}
+          {filteredSkills.length} Results
           <div className='d-flex flex-wrap'>
             {skills&&effectTags&&(filteredSkills.map(skill => (
               <SkillListItem skill={skill} chars={chars}

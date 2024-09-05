@@ -382,11 +382,13 @@ function CharPage() {
                   {char.biography?(  
                     <div className='char-bio'>
                       <h3 className='mx-2'>Biography</h3>
-                      <img src={sprite} alt="Description" className="pixel-bio"/>
+                      <img src={sprite} onClick={() =>  navigator.clipboard.writeText(char._id)}
+                      alt="Description" className="pixel-bio"/>
                       <p className='char-bio-txt' dangerouslySetInnerHTML={{__html: char.biography}}></p>
                     </div>
                   ):(
-                    <img src={sprite} alt="Description" class="pixel-bio"/>
+                    <img src={sprite} onClick={() =>  navigator.clipboard.writeText(char._id)}
+                     alt="Description" class="pixel-bio"/>
                   )}
                 </Col>
               </Row>
