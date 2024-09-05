@@ -104,8 +104,8 @@ function CharPage() {
       <Container className='char-container py-2'>
         {char.name&&(
           <Helmet>
-            <title>{char.name} Stats and Build - SoC Wiki</title>
-            <meta name="description" content={`${char.name}Skills Recommendations and Priority, Recommended Gear, Tarots, Weapons, and Trinkets. Stats comparison and Trait Detail. - Sword of Convallaria Wiki Database`} />
+            <title>{char.name} | Sword of Convallaria Wiki - Stats and Build</title>
+            <meta name="description" content={`${char.name}S kills Recommendations and Priority, Recommended Gear, Tarots, Weapons, and Trinkets. Stats comparison and Trait Detail. - SoC Wiki Database`} />
           </Helmet>
         )}
         <Row className='custom-row'>

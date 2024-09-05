@@ -13,7 +13,10 @@ function EventPage() {
 
   useEffect(() => {
     axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
-      data: {"collection":"events","database":"soc","dataSource":"Sword"}
+      data: {"collection":"events","database":"soc","dataSource":"Sword",
+        "filter": {
+          "id": id
+        }}
     }).then(res => {
       setEvent(res.data.document)
     }).catch(err => console.warn(err));
