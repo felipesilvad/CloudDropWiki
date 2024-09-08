@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Helmet} from "react-helmet";
-import {Container,Form, Overlay} from 'react-bootstrap';
+import {Container,Overlay} from 'react-bootstrap';
 import CharsListItem from './CharsListItem';
 import CharsListItemRow from './CharsListItemRow';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import axios from 'axios';
+import Mongo from '../../mango'
 
 function CharsList() {
   const [chars, setChars] = useState([])
@@ -12,26 +12,20 @@ function CharsList() {
   const windowWidth = useRef(window.innerWidth);
 
   useEffect (() => {
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"chars","database":"soc","dataSource":"Sword"}
-    }).then(res => {
+    Mongo.find('chars')
+    .then(res => {
       setChars(res.data.documents)
     }).catch(err => console.warn(err));
 
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"factions","database":"soc","dataSource":"Sword"}
-    }).then(res => {
+    Mongo.find('factions')
+    .then(res => {
       setFactions(res.data.documents)
-    }).catch(err => console.warn(err));
+    }, function(err) {console.log(err);})
   }, [])
 
   const roleOrder = ['Watcher', 'Destroyer', 'Seeker', 'Defender', 'Breaker'];
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
 
-  // const [hideEpic, setHideEpic] = useState(false);
-  // const [hideRare, setHideRare] = useState(false);
-  // const [hideCommon, setHideCommon] = useState(false);
-  // const [hideLegendary, setHideLegendary] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFactions, setActiveFactions] = useState([]);
   const [activeRoles, setActiveRoles] = useState('');
@@ -54,14 +48,6 @@ function CharsList() {
     );
   };
 
-  // const toggleRarity = (rarity) => {
-  //   setActiveRarities(prevRarities =>
-  //     prevRarities.includes(rarity)
-  //       ? prevRarities.filter(f => f !== rarity)
-  //       : [...prevRarities, rarity]
-  //   );
-  // };
-
   const handleShowFactions = () => {
     setShowFactions(!showFactions)
     setShowRoles(false)
@@ -82,10 +68,6 @@ function CharsList() {
 
 
   const filteredChars = chars
-    // .filter(char => !hideEpic || char.rarity !== 'Epic')
-    // .filter(char => !hideRare || char.rarity !== 'Rare')
-    // .filter(char => !hideCommon || char.rarity !== 'Common')
-    // .filter(char => !hideLegendary || char.rarity !== 'Legendary')
     .filter(char => char.name.toLowerCase().includes(searchTerm.toLowerCase())) // Filter by search term
     .filter(char => activeFactions.length === 0 || activeFactions.every(faction => char.factions.includes(faction))) // Filter by factions
     .filter(char => !activeRoles || char.role === activeRoles) // Filter by factions
@@ -104,6 +86,7 @@ function CharsList() {
       <Helmet>
         <title>Characters List - SoC Wiki</title>
         <meta name="description" content="Sword of Convallaria Characters List, All Rarities: Epic, Rare, Common units" />
+        <link rel="canonical" href='/chars' />
       </Helmet>
 
       {/* MOBILE SIDEBAR */}

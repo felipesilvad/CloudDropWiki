@@ -26,10 +26,10 @@ function StatsItem({stat, chars}) {
   
   if (stat) {
     return (
-      <div className={"w-50"}>
+      <div key={stat.label} className={"w-50"}>
         <div className='stat-item-bg d-flex align-items-center'>
           <div className='stat-icon-bg'>
-            <Image className='stat-icon' src={require(`../assets/img/stat_${stat.label.replace(".","").replace(" ","_")}.png`)} />
+            <Image className='stat-icon' alt={stat.label} width={"inherit"} height={"inherit"} src={require(`../assets/img/stat_${stat.label.replace(".","").replace(" ","_")}.png`)} />
           </div>
           {stat.value}
           <div className='w-100 d-flex justify-content-end'>

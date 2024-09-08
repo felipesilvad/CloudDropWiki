@@ -2,7 +2,6 @@ import React from 'react';
 import { Image } from 'react-bootstrap';
 import {Row, Col} from 'react-bootstrap';
 import GetTraitDoc from '../Skills/GetTraitDoc';
-import GetActiveSkill from '../Chars/GetActiveSkill';
 
 function EnemiesListItem({enemy, blueEffects}) {
 
@@ -14,7 +13,7 @@ function EnemiesListItem({enemy, blueEffects}) {
         <div className='skill-detail-bg trait-title text-center '>{enemy.stage}</div>
         <Row>
           <Col md={4}>
-            <Image className='boss-img' src={enemy_img} />
+            <Image alt={enemy_img} className='boss-img' src={enemy_img} />
             <div className='w-100 skill-detail-bg text-center'>
               {enemy.title}
             </div>
@@ -24,9 +23,9 @@ function EnemiesListItem({enemy, blueEffects}) {
               {enemy.trait&&(
                 <GetTraitDoc slug={enemy.trait} chars={[]} blueEffects={blueEffects} boss={true} />
               )}
-              {enemy.skills&&(enemy.skills.map(skill => (
+              {/* {enemy.skills&&(enemy.skills.map(skill => (
                 <GetActiveSkill slug={skill} chars={[]} blueEffects={blueEffects} />
-              )))}
+              )))} */}
             </div>
           </Col>
         </Row>

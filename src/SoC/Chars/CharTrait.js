@@ -1,23 +1,9 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
 import { Image } from 'react-bootstrap';
-import axios from 'axios';
 import EffectTxt from '../Effect/EffectTxt';
 
-function CharTrait({slug,blueEffects,chars}) {
-  const [trait, setTrait] = useState()
+function CharTrait({trait,blueEffects,chars}) {
   const [showStars, setShowStars] = useState(false)
-
-  useEffect(() => {
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/findOne",
-      data: {"collection":"traits","database":"soc","dataSource":"Sword", 
-        "filter": {
-          "slug": slug
-        }}
-    }).then(res => {
-      setTrait(res.data.document)
-    }).catch(err => console.warn(err));
-  }, [slug]);
-
 
   if (trait) {
     return (
@@ -25,8 +11,8 @@ function CharTrait({slug,blueEffects,chars}) {
         <div className='trait-div d-flex align-items-center'>
           <div className='trait-title d-flex align-items-center'>
               <div className='trait-img-container'>
-                <Image className='trait-img background' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/skills%2F${trait.img}.png?alt=media&token=a0eb4570-8b1d-4859-8a66-90f4e32b2896`} />
-                <Image className='trait-img foreground' src={require(`../assets/img/skill-${(trait.rarity)?(trait.rarity):('Legendary')}.png`)} />
+                <Image className='trait-img background' alt={trait.img} width={"auto"} height={"auto"} src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/skills%2F${trait.img}.png?alt=media&token=a0eb4570-8b1d-4859-8a66-90f4e32b2896`} />
+                <Image className='trait-img foreground'alt={trait.rarity} width={"auto"} height={"auto"} src={require(`../assets/img/skill-${(trait.rarity)?(trait.rarity):('Legendary')}.png`)} />
               </div>
             <b className='trait-title-txt'>
               {trait.title}

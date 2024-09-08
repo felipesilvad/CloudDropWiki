@@ -35,7 +35,8 @@ function EventItem({event, side}) {
       return (
         <Link to={`/events/${event.id}`} className={`event-item ${side&&("w-100")}`}>
           <div className='event-col mt-2 mx-1'>  
-            <Image className='event-img' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`} />
+            <Image className='event-img' alt={event.id} width={876} height={`inherit`}
+            src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`} />
             <div className='mx-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
               <h5 className="">{event.title}</h5>
             </div>

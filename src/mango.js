@@ -2,20 +2,20 @@ import axios from 'axios';
 
 class Mongo {
   // static accessToken = localStorage.getItem("mongoAccessToken");
-  static projectId = localStorage.getItem("mongoProjectId");
-  static provider = localStorage.getItem("mongoProvider");
-  static region = localStorage.getItem("mongoRegion");
+  // static projectId = localStorage.getItem("mongoProjectId");
+  // static provider = localStorage.getItem("mongoProvider");
+  // static region = localStorage.getItem("mongoRegion");
 
-  // static #authUrl = () =>
-  //   `https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find`;
-  static #apiUrl = (action) =>
-    `https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/${action}`;
-  static #authHeaders = () => ({
-    "Access-Control-Request-Headers": "*",
-    Accept: "application/json",
-    // Authorization: `Bearer ${Mongo.accessToken}`,
-    "Content-Type": "application/json",
-  });
+  // // static #authUrl = () =>
+  // //   `https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find`;
+  // static #apiUrl = (action) =>
+  //   `https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/${action}`;
+  // static #authHeaders = () => ({
+  //   "Access-Control-Request-Headers": "*",
+  //   Accept: "application/json",
+  //   // Authorization: `Bearer ${Mongo.accessToken}`,
+  //   "Content-Type": "application/json",
+  // });
 
   // static ready() {
   //   return !!Mongo.projectId && !!Mongo.provider && !!Mongo.region;
@@ -64,16 +64,14 @@ class Mongo {
   static async find(collection, data) {
     if (data?.filter?._id) data.filter._id = { $oid: data.filter._id };
 
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
+    return axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
       data: {
         "collection":collection,
         "database":"soc",
         "dataSource":"Sword",
         ...data,
       }
-    }).then(res => {
-      return res.data.documents
-    }).catch(error => console.warn(`Mongo.find: ${error}`));
+    })
 
     // return fetch(Mongo.#apiUrl("find"), {
     //   method: "POST",

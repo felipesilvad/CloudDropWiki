@@ -8,21 +8,14 @@ function Home() {
   const [events, setEvents] = useState([])
 
   useEffect (() => {
-    Mongo.find('events').then(res => {
-      console.log(res)
+    Mongo.find('events',{limit: 9, sort: {"startDate": -1}})
+    .then(res => {
+      setEvents(res.data.documents)
     }, function(err) {
-      console.log(err); // Error: "It broke"
+      console.log(err);
     })
-    // axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-    //   data: {"collection":"events","database":"soc","dataSource":"Sword","limit":limitN,
-    //     "sort": {
-    //       "startDate": -1
-    //     }
-    //   }
-    // }).then(res => {
-    //   setEvents(res.data.documents)
-    // }).catch(err => console.warn(err));
   }, [])
+
   return (
     <>
       <Helmet>
@@ -30,6 +23,7 @@ function Home() {
         <meta name="description" content="SoC Database, All Characters, Skills, Items, Stages, and Bosses Information." />
         <link rel="canonical" href='/' />
       </Helmet>
+      <h1 className='d-none'>Sword of Convallaria Wiki Homepage - Character Skills and Stats, News</h1>
       <div className='header-cool'>
         <div className='overlay-dark'></div>
       </div>
@@ -37,7 +31,7 @@ function Home() {
         <div className='black-label-div'>
           Latest Events
         </div>
-        {/* <EventsList limitN={9} /> */}
+        <EventsList events={events} />
       </Container>
     </>
   );

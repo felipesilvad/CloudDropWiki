@@ -208,12 +208,12 @@
   border: 2px solid rgba($gold, 1);
   transition: 200ms;
 }
-.the-union-bg {background-color: #415B75;}
+.the_union-bg {background-color: #415B75;}
 .fortitude-bg {background-color: #9A6250;}
 .drifter-bg {background-color: #705B41;}
 .aggression-bg {background-color: #A16755;}
-.papal-states-bg {background-color: #dad091;}
-.sword-of-convallaria-bg {background-color: #5F8678;}
+.papal_states-bg {background-color: #dad091;}
+.sword_of_convallaria-bg {background-color: #5F8678;}
 .alacrity-bg {background-color: #778FB0;}
 .vlder-bg {background-color: #689081;}
 .discipline-bg {background-color: #778FB0;}
@@ -847,6 +847,7 @@
   border-radius: 0.25rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0.25rem;
+  max-width: 100%;
 }
 .source-txt{
   text-transform: uppercase;

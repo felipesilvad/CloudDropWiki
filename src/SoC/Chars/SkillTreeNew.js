@@ -1,8 +1,7 @@
 import React from 'react';
 import SkillTreeNewSkill from './SkillTreeNewSkill';
 
-function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill}) {
-
+function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill, charSkills}) {
   if (lv) {
     return (
       <div className='align-items-center'>
@@ -10,8 +9,9 @@ function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill}
           <div className='d-flex skilltree-div w-100'>
 
             <div className='skilltree-skill'>
-              <SkillTreeNewSkill activeSkill={activeSkill} side={1} slug={lv.skill0}
-              skillRec={[skillRec, lv.rec0]} handleOnClickSkill={handleOnClickSkill} />
+              <SkillTreeNewSkill activeSkill={activeSkill} side={1}
+              skillRec={[skillRec, lv.rec0]} handleOnClickSkill={handleOnClickSkill}
+              skill={charSkills.filter(x => x.slug===lv.skill0)[0]} />
             </div>
 
             <div className='tree-rank_new'>
@@ -21,7 +21,8 @@ function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill}
 
             <div className='skilltree-skill'>
               <SkillTreeNewSkill activeSkill={activeSkill} side={2} slug={lv.skill1}
-              skillRec={[skillRec, lv.rec1]} handleOnClickSkill={handleOnClickSkill} />
+              skillRec={[skillRec, lv.rec1]} handleOnClickSkill={handleOnClickSkill}
+              skill={charSkills.filter(x => x.slug===lv.skill1)[0]} />
             </div>
 
           </div>

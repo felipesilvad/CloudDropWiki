@@ -29,7 +29,7 @@ function HeaderComponent() {
             </Nav.Link>
             <Nav.Link className='nav-link nl-border' href="/chars" >
               <div className='menu-icon-container'>
-                <Image className='menu-icon' src={char_img} />
+                <Image className='menu-icon' src={char_img} alt="char_img" width="100" height="100"/>
               </div>
               <div className='header-link'>
                 Characters
@@ -37,7 +37,7 @@ function HeaderComponent() {
             </Nav.Link>
             <div className='nav-link nl-border'>
               <div className='menu-icon-container'>
-                <Image className='menu-icon' src={skills_img} />
+                <Image className='menu-icon' src={skills_img} alt="skills_img" width="100" height="100"/>
               </div>
               <NavDropdown
                 id="nav-dropdown-dark-example"
@@ -52,7 +52,7 @@ function HeaderComponent() {
             </div>
             <Nav.Link className='nav-link nl-border' href="/gears" >
               <div className='menu-icon-container'>
-                <Image className='menu-icon' src={gear_img} />
+                <Image className='menu-icon' src={gear_img} alt="gear_img" width="100" height="100"/>
               </div>
               <div className='header-link'>
                 Gears
@@ -60,7 +60,7 @@ function HeaderComponent() {
             </Nav.Link>
             <Nav.Link className='nav-link nl-border' href="/tarots" >
               <div className='menu-icon-container'>
-                <Image className='menu-icon' src={tarot_img} />
+                <Image className='menu-icon' src={tarot_img} alt="tarot_img" width="100" height="100"/>
               </div>
               <div className='header-link'>
                 Tarots
@@ -68,7 +68,7 @@ function HeaderComponent() {
             </Nav.Link>
             <div className='nav-link nl-border'>
               <div className='menu-icon-container'>
-                <Image className='menu-icon' src={stage_img} />
+                <Image className='menu-icon' src={stage_img} alt="stage_img" width="100" height="100"/>
               </div>
               <NavDropdown
                 id="nav-dropdown-dark-example"
@@ -83,7 +83,7 @@ function HeaderComponent() {
             </div>
             <Nav.Link className='nav-link nl-border' href="/events" >
               <div className='menu-icon-container'>
-                <Image className='menu-icon' src={event_img} />
+                <Image className='menu-icon' src={event_img} alt="event_img" width="100" height="100"/>
               </div>
               <div className='header-link'>
                 Events
@@ -91,10 +91,10 @@ function HeaderComponent() {
             </Nav.Link>
           </Nav>
             <a target="_blank" href="https://ko-fi.com/clouddropwiki" rel="noreferrer">
-              <Image className='discord-img m-1'  src={kofi} />
+              <Image className='discord-img m-1'  src={kofi} alt="kofi" width="521" height="101"/>
             </a>
-            <a target="_blank" href="https://discord.gg/tbdmmUFN" rel="noreferrer">
-            <Image className='discord-img m-1' href="https://discord.gg/tbdmmUFN" src={discord} />
+            <a target="_blank" href="https://discord.gg/tdTmcKkM" rel="noreferrer">
+              <Image className='discord-img m-1' href="https://discord.gg/tdTmcKkM" src={discord} alt="discord" width="521" height="101"/>
             </a>
         </Navbar.Collapse>
         

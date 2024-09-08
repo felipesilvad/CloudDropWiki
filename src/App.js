@@ -5,7 +5,7 @@ import CharsList from './SoC/Chars/CharsList';
 import HeaderComponent from './SoC/Header';
 import CharPage from './SoC/Chars/CharPage';
 import Home from './SoC/Home';
-import EventsList from './SoC/Events/EventList';
+import EventsListPage from './SoC/Events/EventsListPage';
 import EventPage from './SoC/Events/EventPage';
 import SkillsList from './SoC/Skills/SkillsList';
 import TraitsList from './SoC/Skills/TraitsList';
@@ -32,7 +32,7 @@ function App() {
           <Route path='/gears' element={<GearsList />} exact/>
           <Route path='/gears/:id' element={<GearPage />} exact/>
           <Route path='/tarots' element={<TarotsList />} exact/>
-          <Route path='/events' element={<EventsList />} exact/>
+          <Route path='/events' element={<EventsListPage />} exact/>
           <Route path='/events/:id' element={<EventPage />} exact/>
           <Route path='/enemies' element={<EnemiesList />} exact/>
           {/* <Route path="/search" element={<SearchPage />} /> */}
