@@ -7,9 +7,12 @@ function EventsList({side, events}) {
   return (
     <Container className='new-container'>
       <div className='d-flex flex-wrap'>
-        {events&&(events.map(event => (
+        {events?(events.map(event => (
           <EventItem event={event} side={side} />
-        )))}
+        ))):(
+          <EventItem event={false} side={side} />
+        )
+        }
       </div>
     </Container>
   )
