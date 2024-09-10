@@ -105,12 +105,17 @@
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.opacity-0 {
+  opacity: 0;
+}
 
-/* Skeleton.css */
 .skeleton {
   background-color: rgba($lighter, 0.6);
   width: 100%;
-  height: 230px; /* Adjust to match your image size */
+  height: 225px;
+  @media only screen and (max-width: $md) {
+    height: 180px;
+  }
   border-radius: 8px;
   animation: shimmer 1.5s infinite linear;
 }

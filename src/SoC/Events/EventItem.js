@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
-import { Image } from 'react-bootstrap';
 import LazyImage from './LazyImage';
 
 function EventItem({event, side}) {
@@ -9,25 +8,22 @@ function EventItem({event, side}) {
   const startDate = new Date(event.startDate);
   const endDate = new Date(event.endDate);
 
+  Date.prototype.addHours = function(h) {
+    this.setTime(this.getTime() + (h*60*60*1000));
+    return this;
+  }
+
   useEffect(() => {
     if (endDate) {  
-      const calculateTimeRemaining = () => {
-        const currentTime = new Date();
-        const timeDifference = endDate - currentTime; // Difference in milliseconds
-  
-        if (timeDifference > 0) {
-          const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  
-          setTimeRemaining({ days, hours });
-        } else {
-          setTimeRemaining({ days: 0, hours: 0 });
-        }
-      };
-  
-      const timer = setInterval(calculateTimeRemaining, 1000); // Update every second
-  
-      return () => clearInterval(timer); // Cleanup on unmount
+      const currentTime = new Date();
+      const timeDifference = endDate - currentTime; // Difference in milliseconds
+      if (timeDifference > 0) {
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        setTimeRemaining({ days, hours });
+      } else {
+        setTimeRemaining({ days: 0, hours: 0 });
+      }
     }
   }, [event]);
 
@@ -58,7 +54,7 @@ function EventItem({event, side}) {
             )
           ):(
             <span className="event-item-time event-item-time-coming mx-2">
-              Coming: {startDate.toLocaleString()}
+              Coming: {startDate.addHours(4).toLocaleString()}
             </span>
           )}
         </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { tailspin } from 'ldrs'
 
 const LazyImage = ({ src, alt, ...props }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -7,18 +6,14 @@ const LazyImage = ({ src, alt, ...props }) => {
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
-  tailspin.register()
+
+  const eventImg =  require('../assets/img/0020.jpg')
 
   return (
     <div style={{ position: 'relative', width: '100%', height: 'auto' }}>
       {!isLoaded && (
         <div className="skeleton animate-flicker d-flex align-items-center justify-content-center">
-          {/* <l-tailspin
-            size="60"
-            stroke="5"
-            speed="1.6" 
-            color="gray" 
-          ></l-tailspin> */}
+          <img src={eventImg} className='event-img opacity-0' alt='event-loading' />
         </div>
       )}
       <img
