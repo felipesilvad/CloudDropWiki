@@ -23,7 +23,9 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers, chars}) => {
           array[index - 1]?.endsWith('Heals the target by ')||
           array[index - 1]?.endsWith('Heals all allies within ')||
           array[index - 1]?.endsWith('the DMG taken is decreased by ')||
-          array[index - 1]?.endsWith('healing skill by ')
+          array[index - 1]?.endsWith('healing skill by ')||
+          array[index - 1]?.endsWith('healing effect by ')||
+          array[index - 1]?.endsWith('healing received by ')
          ) {
           // Se a parte anterior termina com "Heals " ou "Heals the target by ", o número atual deve ser verde
           acc.push(

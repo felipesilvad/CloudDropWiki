@@ -6,7 +6,6 @@ import { orbit } from 'ldrs'
 
 function FactionTitle({faction,chars,effect}) {
   orbit.register()
-  console.log(faction)
   if (faction) {
     return (
       <>

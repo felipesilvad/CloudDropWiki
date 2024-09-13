@@ -44,8 +44,6 @@ function EventPage() {
     }
   }, [event]);
   
-  console.log(matches)
-
   if (event) {
     return (
       <Container className='new-container'>

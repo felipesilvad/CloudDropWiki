@@ -12,22 +12,26 @@ import GearsList from './SoC/Gear/GearsList';
 import GearPage from './SoC/Gear/GearPage';
 import TarotsList from './SoC/Gear/TarotList';
 import EnemiesList from './SoC/Stages/EnemiesList';
+import EngravingsComponent from './SoC/Gear/EngravingsComponent';
 
-export default (
-	<Routes>
-    <Route path='/' element={<Home />} exact/>
-    <Route path='/chars' element={<CharsList />} exact/>
-    <Route path='/chars/:id' element={<CharPage />} exact/>
-    <Route path='/skills' element={<SkillsList />} exact/>
-    <Route path='/traits' element={<TraitsList />} exact/>
-    <Route path='/effects' element={<EffectsList />} exact/>
-    <Route path='/gears' element={<GearsList />} exact/>
-    <Route path='/gears/:id' element={<GearPage />} exact/>
-    <Route path='/tarots' element={<TarotsList />} exact/>
-    <Route path='/events' element={<EventsListPage />} exact/>
-    <Route path='/events/:id' element={<EventPage />} exact/>
-    <Route path='/enemies' element={<EnemiesList />} exact/>
-    {/* <Route path="/search" element={<SearchPage />} /> */}
-  </Routes>
-);
-
+function Router() {
+  return (
+    <Routes>
+      <Route path='/' element={<Home />} exact/>
+      <Route path='/chars' element={<CharsList />} exact/>
+      <Route path='/chars/:id' element={<CharPage />} exact/>
+      <Route path='/skills' element={<SkillsList />} exact/>
+      <Route path='/traits' element={<TraitsList />} exact/>
+      <Route path='/effects' element={<EffectsList />} exact/>
+      <Route path='/gears' element={<GearsList />} exact/>
+      <Route path='/gears/:id' element={<GearPage />} exact/>
+      <Route path='/tarots' element={<TarotsList />} exact/>
+      <Route path='/events' element={<EventsListPage />} exact/>
+      <Route path='/events/:id' element={<EventPage />} exact/>
+      <Route path='/enemies' element={<EnemiesList />} exact/>
+      <Route path='/engravings' element={<EngravingsComponent />} exact/>
+      {/* <Route path="/search" element={<SearchPage />} /> */}
+    </Routes>
+  );
+}
+export default Router;

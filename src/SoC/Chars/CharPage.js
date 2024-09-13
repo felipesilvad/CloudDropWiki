@@ -16,6 +16,8 @@ import FactionTitle from './FactionTitle';
 import SkillListItem from '../Skills/SkillListItem';
 import GearsListItem from '../Gear/GearsListItem';
 import TarotsListItem from '../Gear/TarotsListItem';
+import EngravingSingle from '../Gear/EngravingSingle';
+import {Engravings} from '../Data/data.ts';
 import { orbit } from 'ldrs'
 
 function CharPage() {
@@ -157,7 +159,7 @@ function CharPage() {
     const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
     const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
     const cut = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_cut.png?alt=media`
-
+    console.log(char.engraving_1)
     return (
       <Container className='char-container py-2'>
         {char.name&&(
@@ -437,6 +439,33 @@ function CharPage() {
                       )
                     )))}
                   </Col>
+                </Row>
+              </>
+            )}
+
+            {char.engraving_1&&char.engraving_1[0]&&(
+              <>
+                <div className='black-label-div mt-2'>
+                  <h5>
+                    ENGRAVING RECOMENDATIONS
+                  </h5>
+                </div>
+                <Row className='custom-row'>
+                  {char.engraving_1[0]&&(
+                    <Col md={6}>
+                      <EngravingSingle x={Engravings.filter(x=>(
+                        x.engravings.includes(char.engraving_1[0])&&x.engravings.includes(char.engraving_1[1])
+                      ))[0]} />
+                    </Col>
+                  )}
+                  {char.engraving_2[0]&&(
+                    <Col md={6}>
+                      <EngravingSingle x={Engravings.filter(x=>(
+                        x.engravings.includes(char.engraving_2[0])&&x.engravings.includes(char.engraving_2[1])
+                      ))[0]} />
+                    </Col>
+                  )}
+
                 </Row>
               </>
             )}
