@@ -3,7 +3,7 @@ import {Row} from 'react-bootstrap';
 import CharPageArtSkins from './CharPageArtSkins';
 import CharPageArtBio from './CharPageArtBio';
 
-function CharPageArt({rarity, slug, biography}) {
+function CharPageArt({rarity, slug, biography, cv_cn, cv_jp, title}) {
 
   return (
     <>
@@ -16,7 +16,7 @@ function CharPageArt({rarity, slug, biography}) {
       <div className='ligter-bg'>
         <Row>
           <CharPageArtSkins rarity={rarity} slug={slug} />
-          <CharPageArtBio slug={slug} biography={biography} />
+          <CharPageArtBio slug={slug} biography={biography} cv_cn={cv_cn} cv_jp={cv_jp} title={title} />
         </Row>
       </div>
     </>

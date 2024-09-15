@@ -2,6 +2,8 @@ import React from 'react';
 import SkillTreeNewSkill from './SkillTreeNewSkill';
 
 function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill, charSkills}) {
+  const lv_buffs = [["HP","DEF"],'',["DEF", "HP"],'',["ATK", "ATK"],'',["HP","DEF"],'',["DEF","HP"],'',["ATK","ATK"]]
+
   if (lv) {
     return (
       <div className='align-items-center'>
@@ -9,14 +11,12 @@ function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill,
           <div className='d-flex skilltree-div w-100'>
 
             <div className='skilltree-skill'>
-              {lv.stat0&&(
-                <div className='skill-tree-stat-drk my-1 align-items-center'>
-                  {lv.stat0}
-                  <div className='skill-tree-stat_value px-2'>
-                    + 3%
-                  </div>
+              <div className='skill-tree-stat-drk my-1 align-items-center'>
+                {lv_buffs[lv.lv-1][0]}
+                <div className='skill-tree-stat_value px-2'>
+                  + 3%
                 </div>
-              )}
+              </div>
               <SkillTreeNewSkill activeSkill={activeSkill} side={1}
               skillRec={[skillRec, lv.rec0]} handleOnClickSkill={handleOnClickSkill}
               skill={charSkills.filter(x => x.slug===lv.skill0)[0]} />
@@ -28,14 +28,12 @@ function SkillTreeNew({lv,index,last, skillRec, handleOnClickSkill, activeSkill,
             </div>
 
             <div className='skilltree-skill'>
-              {lv.stat1&&(
-                <div className='skill-tree-stat-drk my-1 align-items-center'>
-                  <div className='skill-tree-stat_value px-2'>
-                    + 3%
-                  </div>
-                  {lv.stat1}
+              <div className='skill-tree-stat-drk my-1 align-items-center'>
+                <div className='skill-tree-stat_value px-2'>
+                  + 3%
                 </div>
-              )}
+                {lv_buffs[lv.lv-1][1]}
+              </div>
               <SkillTreeNewSkill activeSkill={activeSkill} side={2} slug={lv.skill1}
               skillRec={[skillRec, lv.rec1]} handleOnClickSkill={handleOnClickSkill}
               skill={charSkills.filter(x => x.slug===lv.skill1)[0]} />

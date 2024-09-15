@@ -26,17 +26,21 @@ function StatsItem({stat, chars, trait_buff}) {
   
   if (stat) {
     return (
-      <div key={stat.label} className={"w-50"}>
+      <div key={stat.label} className="stat-item-bg-w">
         <div className='stat-item-bg d-flex align-items-center'>
           <div className='stat-icon-bg'>
             <Image className='stat-icon' alt={stat.label} width={"inherit"} height={"inherit"} src={require(`../assets/img/stat_${stat.label.replace(".","").replace(" ","_")}.png`)} />
           </div>
           {stat.value}
-          {trait_buff&&((stat.label.replace('.', '').includes(trait_buff.split('-')[0]))?(
-            <span className='skill-tree-stat_value px-2 ml-2'>
-              +{trait_buff.split('-')[1]}%
-            </span>
-          ):(''))}
+          {trait_buff&&(trait_buff.length>0&&(
+            trait_buff.map(buff => (
+              (stat.label.replace('.', '').includes(buff.split('-')[0]))?(
+                <span className='skill-tree-stat_value px-2 ml-2'>
+                  +{buff.split('-')[1]}%
+                </span>
+              ):('')
+            ))
+          ))}
           <div className='w-100 d-flex justify-content-end'>
             <b className='stat-placement'>
               {chars&&(

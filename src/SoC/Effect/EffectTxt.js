@@ -18,7 +18,7 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers, chars}) => {
   
   if (text) { 
     const renderText = () => {
-      return text.split(/(\d+%?|\[.*?\])/g).reduce((acc, part, index, array) => {
+      return text.split(/(\d+%?|\[.*?\]|\|hr\||\|br\|)/g).reduce((acc, part, index, array) => {
         if (array[index - 1]?.endsWith('Heals ') ||
           array[index - 1]?.endsWith('Heals the target by ')||
           array[index - 1]?.endsWith('Heals all allies within ')||

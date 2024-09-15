@@ -145,7 +145,7 @@
   border-radius: 1rem;
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: bolder;
   padding: 0.1rem 0.75rem;
 }
@@ -169,6 +169,13 @@
   opacity: .5;
 }
 
+.stat-item-bg-w {
+  width: 50%;
+  @media only screen and (max-width: $md) {
+    width: 100%;
+  }
+}
+
 .stat-item-bg {
   background-color: $lighter;
   border-radius: 5rem;
@@ -177,6 +184,9 @@
   padding: 0;
   line-height: 0;
   font-weight: bold;
+  @media only screen and (max-width: $md) {
+    margin: 0.15rem;
+  }
 }
 
 .stat-label-txt {
@@ -391,8 +401,8 @@
 .background {
   z-index: 1;
 }
-.opacity-7 {
-  opacity: 0.7;
+.opacity-8 {
+  opacity: 0.8;
 }
 
 .foreground {
@@ -836,7 +846,7 @@
 }
 
 .char-bio-txt {
-  text-align: justify;
+  // text-align: justify;
 }
 
 .pixel-bio {
@@ -844,6 +854,7 @@
   margin: 0;
   width: 8rem;
   height: auto;
+  position: absolute;
 }
 
 .skill-modal {
@@ -926,4 +937,14 @@
     width: 4rem;
     height: 4rem;
   }
+}
+
+
+
+.cv-div {
+ text-align: end;
+}
+
+.bio-title {
+  margin-top: 4.8rem;
 }

@@ -304,7 +304,7 @@ function CharPage() {
               <div className='d-flex mb-2 rec-bg align-items-center'>
                 <div className='bg-lighter mx-1 px-2'>
                   <b className='rec-label-color bg-op'>▉</b><span className='rec-label' >Optional</span>
-                  <b className='rec-label-color bg-rec'>▉</b><span className='rec-label' >Highly Recommended</span>
+                  <b className='rec-label-color bg-rec'>▉</b><span className='rec-label' >Recommended</span>
                 </div>
               </div>
             )}
@@ -495,13 +495,13 @@ function CharPage() {
                       ))[0]} />
                     </Col>
                   )}
-                  {char.engraving_2[0]&&(
+                  {char.engraving_2&&(char.engraving_2[0]&&(
                     <Col md={6}>
                       <EngravingSingle x={Engravings.filter(x=>(
                         x.engravings.includes(char.engraving_2[0])&&x.engravings.includes(char.engraving_2[1])
                       ))[0]} />
                     </Col>
-                  )}
+                  ))}
 
                 </Row>
               </>
@@ -516,7 +516,8 @@ function CharPage() {
               </div>
             )}
 
-            <CharPageArt slug={char.slug} rarity={char.rarity} biography={char.biography} />
+            <CharPageArt slug={char.slug} cv_cn={char.cv_cn} cv_jp={char.cv_jp}
+            rarity={char.rarity} biography={char.biography} title={char.title} />
 
           </Col>
         </Row>

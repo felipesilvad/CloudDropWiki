@@ -16,8 +16,8 @@ function SkillTreeNewSkill({skill, skillRec, side, handleOnClickSkill, activeSki
           ${(side===1)?('new-skill-tree-1'):('new-skill-tree-2 ')}
         `}>
           {skillRec&&(skillRec[0]&&(skillRec[1]&&(skillRec[1].includes("c")&&(
-            <div className='castlia-rec-container'>
-              <Image alt='castalia' widthwidth={"inherit"} height={"inherit"} src={castalia} className='castlia-rec-img' />
+            <div className={`castlia-rec-container`}>
+              <Image alt='castalia' width={"inherit"} height={"inherit"} src={castalia}className={`castlia-rec-img ${side===1&&("left-0")}`}  />
             </div>
           ))))}
           <div className={`d-flex justify-content-${(side===1)?('end'):('start')}`}>
