@@ -23,6 +23,10 @@
   font-family: "PT Sans", sans-serif;
 }
 
+.c-pointer {
+  cursor: pointer;
+}
+
 hr {
   margin: 0.25rem 0!important;
   color: inherit;
@@ -98,6 +102,9 @@ a {
 }
 .mb-n1 {
   margin-bottom: -1rem!important;
+}
+.ml-2 {
+  margin-left: 0.5rem!important;
 }
 
 .font-bolder {

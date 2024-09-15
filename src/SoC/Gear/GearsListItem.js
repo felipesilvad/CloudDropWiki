@@ -1,13 +1,9 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import { Link } from 'react-router-dom';
+import Gearicon from './Gearicon';
 
 function GearsListItem({gear, sideMenu}) {
-  const gear_img = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/gear%2F${gear.img}.png?alt=media`
-  const bg = require(`../assets/img/face_bg_${gear.rarity}.png`)
-  const border = require(`../assets/img/face_border_${gear.rarity}.png`)
-
   if (gear) {
 
     return (
@@ -26,15 +22,10 @@ function GearsListItem({gear, sideMenu}) {
             <Link className="gear-title" to={`/gears/${gear.img}`}>
               <div className='trait-div d-flex align-items-center mx-1'>
                 <div className='trait-title d-flex align-items-center'>
-                  <div class="trait-img-container m-1">
-                    <Image src={bg} alt='bg' className="trait-img background" />
-                    <Image src={gear_img} alt='gear_img'  className="gear-list-img foreground" />
-                    <Image src={border} alt='border'  className="trait-img char-face-border" />
-                  </div>
+                  <Gearicon gear={gear} />
                   <b className='trait-title-txt gear-title'>
                     {gear.title}
                   </b>
-                  
                 </div>
               </div>
             </Link>

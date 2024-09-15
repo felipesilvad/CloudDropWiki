@@ -15,6 +15,14 @@ function SkillTreeLV({lv,index,last, skillRec, blueEffects,chars, charSkills}) {
           <div className='d-flex skilltree-div-mobile w-100'>
 
             <div className='skilltree-skill-mobile'>
+              {lv.stat0&&(
+                <div className='skill-tree-stat my-1 align-items-center'>
+                  {lv.stat0}
+                  <div className='skill-tree-stat_value px-2'>
+                    + 3%
+                  </div>
+                </div>
+              )}
               <CharSkill blueEffects={blueEffects} skillRec={[skillRec, lv.rec0]} chars={chars}
               skill={charSkills.filter(x => x.slug===lv.skill0)[0]} />
             </div>
@@ -25,6 +33,14 @@ function SkillTreeLV({lv,index,last, skillRec, blueEffects,chars, charSkills}) {
             </div>
 
             <div className='skilltree-skill-mobile'>
+              {lv.stat1&&(
+                <div className='skill-tree-stat my-1 align-items-center'>
+                  <div className='skill-tree-stat_value px-2'>
+                    + 3%
+                  </div>
+                  {lv.stat1}
+                </div>
+              )}
               <CharSkill blueEffects={blueEffects} skillRec={[skillRec, lv.rec1]} chars={chars}
               skill={charSkills.filter(x => x.slug===lv.skill1)[0]} />
             </div>

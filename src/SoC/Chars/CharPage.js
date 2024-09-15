@@ -18,7 +18,9 @@ import GearsListItem from '../Gear/GearsListItem';
 import TarotsListItem from '../Gear/TarotsListItem';
 import EngravingSingle from '../Gear/EngravingSingle';
 import {Engravings} from '../Data/data.ts';
-import { orbit } from 'ldrs'
+import Gearicon from '../Gear/Gearicon.js';
+import CharPageProfileImg from './CharPage/CharPageProfileImg.js';
+import CharPageArt from './CharPage/CharPageArt.js';
 
 function CharPage() {
 
@@ -27,7 +29,6 @@ function CharPage() {
   const [reversedSkillTree, setReversedSkillTree] = useState([])
   const windowWidth = useRef(window.innerWidth);
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
-  orbit.register()
 
   const [skillRec, setSkillRec] = useState(false)
   const [activeSkill, setActiveSkill] = useState()
@@ -42,6 +43,10 @@ function CharPage() {
   const [charTarots, setCharTarots] = useState([])
   const [charSources, setCharSources] = useState([])
 
+  const [showWeapons, setShowWeapons] = useState(false)
+  const [showArmor, setShowArmor] = useState(false)
+  const [showTarots, setShowTarots] = useState(false)
+
   // FOR MOBILE ONLY MODAL
   const [show, setShow] = useState(false);
   const handleCloseModal = () => setShow(false);
@@ -55,7 +60,7 @@ function CharPage() {
       setActiveSkill(slug)
     }
   }
-  const [art, setArt] = useState('');
+
 
   useEffect (() => {
     Mongo.find('chars')
@@ -84,9 +89,6 @@ function CharPage() {
       if (char.skill_tree) {
         setActiveSkill(char.skill_tree[0].skill0)
       }
-
-      if (char.rarity === "Legendary") {setArt("Awaken")}
-      else {setArt("Main")}
 
       if (char.skill_tree) {setReversedSkillTree(char.skill_tree.reverse())}
 
@@ -153,10 +155,6 @@ function CharPage() {
   }, [char]);
   
   if (char) {
-    const sprite = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}.gif?alt=media`
-    const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_awaken.png?alt=media`
-    const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_full.png?alt=media`
-    const profile = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_profile.png?alt=media`
     const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
     const cut = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_cut.png?alt=media`
     console.log(char.engraving_1)
@@ -183,18 +181,10 @@ function CharPage() {
           <Col md={9} className='desktop-char-row'>
 
             <Row className='custom-row'>
-              <Col xs={3}>
-                {char.rarity&&(
-                  <div className='profile-img-div' style={{
-                    backgroundImage: "url(" + require(`../assets/img/unit_bg_${char.rarity}.png`) + ")"
-                  }}>
-                    <Image className='profile-img' alt='profile-img' src={profile} width={"inherit"} height={"20rem"} />
-                  </div>
-                )}
-              </Col>
+              <CharPageProfileImg rarity={char.rarity} slug={char.slug} />
+              
               <Col xs={9}>
                 <div className='char-detail-bg'>
-
                   <div className='char-name-div'>
                     <div  
                     className='char-name-bg-img d-flex pb-1-mobile justify-content-between align-items-center'>
@@ -239,14 +229,14 @@ function CharPage() {
                     </h5>
                   </div>
                   <Row className='custom-row'>
-                    <Col md={6} >
+                    <Col md={8} >
                       <div className='d-flex justify-content-center flex-wrap'>
                         {char.base_stats&&(char.base_stats.map(stat => (
-                          <StatsItem stat={stat} chars={chars} />
+                          <StatsItem stat={stat} chars={chars} trait_buff={char.trait_buff} />
                         )))}
                       </div>
                     </Col>
-                    <Col md={6}>
+                    <Col md={4}>
                       {char.move_stats&&(char.move_stats.map(stat => (
                         <StatsItemMove stat={stat} />
                       )))}
@@ -256,7 +246,7 @@ function CharPage() {
 
               </Col>
             </Row>
-
+            
             <div className='black-label-div mt-2'>
               <h5>
                 TRAIT
@@ -414,42 +404,89 @@ function CharPage() {
                     GEAR RECOMENDATIONS
                   </h5>
                 </div>
-                <Row className='custom-row'>
-                  <Col md={4}>
-                    <div className='skill-detail-bg trait-title text-center '>Weapon</div>
+                <div className='gear-rec-bg d-flex align-items-center mt-3'
+                style={{"marginBottom": "0.5rem"}}
+                onClick={() => setShowWeapons(!showWeapons)}>
+                  <div className='w-100 text-center gear-rec-label'>
+                    {showWeapons?("▲Weapons▲"):("▼Weapons")}
+                  </div>
+                  {!showWeapons&&char.weapon_rec&&(charGears.length>0&&(char.weapon_rec.map(rec => (
+                    charGears.filter(x => x.img === rec).length>0&&(
+                      <div className='trait-title d-flex align-items-center ardela'>
+                        <Gearicon gear={charGears.filter(x => x.img === rec)[0]} css={"gear-rec-icon"}/>
+                      </div>
+                    )
+                  ))))}
+                </div>
+                {showWeapons&&(
+                  <div className='d-flex flex-wrap'>
                     {char.weapon_rec&&(charGears.length>0&&(char.weapon_rec.map(rec => (
                       charGears.filter(x => x.img === rec).length>0&&(
-                        <GearsListItem gear={charGears.filter(x => x.img === rec)[0]} sideMenu={true} />
+                        <GearsListItem gear={charGears.filter(x => x.img === rec)[0]}/>
                       )
                     ))))}
-                  </Col>
-                  <Col md={4}>
-                    <div className='skill-detail-bg trait-title text-center '>Trinket</div>
+                  </div>
+                )}
+                <div className='gear-rec-bg d-flex align-items-center'
+                style={{"marginBottom": "0.5rem"}}
+                onClick={() => setShowArmor(!showArmor)}>
+                  <div className='w-100 text-center gear-rec-label'>
+                    {showArmor?("▲Trinkets▲"):("▼Trinkets")}
+                  </div>
+                  {!showArmor&&char.armor_rec&&(charGears.length>0&&(char.armor_rec.map(rec => (
+                    charGears.filter(x => x.img === rec).length>0&&(
+                      <div className='trait-title d-flex align-items-center'>
+                        <Gearicon gear={charGears.filter(x => x.img === rec)[0]} css={"gear-rec-icon"} />
+                      </div>
+                    )
+                  ))))}
+                </div>
+                {showArmor&&(
+                  <div className='d-flex flex-wrap'>
                     {char.armor_rec&&(charGears.length>0&&(char.armor_rec.map(rec => (
                       charGears.filter(x => x.img === rec).length>0&&(
-                        <GearsListItem gear={charGears.filter(x => x.img === rec)[0]} sideMenu={true} />
+                        <GearsListItem gear={charGears.filter(x => x.img === rec)[0]}/>
                       )
                     ))))}
-                  </Col>
-                  <Col md={4}>
-                    <div className='skill-detail-bg trait-title text-center '>Tarot</div>
+                  </div>
+                )}
+                <div className='gear-rec-bg d-flex align-items-center'
+                style={{"marginBottom": "0.5rem"}}
+                onClick={() => setShowTarots(!showTarots)}>
+                  <div className='w-100 text-center gear-rec-label'>
+                    {showTarots?("▲Tarots▲"):("▼Tarots")}
+                  </div>
+                  {!showTarots&&char.tarot_rec&&(charTarots.length>0&&(char.tarot_rec.map(rec => (
+                    charTarots.filter(x => x.slug === rec).length>0&&(
+                      <div className='trait-title d-flex align-items-center'>
+                        <div class="trait-img-container m-1" >
+                          <Image src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/tarot%2F${charTarots.filter(x=> x.slug===rec)[0].img}.png?alt=media`}
+                          alt='tarot_img' className="trait-img" />
+                        </div>
+                      </div>
+                    )
+                  ))))}
+                </div>
+                {showTarots&&(
+                  <div className='d-flex flex-wrap'>
                     {charTarots.length>0&&(char.tarot_rec.map(rec => (
                       charTarots.filter(x=> x.slug===rec).length>0&&(
-                        <TarotsListItem tarot={charTarots.filter(x=> x.slug===rec)[0]} sideMenu={true} compact={true} />
+                        <TarotsListItem tarot={charTarots.filter(x=> x.slug===rec)[0]} compact={true} />
                       )
                     )))}
-                  </Col>
-                </Row>
+                  </div>
+                )}
               </>
             )}
-
+             
             {char.engraving_1&&char.engraving_1[0]&&(
               <>
                 <div className='black-label-div mt-2'>
-                  <h5>
-                    ENGRAVING RECOMENDATIONS
-                  </h5>
+                  Engravings
                 </div>
+                <h5 className='d-none'>
+                  {char.name} ENGRAVING RECOMENDATIONS
+                </h5>
                 <Row className='custom-row'>
                   {char.engraving_1[0]&&(
                     <Col md={6}>
@@ -479,63 +516,13 @@ function CharPage() {
               </div>
             )}
 
-            <div className='black-label-div mt-2'>
-              <h5>
-                ART
-              </h5>
-            </div>
-            
-            <div className='ligter-bg'>
-              <Row>
-                <Col md={8} >
-                  <div className='d-flex'>
-                    {char.rarity==="Legendary"&&(
-                      <div className={`art-bg mx-1 px-2 ardela ${(art==="Awaken")&&('art-active')}`}
-                       onClick={() => setArt("Awaken")}>Awaken</div>
-                    )}
-                    <div className={`art-bg mx-1 px-2 ardela ${(art==="Main")&&('art-active')}`}
-                     onClick={() => setArt("Main")}>Main Art</div>
-                  </div>
-                  
-                  {(art==="Awaken")&&(
-                    <div className='art-img-div'>
-                      <Image className='art-img' src={awaken} alt={char.slug+"_awaken_art"} width={"auto"} height={"auto"} />
-                    </div>
-                  )}
-                  {(art==="Main")&&(
-                    <div className='d-flex justify-content-center'>
-                      <Image className='art-img-full' src={full} alt={char.slug+"_full_art"} width={"auto"} height={"auto"} />
-                    </div>
-                  )}
-                </Col>
-                <Col>
-                  {char.biography?(  
-                    <div className='char-bio'>
-                      <h3 className='mx-2'>Biography</h3>
-                      <img src={sprite} alt={char.slug+"_sprite_idle"} width={"auto"} height={"auto"} onClick={() =>  navigator.clipboard.writeText(char._id)}
-                      className="pixel-bio"/>
-                      <p className='char-bio-txt' dangerouslySetInnerHTML={{__html: char.biography}}></p>
-                    </div>
-                  ):(
-                    <img src={sprite} onClick={() =>  navigator.clipboard.writeText(char._id)}
-                    alt={char.slug+"_sprite_idle"} width={"auto"} height={"auto"} class="pixel-bio"/>
-                  )}
-                </Col>
-              </Row>
-              
-            </div>
+            <CharPageArt slug={char.slug} rarity={char.rarity} biography={char.biography} />
 
           </Col>
         </Row>
       </Container>
     );
-  } else return(
-    <l-orbit
-      size="35"
-      speed="1.5" 
-      color="black" 
-    ></l-orbit>
-  )
+  }
 }
 
 export default CharPage;

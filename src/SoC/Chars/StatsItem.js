@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-bootstrap';
 
-function StatsItem({stat, chars}) {
+function StatsItem({stat, chars, trait_buff}) {
   
   function getStatPlacement(currentStatValue, statLabel) {
     const allStatValues = chars
@@ -32,6 +32,11 @@ function StatsItem({stat, chars}) {
             <Image className='stat-icon' alt={stat.label} width={"inherit"} height={"inherit"} src={require(`../assets/img/stat_${stat.label.replace(".","").replace(" ","_")}.png`)} />
           </div>
           {stat.value}
+          {trait_buff&&((stat.label.replace('.', '').includes(trait_buff.split('-')[0]))?(
+            <span className='skill-tree-stat_value px-2 ml-2'>
+              +{trait_buff.split('-')[1]}%
+            </span>
+          ):(''))}
           <div className='w-100 d-flex justify-content-end'>
             <b className='stat-placement'>
               {chars&&(

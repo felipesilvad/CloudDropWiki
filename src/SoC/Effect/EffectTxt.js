@@ -47,8 +47,8 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers, chars}) => {
           acc.push(<EffectTag key={index} value={value} />);
         } else if (part.match(/\|hr\|/)) {
           acc.push(<><hr />{part.replace('|hr|','')}</>);
-        } else if (part.match(/<br\s*\/?>/i)) {
-          acc.push(<><br />{part.replace('<br />','')}</>);
+        } else if (part.match(/\|br\|/)) {
+          acc.push(<><br />{part.replace('|br|','')}</>);
         } else {
           part.split(`"`).forEach(x => {
             if (factions.includes(x)||x==="Sword of Convallaria") {

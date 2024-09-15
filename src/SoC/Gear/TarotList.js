@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Mongo from '../../mango'
 import {Helmet} from "react-helmet";
 import {Container} from 'react-bootstrap';
 import TarotsListItem from './TarotsListItem';
@@ -8,16 +8,12 @@ function TarotsList() {
   const [tarots, setTarots] = useState([])
 
   useEffect (() => {
-
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"tarots","database":"soc","dataSource":"Sword", 
-      "sort": {
-          "series": 1
-        }
-      }
-    }).then(res => {
+    Mongo.find('tarots',{sort: {"series": 1}})
+    .then(res => {
       setTarots(res.data.documents)
-    }).catch(err => console.warn(err));
+    }, function(err) {
+      console.log(err);
+    })
   }, [])
 
   return (
