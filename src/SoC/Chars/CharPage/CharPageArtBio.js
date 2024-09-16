@@ -16,10 +16,10 @@ function CharPageArtBio({slug, biography, cv_cn, cv_jp, title}) {
               <div className='w-100 cv-div'>
                 <h5>Voice Actors</h5>
                 {cv_jp&&(
-                  <div>JP CV: <b>{cv_jp}</b></div>
+                  <div>JP: <b>{cv_jp}</b></div>
                 )}
                 {cv_cn&&(
-                  <div>CN CV: <b>{cv_cn}</b></div>
+                  <div>CN: <b>{cv_cn}</b></div>
                 )}
               </div>
             ):('')}

@@ -12,7 +12,7 @@ function CharsList() {
   const windowWidth = useRef(window.innerWidth);
 
   useEffect (() => {
-    Mongo.find('chars')
+    Mongo.find('chars', {sort: {"name":1}})
     .then(res => {
       setChars(res.data.documents)
     }).catch(err => console.warn(err));

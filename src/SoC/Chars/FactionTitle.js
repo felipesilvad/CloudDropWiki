@@ -2,10 +2,8 @@ import React from 'react';
 import { Image } from 'react-bootstrap';
 import { Tooltip } from 'react-tooltip'
 import CharFace from './CharFace';
-import { orbit } from 'ldrs'
 
 function FactionTitle({faction,chars,effect}) {
-  orbit.register()
   if (faction) {
     return (
       <>
@@ -26,12 +24,6 @@ function FactionTitle({faction,chars,effect}) {
         </Tooltip>
       </>
     );
-  } else {
-    <l-orbit
-      size="35"
-      speed="1.5" 
-      color="black" 
-    ></l-orbit>
   }
 }
 

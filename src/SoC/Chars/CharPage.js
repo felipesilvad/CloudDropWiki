@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Row,Col,Container,Image,Form,Modal} from 'react-bootstrap';
+import {Row,Col,Container,Image} from 'react-bootstrap';
 import Mongo from '../../mango'
 import {useParams} from 'react-router-dom';
 import {Helmet} from "react-helmet-async";
@@ -8,9 +8,7 @@ import StatsItemMove from './StatsItemMove';
 import FactionImage from './FactionImage';
 import CharTrait from './CharTrait';
 import CharSkill from './CharSkill';
-import SkillTreeLV from './SkillTreeLV';
 import CharsListItemRow from './CharsListItemRow';
-import SkillTreeNew from './SkillTreeNew';
 import SourceItem from './SourceItem';
 import FactionTitle from './FactionTitle';
 import SkillListItem from '../Skills/SkillListItem';
@@ -21,18 +19,14 @@ import {Engravings} from '../Data/data.ts';
 import Gearicon from '../Gear/Gearicon.js';
 import CharPageProfileImg from './CharPage/CharPageProfileImg.js';
 import CharPageArt from './CharPage/CharPageArt.js';
+import CharPageSkillTree from './CharPage/CharPageSkillTree.js';
 
 function CharPage() {
 
   const id = useParams().id
   const [char, setChar] = useState()
-  const [reversedSkillTree, setReversedSkillTree] = useState([])
   const windowWidth = useRef(window.innerWidth);
   const rarityOrder = ['Legendary', 'Epic', 'Rare', 'Common'];
-
-  const [skillRec, setSkillRec] = useState(false)
-  const [activeSkill, setActiveSkill] = useState()
-  const [skillTreeView, setSkillTreeView] = useState(false)
 
   const [chars, setChars] = useState([])
   const [blueEffects, setBlueEffects] = useState([])
@@ -47,23 +41,8 @@ function CharPage() {
   const [showArmor, setShowArmor] = useState(false)
   const [showTarots, setShowTarots] = useState(false)
 
-  // FOR MOBILE ONLY MODAL
-  const [show, setShow] = useState(false);
-  const handleCloseModal = () => setShow(false);
-  const handleShowModal = () => setShow(true);
-
-  const handleOnClickSkill = (slug) => {
-    if (windowWidth.current < 768) {
-      setActiveSkill(slug)
-      handleShowModal(true)
-    } else {
-      setActiveSkill(slug)
-    }
-  }
-
-
   useEffect (() => {
-    Mongo.find('chars')
+    Mongo.find('chars', {sort: {"name": 1}})
     .then(res => {
       setChars(res.data.documents)
     }).catch(err => console.warn(err));
@@ -86,12 +65,6 @@ function CharPage() {
 
   useEffect(() => {
     if (char) {
-      if (char.skill_tree) {
-        setActiveSkill(char.skill_tree[0].skill0)
-      }
-
-      if (char.skill_tree) {setReversedSkillTree(char.skill_tree.reverse())}
-
       Mongo.find('traits',{filter: {"slug": char.trait}})
       .then(res => {
         setTrait(res.data.documents[0])
@@ -232,7 +205,7 @@ function CharPage() {
                     <Col md={8} >
                       <div className='d-flex justify-content-center flex-wrap'>
                         {char.base_stats&&(char.base_stats.map(stat => (
-                          <StatsItem stat={stat} chars={chars} trait_buff={char.trait_buff} />
+                          <StatsItem role={char.role} stat={stat} chars={chars} trait_buff={char.trait_buff} />
                         )))}
                       </div>
                     </Col>
@@ -279,105 +252,11 @@ function CharPage() {
               </Col>
             </Row>
             
-            <div className='black-label-div mt-2'>
-              <h5>
-                SKILL TREE
-              </h5>
-            </div>
-
-            <div className='d-flex justify-content-around flex-wrap m-1 bg-lighter'>
-              <Form.Check // prettier-ignore
-                type="switch"
-                id="custom-switch"
-                label="Show Skill Recomendations"
-                onClick={() => setSkillRec(!skillRec)}
-              />
-              <Form.Check // prettier-ignore
-                type="switch"
-                id="custom-switch"
-                label="Show All Skills Effects"
-                onClick={() => setSkillTreeView(!skillTreeView)}
-              />
-            </div>
-            
-            {skillRec&&(
-              <div className='d-flex mb-2 rec-bg align-items-center'>
-                <div className='bg-lighter mx-1 px-2'>
-                  <b className='rec-label-color bg-op'>▉</b><span className='rec-label' >Optional</span>
-                  <b className='rec-label-color bg-rec'>▉</b><span className='rec-label' >Recommended</span>
-                </div>
-              </div>
-            )}
-
-            {!skillTreeView?(
-              <Row>
-                <Col md={6}>
-                  {char.skill_tree_label1&&(
-                    <div className=''>
-                      <div className='d-flex w-100 text-center'>
-                        <div className='skilltree-label skilltree-label-left'>
-                          {char.skill_tree_label1}
-                        </div>
-                        <div className='skilltree-label skilltree-label-right'>
-                          {char.skill_tree_label2}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {reversedSkillTree&&(reversedSkillTree.map((lv, index) => (
-                      charSkills.length>0&&(
-                        <SkillTreeNew blueEffects={blueEffects} skillRec={skillRec} handleOnClickSkill={handleOnClickSkill} activeSkill={activeSkill}
-                        lv={lv} index={index} last={char.skill_tree&&(char.skill_tree.length)} charSkills={charSkills} />
-                      )
-                  )))}
-                  
-                  {/* MOBILE ONLY MODAL */}
-                  <Modal show={show}  onHide={handleCloseModal}>
-                    <Modal.Header className='skill-modal' closeButton>
-                      
-                    </Modal.Header>
-                    <div>
-                      {charSkills.length>0&&(
-                        charSkills.filter(x => x.slug===activeSkill).length>0&&(
-                          <SkillListItem blueEffects={blueEffects} chars={chars} w100={true}
-                          skill={charSkills.filter(x => x.slug===activeSkill)[0]} />
-                        )
-                      )}
-                    </div>
-                  </Modal>
-                </Col>
-                <Col md={6} className='d-none d-md-block d-lg-block'>
-                  {charSkills.length>0&&activeSkill&&(
-                    charSkills.filter(x => x.slug===activeSkill).length>0&&(
-                      <SkillListItem blueEffects={blueEffects} chars={chars} w100={true}
-                      skill={charSkills.filter(x => x.slug===activeSkill)[0]} />
-                    )
-                  )}
-                </Col>
-              </Row>
-            ):(
-              <>  
-                {char.skill_tree_label1&&(
-                  <div className='d-none d-md-block'>
-                    <div className='d-flex w-100 text-center'>
-                      <div className='skilltree-label skilltree-label-left'>
-                        {char.skill_tree_label1}
-                      </div>
-                      <div className='skilltree-label skilltree-label-right'>
-                        {char.skill_tree_label2}
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {reversedSkillTree&&(reversedSkillTree.map((lv, index) => (
-                  charSkills.length>0&&(
-                    <SkillTreeLV blueEffects={blueEffects} skillRec={skillRec} lv={lv} chars={chars}
-                    index={index} last={char.skill_tree&&(char.skill_tree.length)} charSkills={charSkills} />
-                  )
-                )))}
-              </>
-            )}
-
+            <CharPageSkillTree 
+              blueEffects={blueEffects} factions={factions} charSkills={charSkills} windowWidth={windowWidth}
+              skill_tree_label1={char.skill_tree_label1} skill_tree_label2={char.skill_tree_label2}
+              skill_tree={char.skill_tree} chars={chars}
+            />
 
             {char.other_skills&&char.other_skills.length>0&&(
               <>

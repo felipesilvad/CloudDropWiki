@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Image } from 'react-bootstrap';
 
-const LazyImage = ({ src, alt, ...props }) => {
+const LazyImage = ({ src, alt,i, ...props }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const windowWidth = useRef(window.innerWidth);
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
@@ -17,13 +17,24 @@ const LazyImage = ({ src, alt, ...props }) => {
           <Image src={eventImg} className='event-img opacity-0' alt='event-loading' />
         </div>
       )}
-      <Image
-        src={src}
-        alt={alt}
-        onLoad={handleImageLoad}
-        style={{ display: isLoaded ? 'block' : 'none', width: '100%', height: 'auto' }}
-        {...props}
-      />
+      {(windowWidth.current<768&&(i===0))?(
+          <Image
+            src={src}
+            alt={alt}
+            fetchpriority="high"
+            onLoad={handleImageLoad}
+            style={{ display: isLoaded ? 'block' : 'none', width: '100%', height: 'auto' }}
+            {...props}
+          />
+        ):(
+          <Image
+            src={src}
+            alt={alt}
+            onLoad={handleImageLoad}
+            style={{ display: isLoaded ? 'block' : 'none', width: '100%', height: 'auto' }}
+            {...props}
+          />
+        )}
     </div>
   );
 };
