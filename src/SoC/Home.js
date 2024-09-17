@@ -15,7 +15,7 @@ function Home() {
       console.log(err);
     })
   }, [])
-
+  
   return (
     <>
       <Helmet>

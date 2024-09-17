@@ -10,9 +10,9 @@ function StatsItem({role, stat, chars, trait_buff}) {
       .filter((value) => value !== undefined);
   
     allStatValues.sort((a, b) => b - a);
-  
     // Encontrar a colocação do valor atual
     const placement = allStatValues.indexOf(currentStatValue) + 1;
+    console.log(allStatValues)
     
     if (placement === 1) {
       return '1st'
@@ -25,15 +25,32 @@ function StatsItem({role, stat, chars, trait_buff}) {
     }
   }
 
-  function getStatPlacementTraitBuff(currentStatValue, statLabel, charactersFilter) {
+  function getStatPlacementTraitBuff(currentStatValue, statLabel, charactersFilter, buff) {
     const allStatValues = charactersFilter
-      .map((char) => char.base_stats.find((stat) => stat.label === statLabel)?.value)
+      .map((char) => (
+        char.base_stats.find((stat) => stat.label === statLabel)?.value*(
+          1+(
+          char.base_stats.find((stat) => stat.label === statLabel)?.value*(
+            char.trait_buff.length>0&&(
+              char.trait_buff.map(mappedBuff => (
+                (stat.label.replace('.', '').includes(mappedBuff.split('-')[0]))?(
+                  parseFloat(mappedBuff.split('-')[1])/100
+                ):('')
+              ))
+            )
+          )
+        ))
+      ))
       .filter((value) => value !== undefined);
     allStatValues.sort((a, b) => b - a);
 
-    var statBuff = null
+    var buffedCurrantStatValue = currentStatValue
+    
+    if (stat.label.replace('.', '').includes(buff.split('-')[0])) {
+      buffedCurrantStatValue = currentStatValue*(1+(currentStatValue * (parseFloat(buff.split('-')[1])/100)))
+    }
 
-    // IDFK WHAT TO DO
+    console.log("buff",stat.label,allStatValues)
   
     // Encontrar a colocação do valor atual
     const placement = allStatValues.indexOf(currentStatValue) + 1;
@@ -76,15 +93,13 @@ function StatsItem({role, stat, chars, trait_buff}) {
               </>
             )}
           </div>
-          {trait_buff&&(trait_buff.length>0&&(
+          {trait_buff.length>0&&(
             trait_buff.map(buff => (
-              (stat.label.replace('.', '').includes(buff.split('-')[0]))?(
-                <span className='skill-tree-stat_value px-2 ml-2'>
-                  +{buff.split('-')[1]}%
-                </span>
-              ):('')
+              <>
+                {getStatPlacementTraitBuff(stat.value, stat.label, chars, buff)}
+              </>
             ))
-          ))}
+          )}
         </Tooltip>
         <div className='stat-item-bg d-flex align-items-center'>
           <div className='stat-icon-bg'>
