@@ -1,9 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import LazyImage from './LazyImage';
-import { Image } from 'react-bootstrap';
 import { dotPulse } from 'ldrs'
-
 
 // Default values shown
 
@@ -12,7 +10,6 @@ function EventItem({event, side, i}) {
   const today = new Date();
   const startDate = new Date(event?(event.startDate):(today));
   const endDate = new Date(event?(event.endDate):(today));
-  const windowWidth = useRef(window.innerWidth);
   dotPulse.register()
 
   Date.prototype.addHours = function(h) {
@@ -38,7 +35,7 @@ function EventItem({event, side, i}) {
     <Link key={i} to={event&&(`/events/${event.id}`)} className={`event-item ${side&&("w-100")}`}>
       <div className='event-col mt-2 mx-1'> 
         <LazyImage className='event-img' alt={`event-${i}`} i={i}
-        src={event&&(`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`)} />
+        path={event&&(`/events/${event.id}.jpg`)} />
         <div className='mx-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
           {event?(
             <h5 className="">{event&&(event.title)}</h5>

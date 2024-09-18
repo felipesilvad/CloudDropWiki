@@ -25,46 +25,46 @@ function StatsItem({role, stat, chars, trait_buff}) {
     }
   }
 
-  function getStatPlacementTraitBuff(currentStatValue, statLabel, charactersFilter, buff) {
-    const allStatValues = charactersFilter
-      .map((char) => (
-        char.base_stats.find((stat) => stat.label === statLabel)?.value*(
-          1+(
-          char.base_stats.find((stat) => stat.label === statLabel)?.value*(
-            char.trait_buff.length>0&&(
-              char.trait_buff.map(mappedBuff => (
-                (stat.label.replace('.', '').includes(mappedBuff.split('-')[0]))?(
-                  parseFloat(mappedBuff.split('-')[1])/100
-                ):('')
-              ))
-            )
-          )
-        ))
-      ))
-      .filter((value) => value !== undefined);
-    allStatValues.sort((a, b) => b - a);
+  // function getStatPlacementTraitBuff(currentStatValue, statLabel, charactersFilter, buff) {
+  //   const allStatValues = charactersFilter
+  //     .map((char) => (
+  //       char.base_stats.find((stat) => stat.label === statLabel)?.value*(
+  //         1+(
+  //         char.base_stats.find((stat) => stat.label === statLabel)?.value*(
+  //           char.trait_buff.length>0&&(
+  //             char.trait_buff.map(mappedBuff => (
+  //               (stat.label.replace('.', '').includes(mappedBuff.split('-')[0]))?(
+  //                 parseFloat(mappedBuff.split('-')[1])/100
+  //               ):('')
+  //             ))
+  //           )
+  //         )
+  //       ))
+  //     ))
+  //     .filter((value) => value !== undefined);
+  //   allStatValues.sort((a, b) => b - a);
 
-    var buffedCurrantStatValue = currentStatValue
+  //   var buffedCurrantStatValue = currentStatValue
     
-    if (stat.label.replace('.', '').includes(buff.split('-')[0])) {
-      buffedCurrantStatValue = currentStatValue*(1+(currentStatValue * (parseFloat(buff.split('-')[1])/100)))
-    }
+  //   if (stat.label.replace('.', '').includes(buff.split('-')[0])) {
+  //     buffedCurrantStatValue = currentStatValue*(1+(currentStatValue * (parseFloat(buff.split('-')[1])/100)))
+  //   }
 
-    console.log("buff",stat.label,allStatValues)
+  //   console.log("buff",stat.label,allStatValues)
   
-    // Encontrar a colocação do valor atual
-    const placement = allStatValues.indexOf(currentStatValue) + 1;
+  //   // Encontrar a colocação do valor atual
+  //   const placement = allStatValues.indexOf(currentStatValue) + 1;
     
-    if (placement === 1) {
-      return '1st'
-    } else if (placement === 2) {
-      return '2nd'
-    } else if (placement === 3) {
-      return '3rd'
-    } else {
-      return `${placement}th`
-    }
-  }
+  //   if (placement === 1) {
+  //     return '1st'
+  //   } else if (placement === 2) {
+  //     return '2nd'
+  //   } else if (placement === 3) {
+  //     return '3rd'
+  //   } else {
+  //     return `${placement}th`
+  //   }
+  // }
   
   if (stat) {
     return (
@@ -82,8 +82,8 @@ function StatsItem({role, stat, chars, trait_buff}) {
               </>
             )}
           </div>
-          <div className='stat-placement'>
-            <b className='mx-2'>
+          <div className={`${role}-color`}>
+          <b className='mx-2' >
               {role}s Ranking:
             </b>
             {chars&&(
@@ -93,13 +93,13 @@ function StatsItem({role, stat, chars, trait_buff}) {
               </>
             )}
           </div>
-          {trait_buff.length>0&&(
+          {/* {trait_buff.length>0&&(
             trait_buff.map(buff => (
               <>
                 {getStatPlacementTraitBuff(stat.value, stat.label, chars, buff)}
               </>
             ))
-          )}
+          )} */}
         </Tooltip>
         <div className='stat-item-bg d-flex align-items-center'>
           <div className='stat-icon-bg'>

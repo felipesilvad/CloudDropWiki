@@ -30,3 +30,25 @@ $txt: #6a5f42;
 $black-bg: #262626;
 $gold: #c2b67e;
 $golden: #FFDB51;
+
+$Watcher: #F0CB65;
+$Defender: #90ee99;
+$Destroyer: #E6C4DC;
+$Breaker: #FAAC95;
+$Seeker: #78B0D8;
+
+.Watcher-color {
+  color: $Watcher;
+}
+.Defender-color {
+  color: $Defender;
+}
+.Destroyer-color {
+  color: $Destroyer;
+}
+.Breaker-color {
+  color: $Breaker;
+}
+.Seeker-color {
+  color: $Seeker;
+}
