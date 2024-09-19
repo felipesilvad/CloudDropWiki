@@ -3,6 +3,7 @@
   width: -moz-available;          /* WebKit-based browsers will ignore this. */
   width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
   width: fill-available;
+  font-size: 0
 }
 
 .event-item {
@@ -38,7 +39,7 @@
 }
 
 .event-item-time-over {
-  color: gray;
+  color: rgb(197, 197, 197);
 }
 .event-item-time-ending {
   color: $physical;

@@ -1,11 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import EffectTag from './EffectTag';
 import FactionTitle from '../Chars/FactionTitle';
 
-const EffectTxt = ({ text, dmg, blueEffects, colorNumbers, chars}) => {
+const EffectTxt = ({ text, dmg, blueEffects, factions, chars}) => {
   const [hasBlueEffect, setHasBlueEffect] = useState()
-  const factions = ["Aggression","Alacrity","Discipline","Drifter","Fortitude",
-  "Iria","Papal States","Sword of Convallaria","The Union", "Vlder"]
+
+  const factionsTitles = useMemo(() => {
+    if (factions) {
+      return factions.map(faction => faction.title);
+    } else {
+      return []
+    }
+  }, [factions]);
+
   useEffect(() => {
     if (blueEffects) {
       blueEffects.map(effect => (
@@ -25,7 +32,9 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers, chars}) => {
           array[index - 1]?.endsWith('the DMG taken is decreased by ')||
           array[index - 1]?.endsWith('healing skill by ')||
           array[index - 1]?.endsWith('healing effect by ')||
-          array[index - 1]?.endsWith('healing received by ')
+          array[index - 1]?.endsWith('healing received by ')||
+          array[index - 1]?.endsWith('generating ')||
+          array[index - 1]?.endsWith('recovers ')
          ) {
           // Se a parte anterior termina com "Heals " ou "Heals the target by ", o número atual deve ser verde
           acc.push(
@@ -51,8 +60,8 @@ const EffectTxt = ({ text, dmg, blueEffects, colorNumbers, chars}) => {
           acc.push(<><br />{part.replace('|br|','')}</>);
         } else {
           part.split(`"`).forEach(x => {
-            if (factions.includes(x)||x==="Sword of Convallaria") {
-              acc.push(<><FactionTitle slug={x} chars={chars} effect={true} /></>)
+            if (factionsTitles.includes(x)&&factions) {
+              acc.push(<FactionTitle faction={factions.filter(faction=>faction.title===x)[0]} chars={chars} effect={true} />)
             } else {
               acc.push(x); // Retornar parte original do texto
             }

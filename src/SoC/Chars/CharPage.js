@@ -128,9 +128,6 @@ function CharPage() {
   }, [char]);
   
   if (char) {
-    const role = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`
-    const cut = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_cut.png?alt=media`
-    console.log(char.engraving_1)
     return (
       <Container className='char-container py-2'>
         {char.name&&(
@@ -162,7 +159,9 @@ function CharPage() {
                     <div  
                     className='char-name-bg-img d-flex pb-1-mobile justify-content-between align-items-center'>
                       <div className='d-flex align-items-center'>
-                        <Image className='role-img mx-1' alt='role-img' width={20} height={20} src={role} />
+                        {char&&(
+                          <Image className='role-img mx-1' alt='role-img' width={20} height={20} src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/roles%2F${char.role}.png?alt=media`} />
+                        )}
                         <h2 className='mt-1 char-name'>{char.name}</h2>
                       </div>
                       {(windowWidth.current < 768)?(
@@ -178,7 +177,9 @@ function CharPage() {
                         </div>
                       ):(
                         <div className='char-cut-div d-flex align-items-center'>
-                          <Image className='char-cut-img' src={cut} alt='char-cut' width={"inherit"} height={"inherit"} />
+                          {char&&(
+                            <Image className='char-cut-img' src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_cut.png?alt=media`} alt='char-cut' width={"inherit"} height={"inherit"} />
+                          )}
                         </div>
                       )}
                     </div>

@@ -33,9 +33,14 @@ function EventItem({event, side, i}) {
 
   return (
     <Link key={i} to={event&&(`/events/${event.id}`)} className={`event-item ${side&&("w-100")}`}>
-      <div className='event-col mt-2 mx-1'> 
-        <LazyImage className='event-img' alt={`event-${i}`} i={i}
-        path={event&&(`/events/${event.id}.jpg`)} />
+      <div className='event-col mt-2 mx-1'>
+        {event?(
+          <LazyImage className='event-img' alt={`event-${i}`} i={i}
+          path={`/events/${event.id}.jpg`} />
+        ):(
+          <div className="skeleton animate-flicker d-flex align-items-center justify-content-center">
+          </div>
+        )}
         <div className='mx-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
           {event?(
             <h5 className="">{event&&(event.title)}</h5>

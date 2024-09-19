@@ -2,7 +2,7 @@ import React from 'react';
 import { Image } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 
-function CharSkill({skill, skillRec, blueEffects, chars}) {
+function CharSkill({skill, skillRec, blueEffects, chars, factions}) {
   const nrg_icon = require('../assets/img/nrg_icon.png')
   const cd_icon = require('../assets/img/cd_icon.png')
   const castalia = require("../assets/img/castalia.png")
@@ -70,7 +70,14 @@ function CharSkill({skill, skillRec, blueEffects, chars}) {
           </div>
 
           <div className='mx-2'>
-            <EffectTxt blueEffects={blueEffects} colorNumbers={true} text={skill.effect} chars={chars} dmg={skill.dmg}/>
+            <EffectTxt
+              blueEffects={blueEffects}
+              colorNumbers={true}
+              text={skill.effect}
+              chars={chars}
+              dmg={skill.dmg}
+              factions={factions}
+            />
           </div>
           
           {(skill.range_1!==null)&&(

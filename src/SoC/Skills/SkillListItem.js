@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 import EffectTxt from '../Effect/EffectTxt';
 import CharFace from '../Chars/CharFace';
 
-function SkillListItem({skill, blueEffects, chars, w100}) {
+function SkillListItem({skill, blueEffects, chars, w100, factions}) {
   const nrg_icon = require('../assets/img/nrg_icon.png')
   const cd_icon = require('../assets/img/cd_icon.png')
   const [filteredChars, setfilteredChars] = useState([])
@@ -79,7 +79,13 @@ function SkillListItem({skill, blueEffects, chars, w100}) {
             </div>
 
             <div className='mx-2'>
-              <EffectTxt blueEffects={blueEffects} text={skill.effect} dmg={skill.dmg} chars={chars} />
+              <EffectTxt 
+                blueEffects={blueEffects} 
+                text={skill.effect}
+                dmg={skill.dmg}
+                chars={chars}
+                factions={factions}
+              />
             </div>
             
             {(skill.range_1!==null)&&(

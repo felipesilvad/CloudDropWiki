@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo} from 'react';
-import axios from 'axios';
+import Mongo from '../../mango'
 import {Helmet} from "react-helmet";
 import {Container,Row,Col} from 'react-bootstrap';
 import SkillListItem from './SkillListItem';
@@ -9,29 +9,31 @@ import { FaSearch } from "react-icons/fa";
 function SkillsList() {
   const [skills, setSkills] = useState([])
   const [chars, setChars] = useState([])
+  const [factions, setFactions] = useState([])
   const [effectTags, setEffectTags] = useState([])
   const [focused, setFocused] = React.useState(false);
   const onFocus = () => setFocused(!focused);
   const onBlur = () => setFocused(false);
 
   useEffect (() => {
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"skills","database":"soc","dataSource":"Sword","limit":30}
-    }).then(res => {
+    Mongo.find('skills', {limit: 30})
+    .then(res => {
       setSkills(res.data.documents)
-    }).catch(err => console.warn(err));
-
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"effect_tags","database":"soc","dataSource":"Sword"}
-    }).then(res => {
+    }, function(err) {console.log(err);})
+    Mongo.find('effect_tags')
+    .then(res => {
       setEffectTags(res.data.documents)
-    }).catch(err => console.warn(err));
+    }, function(err) {console.log(err);})
 
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"chars","database":"soc","dataSource":"Sword"}
-    }).then(res => {
+    Mongo.find('chars')
+    .then(res => {
       setChars(res.data.documents)
-    }).catch(err => console.warn(err));
+    }, function(err) {console.log(err);})
+
+    Mongo.find('factions')
+    .then(res => {
+      setFactions(res.data.documents)
+    }, function(err) {console.log(err);})
   }, [])
 
   const [selectedEffectTypes, setSelectedEffectTypes] = useState('any');
@@ -43,82 +45,83 @@ function SkillsList() {
 
   const handleEffectTypes = (value) => {
     setSelectedEffectTypes(value)
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"skills","database":"soc","dataSource":"Sword",
-        "filter": {
-          "effect_type": value,
-          "slug": { $nin: skills.map(skill => skill.slug) }
-        }}
-    }).then(res => {
+    Mongo.find('skills', {
+      filter: {
+        "effect_type": value,
+        "slug": { $nin: skills.map(skill => skill.slug) }
+      }
+    })
+    .then(res => {
       setSkills([...skills, ...res.data.documents])
-    }).catch(err => console.warn(err));
+    }, function(err) {console.log(err);})
   }
 
   const handleStatsTags = (value) => {
     setSelectedStatsTags(value)
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"skills","database":"soc","dataSource":"Sword",
-        "filter": {
-          $and: value.map(effectTag => ({"effect": {$regex : effectTag.replaceAll('|','\\|')}})),
-          "slug": { $nin: skills.map(skill => skill.slug) }
-        }}
-    }).then(res => {
+    Mongo.find('skills', {
+      filter: {
+        $and: value.map(effectTag => ({"effect": {$regex : effectTag.replaceAll('|','\\|')}})),
+        "slug": { $nin: skills.map(skill => skill.slug) }
+      }
+    })
+    .then(res => {
       setSkills([...skills, ...res.data.documents])
-    }).catch(err => console.warn(err));
+    }, function(err) {console.log(err);})
   }
 
   const handleEffectTags = (value) => {
     setSelectedEffectTags(value)
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"skills","database":"soc","dataSource":"Sword",
-        "filter": {
-          $and: value.map(effectTag => ({"effect": {$regex : `\\[${effectTag}\]`}})),
-          "slug": { $nin: skills.map(skill => skill.slug) }
-        }}
-    }).then(res => {
+
+    Mongo.find('skills', {
+      filter: {
+        $and: value.map(effectTag => ({"effect": {$regex : `\\[${effectTag}\]`}})),
+        "slug": { $nin: skills.map(skill => skill.slug) }
+      }
+    })
+    .then(res => {
       setSkills([...skills, ...res.data.documents])
-    }).catch(err => console.warn(err));
+    }, function(err) {console.log(err);})
+    
   }
 
   const handleFactions = (value) => {
     setSelectedFactions(value)
     if (value === "any") {
-      axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-        data: {"collection":"skills","database":"soc","dataSource":"Sword",
-          "filter": {
-            $and: factions.map(faction => ({"effect": {$regex : `${faction}`}})),
-            "slug": { $nin: skills.map(skill => skill.slug) }
-          }}
-      }).then(res => {
+      Mongo.find('skills', {
+        filter: {
+          $and: factions.map(faction => ({"effect": {$regex : `${faction}`}})),
+          "slug": { $nin: skills.map(skill => skill.slug) }
+        }
+      })
+      .then(res => {
         setSkills([...skills, ...res.data.documents])
-      }).catch(err => console.warn(err));
+      }, function(err) {console.log(err);})
     } else if (value === "none") {}
     else {
-      axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-        data: {"collection":"skills","database":"soc","dataSource":"Sword",
-          "filter": {
-            "effect": {$regex : `${value}`},
-            "slug": { $nin: skills.map(skill => skill.slug) }
-          }}
-      }).then(res => {
+      Mongo.find('skills', {
+        filter: {
+          "effect": {$regex : `${value}`},
+          "slug": { $nin: skills.map(skill => skill.slug) }
+        }
+      })
+      .then(res => {
         setSkills([...skills, ...res.data.documents])
-      }).catch(err => console.warn(err));
+      }, function(err) {console.log(err);})
     }
   }
 
   const handleSearch = (value) => {
     setActiveSearchTerm(value)
-    axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/find",
-      data: {"collection":"skills","database":"soc","dataSource":"Sword",
-        "filter": {
-          "title": {$regex : value},
-          "slug": { $nin: skills.map(skill => skill.slug) }
-        }}
-    }).then(res => {
+    Mongo.find('skills', {
+      filter: {
+        "title": {$regex : value},
+        "slug": { $nin: skills.map(skill => skill.slug) }
+      }
+    })
+    .then(res => {
       setSkills([...skills, ...res.data.documents])
-    }).catch(err => console.warn(err));
+    }, function(err) {console.log(err);})
   }
-  console.log(skills.map(skill => skill._id))
   useEffect (() => {
     if (searchTerm === '') {
       setActiveSearchTerm('')
@@ -175,16 +178,11 @@ function SkillsList() {
   
   const effectTagOptions = useMemo(() => {
     return effectTags.filter(tag => !tag.title.includes("|")).map(tag => ({ value: tag.title, label: tag.title }));
-  }, [effectTags, statsTags]);
-  
-  const factions = useMemo(() => {
-    return ["Aggression","Alacrity","Discipline","Drifter","Fortitude",
-      "Iria","Papal States","Sword of Convallaria","The Union", "Vlder"]
-  }, []);
+  }, [effectTags]);
 
   const factionOptions = useMemo(() => {
     return [{ value: 'none', label: 'None' }, { value: 'any', label: 'Any' }, 
-      ...factions.map(faction => ({ value: faction, label: faction }))];
+      ...factions.map(faction => ({ value: faction.title, label: faction.title }))];
   }, [factions]);
 
   const filteredSkills = skills
@@ -196,7 +194,7 @@ function SkillsList() {
       if (selectedFactions === "none") {
         return true;
       } else if (selectedFactions === "any") {
-        return factions.some(faction => skill.effect.toLowerCase().includes(faction.toLowerCase()));
+        return factions.some(faction => skill.effect.toLowerCase().includes(faction.title.toLowerCase()));
       } else {
         return skill.effect.toLowerCase().includes(selectedFactions.toLowerCase());
       }
@@ -287,7 +285,7 @@ function SkillsList() {
           {filteredSkills.length} Results
           <div className='d-flex flex-wrap'>
             {skills&&effectTags&&(filteredSkills.map(skill => (
-              <SkillListItem skill={skill} chars={chars}
+              <SkillListItem skill={skill} chars={chars} factions={factions}
               blueEffects={[effectTags.filter(effect => effect.color === "blue")]} />
             )))}
           </div>
