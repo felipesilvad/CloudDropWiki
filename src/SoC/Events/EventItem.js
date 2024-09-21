@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import LazyImage from './LazyImage';
 import { dotPulse } from 'ldrs'
 
-// Default values shown
-
 function EventItem({event, side, i}) {
   const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0 });
   const today = new Date();

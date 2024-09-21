@@ -115,21 +115,32 @@
 }
 
 .header-cool {
-  background-image: url('../assets/img/stage03.webp');
-  background-size: cover;
+  // background-image: url('../assets/img/stage03.webp');
+  // background-size: cover;
+  // background-position: center;
+  position: relative;
+  overflow: hidden;
   height: 12rem;
-  background-position: center;
   @media (max-width: 767px) {
     height: 4rem;
   }
 }
 
+.header-cool-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .overlay-dark {
-  background-color: rgba($color: #000000, $alpha: 0.3);
-  height: 12rem;
-  @media (max-width: 767px) {
-    height: 4rem;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 
 .discord-img {
