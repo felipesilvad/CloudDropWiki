@@ -1,6 +1,6 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
-import LazyImage from './LazyImage';
+import LazyImageEvent from './LazyImage';
 import { dotPulse } from 'ldrs'
 
 function EventItem({event, side, i}) {
@@ -33,8 +33,8 @@ function EventItem({event, side, i}) {
     <Link key={i} to={event&&(`/events/${event.id}`)} className={`event-item ${side&&("w-100")}`}>
       <div className='event-col mt-2 mx-1'>
         {event?(
-          <LazyImage className='event-img' alt={`event-${i}`} i={i}
-          path={`/events/${event.id}.jpg`} />
+          <LazyImageEvent className='event-img' alt={`event-${i}`} i={i}
+          publicID={`/events/${event.id}`} width="500" />
         ):(
           <div className="skeleton animate-flicker d-flex align-items-center justify-content-center">
           </div>

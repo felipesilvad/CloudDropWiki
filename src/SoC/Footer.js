@@ -7,8 +7,8 @@ function FooterComponent() {
   return (
     <footer className='footer d-flex justify-content-between align-items-center'>
       <Container className='d-flex justify-content-between align-items-center'>
-        <img src={img} className='footer-img' alt={"garcia-and-teadon-on-a-scorpion"} width={160} height={60} />
-        <a href='https://forms.gle/VJUss2tM1vMfhj5C6'target="_blank" rel="noopener"> 
+        <img src={img} className='footer-img' loading='lazy' fetchPriority='low' alt={"garcia-and-teadon-on-a-scorpion"} width={160} height={60} />
+        <a href='https://forms.gle/VJUss2tM1vMfhj5C6'target="_blank" rel="noreferrer" > 
           <Button className='footer-btn'>Submit Feedback</Button>
         </a>
       </Container>

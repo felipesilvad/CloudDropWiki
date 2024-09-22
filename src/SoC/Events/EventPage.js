@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import Mongo from '../../mango'
-import { Col, Container, Image,Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import EventsList from './EventList';
 import CharsListItemRow from '../Chars/CharsListItemRow';
 import {Helmet} from "react-helmet-async";
+import LazyImageEvent from './LazyImage';
 
 function EventPage() {
   const id = useParams().id
@@ -56,8 +57,15 @@ function EventPage() {
           <Col md={9}>
             <div className='event-div p-3'> 
               <div className='d-flex justify-content-center'>
-                <Image className='event-page-img' alt={event.id} width={876} height={`inherit`}
-                src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`} />
+                {event?(
+                  <LazyImageEvent lassName='event-page-img' alt={`event-img`}
+                  publicID={`/events/${event.id}`} width="600" />
+                ):(
+                  <div className="skeleton animate-flicker d-flex align-items-center justify-content-center">
+                  </div>
+                )}
+                {/* <Image className='event-page-img' alt={event.id} width={876} height={`inherit`}
+                src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/events%2F${event.id}.jpg?alt=media&token=d4a2187b-bfd6-4633-bb6f-7fc65a49c6ed`} /> */}
               </div>
 
               <div className='m-1 mt-2 d-flex justify-content-center align-items-middle text-center'>

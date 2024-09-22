@@ -99,8 +99,8 @@ function HeaderComponent() {
             <a target="_blank" href="https://ko-fi.com/clouddropwiki" rel="noreferrer">
               <Image loading="lazy" className='discord-img m-1'  src={kofi} alt="kofi" width="521" height="101"/>
             </a>
-            <a target="_blank" href="https://discord.gg/tdTmcKkM" rel="noreferrer">
-              <Image loading="lazy" className='discord-img m-1' href="https://discord.gg/tdTmcKkM" src={discord} alt="discord" width="521" height="101"/>
+            <a target="_blank" href="https://discord.gg/S3F95TpyMW" rel="noreferrer">
+              <Image loading="lazy" className='discord-img m-1' src={discord} alt="discord" width="521" height="101"/>
             </a>
         </Navbar.Collapse>
         
