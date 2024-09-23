@@ -84,8 +84,8 @@ function CharsList() {
   return (
     <Container className='new-container'>
       <Helmet>
-        <title>Characters List - SoC Wiki</title>
-        <meta name="description" content="Sword of Convallaria Characters List, All Rarities: Epic, Rare, Common units" />
+        <title>Characters List - Sword of Convallaria Wiki</title>
+        <meta name="description" content="SoC Global Characters List, All Rarities: Epic, Rare, Common units" />
         <link rel="canonical" href='/chars' />
       </Helmet>
 

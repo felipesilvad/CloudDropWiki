@@ -26,15 +26,18 @@ const EffectTxt = ({ text, dmg, blueEffects, factions, chars}) => {
   if (text) { 
     const renderText = () => {
       return text.split(/(\d+%?|\[.*?\]|\|hr\||\|br\|)/g).reduce((acc, part, index, array) => {
-        if (array[index - 1]?.endsWith('Heals ') ||
-          array[index - 1]?.endsWith('Heals the target by ')||
-          array[index - 1]?.endsWith('Heals all allies within ')||
-          array[index - 1]?.endsWith('the DMG taken is decreased by ')||
-          array[index - 1]?.endsWith('healing skill by ')||
-          array[index - 1]?.endsWith('healing effect by ')||
-          array[index - 1]?.endsWith('healing received by ')||
-          array[index - 1]?.endsWith('generating ')||
-          array[index - 1]?.endsWith('recovers ')
+        if (array[index - 1]?.endsWith('Heals ')
+          ||array[index - 1]?.endsWith('Heals the target by ')
+          ||array[index - 1]?.endsWith('Heals all allies within ')
+          ||array[index - 1]?.endsWith('the DMG taken is decreased by ')
+          ||array[index - 1]?.endsWith('healing skill by ')
+          ||array[index - 1]?.endsWith('healing effect by ')
+          ||array[index - 1]?.endsWith('healing received by ')
+          ||array[index - 1]?.endsWith('HP equal to  ')
+          ||array[index - 1]?.endsWith('generating ')
+          ||array[index - 1]?.endsWith('recovers ')
+          ||array[index - 1]?.endsWith('NRG is increased to ')
+          ||array[index - 1]?.endsWith('NRG owned, he additionally gains ')
          ) {
           // Se a parte anterior termina com "Heals " ou "Heals the target by ", o número atual deve ser verde
           acc.push(

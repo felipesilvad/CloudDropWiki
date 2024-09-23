@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {Col, Image} from 'react-bootstrap';
+import {Col} from 'react-bootstrap';
+import {IKImage} from 'imagekitio-react';
 
 function CharPageArtSkins({rarity, slug}) {
   const [art, setArt] = useState('Main');
-
-  const awaken = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${slug}_awaken.png?alt=media`
-  const full = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${slug}_full.png?alt=media`
 
   useEffect(() => {
     if (rarity === "Legendary") {setArt("Awaken")}
@@ -24,13 +22,39 @@ function CharPageArtSkins({rarity, slug}) {
       </div>
       
       {(art==="Awaken")&&(
-        <div className='art-img-div'>
-          <Image className='art-img' src={awaken} alt={slug+"_awaken_art"} width={"auto"} height={"auto"} />
+        <div className='d-flex justify-content-center'>
+          <IKImage
+            urlEndpoint={'https://ik.imagekit.io/clouddrop/soc/'}
+            path={`chars/${slug}_awaken.png`}
+            alt={slug+"_awaken"}
+            className='art-img'
+            transformation={[{
+              width: 600
+            }]}
+            width="600"
+            height="auto"
+            loading='lazy'
+            fetchPriority='low'
+          />
+          {/* <Image className='art-img' src={awaken} alt={slug+"_awaken_art"} width={"auto"} height={"auto"} /> */}
         </div>
       )}
       {(art==="Main")&&(
         <div className='d-flex justify-content-center'>
-          <Image className='art-img-full' src={full} alt={slug+"_full_art"} width={"auto"} height={"auto"} />
+          <IKImage
+            urlEndpoint={'https://ik.imagekit.io/clouddrop/soc/'}
+            path={`chars/${slug}_full.png`}
+            alt={slug+"_full_art"}
+            transformation={[{
+              width: 600
+            }]}
+            width="auto"
+            className='art-img-full'
+            height="auto"
+            loading='lazy'
+            fetchPriority='low'
+          />
+          {/* <Image className='art-img-full' src={full} alt= width={"auto"} height={"auto"} /> */}
         </div>
       )}
     </Col>
