@@ -93,6 +93,19 @@ a {
   }
 }
 
+.loading-screen {
+  position:absolute;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(#1E1E24, 0.7);
+  margin: auto;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .margin-main {
   padding-top: 4.5rem;
 }

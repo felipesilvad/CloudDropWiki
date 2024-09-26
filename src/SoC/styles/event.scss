@@ -6,6 +6,11 @@
   font-size: 0
 }
 
+.event-img-lcp {
+  scale: 1.01;
+}
+
+
 .event-item {
   width: 33%;
   @media only screen and (max-width: $md) {

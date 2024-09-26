@@ -15,8 +15,17 @@ function EventsList({side, events}) {
           Array(9).fill().map((event, i) => (
             <EventItem event={null} side={side} i={i} />
           ))
-        )
-        }
+        )}
+        {/* <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} />
+        <EventItem event={null} side={side} i={1} /> */}
+
       </div>
     </Container>
   )

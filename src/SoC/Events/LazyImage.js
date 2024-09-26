@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 // import {IKImage} from 'imagekitio-react';
 // import { Image } from 'react-bootstrap';
 import { Image } from 'cloudinary-react';
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const LazyImageEvent = ({publicID, id, alt,i,width, ...props }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,13 +24,22 @@ const LazyImageEvent = ({publicID, id, alt,i,width, ...props }) => {
         <Image 
           cloudName="cdwiki" onLoad={handleImageLoad} alt={alt}
           {...props} publicId={publicID} width={width} crop="scale"
-          fetchpriority="high"
+          fetchpriority="high" className='event-img event-img-lcp'
         />
       ):(
-        <Image
-          cloudName="cdwiki" onLoad={handleImageLoad} alt={alt}
-          {...props} publicId={publicID} width={width} crop="scale"
+        <LazyLoadImage
+          alt={`at`}
+          height={`auto`}
+          src={`https://res.cloudinary.com/cdwiki/image/upload/c_scale,w_500/v1/events/${id}`}
+          width={`500`}
+          className='event-img'
+          loading='lazy'
+          onLoad={handleImageLoad}
         />
+        // <Image
+        //   cloudName="cdwiki" onLoad={handleImageLoad} alt={alt} loading=
+        //   {...props} publicId={publicID} width={width} crop="scale"
+        // />
       )}
     </>
   );

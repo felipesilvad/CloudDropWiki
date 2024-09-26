@@ -1,35 +1,62 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import {Routes, Route} from 'react-router-dom'
-import CharsList from './SoC/Chars/CharsList';
-import CharPage from './SoC/Chars/CharPage';
-import Home from './SoC/Home';
-import EventsListPage from './SoC/Events/EventsListPage';
-import EventPage from './SoC/Events/EventPage';
-import SkillsList from './SoC/Skills/SkillsList';
-import TraitsList from './SoC/Skills/TraitsList';
-import EffectsList from './SoC/Skills/EffectsList';
-import GearsList from './SoC/Gear/GearsList';
-import GearPage from './SoC/Gear/GearPage';
-import TarotsList from './SoC/Gear/TarotList';
-import EnemiesList from './SoC/Stages/EnemiesList';
-import EngravingsComponent from './SoC/Gear/EngravingsComponent';
+import LoadingScreen from './SoC/LoadingScreen';
+const CharsList = lazy(() => import ('./SoC/Chars/CharsList'));
+const CharPage = lazy(() => import ('./SoC/Chars/CharPage'));
+const Home = lazy(() => import ('./SoC/Home'));
+const EventsListPage = lazy(() => import ('./SoC/Events/EventsListPage'));
+const EventPage = lazy(() => import ('./SoC/Events/EventPage'));
+const SkillsList = lazy(() => import ('./SoC/Skills/SkillsList'));
+const TraitsList = lazy(() => import ('./SoC/Skills/TraitsList'));
+const EffectsList = lazy(() => import ('./SoC/Skills/EffectsList'));
+const GearsList = lazy(() => import ('./SoC/Gear/GearsList'));
+const GearPage = lazy(() => import ('./SoC/Gear/GearPage'));
+const TarotsList = lazy(() => import ('./SoC/Gear/TarotList'));
+const EnemiesList = lazy(() => import ('./SoC/Stages/EnemiesList'));
+const EngravingsComponent = lazy(() => import ('./SoC/Gear/EngravingsComponent'));
 
 function Router() {
   return (
     <Routes>
-      <Route path='/' element={<Home />} exact/>
-      <Route path='/chars' element={<CharsList />} exact/>
-      <Route path='/chars/:id' element={<CharPage />} exact/>
-      <Route path='/skills' element={<SkillsList />} exact/>
-      <Route path='/traits' element={<TraitsList />} exact/>
-      <Route path='/effects' element={<EffectsList />} exact/>
-      <Route path='/gears' element={<GearsList />} exact/>
-      <Route path='/gears/:id' element={<GearPage />} exact/>
-      <Route path='/tarots' element={<TarotsList />} exact/>
-      <Route path='/events' element={<EventsListPage />} exact/>
-      <Route path='/events/:id' element={<EventPage />} exact/>
-      <Route path='/enemies' element={<EnemiesList />} exact/>
-      <Route path='/engravings' element={<EngravingsComponent />} exact/>
+      <Route path='/' exact element={
+        <Suspense fallback={<LoadingScreen />}><Home /></Suspense>
+      }/>
+      <Route path='/chars' exact element={
+        <Suspense  fallback={<LoadingScreen />}><CharsList /></Suspense>
+      }/>
+      <Route path='/chars/:id' exact element={
+        <Suspense  fallback={<LoadingScreen />}><CharPage /></Suspense>
+      }/>
+      <Route path='/skills' exact element={
+        <Suspense  fallback={<LoadingScreen />}><SkillsList /></Suspense>
+      }/>
+      <Route path='/traits' exact element={
+        <Suspense  fallback={<LoadingScreen />}><TraitsList /></Suspense>
+      }/>
+      <Route path='/effects' exact element={
+        <Suspense  fallback={<LoadingScreen />}><EffectsList /></Suspense>
+      }/>
+      <Route path='/gears' exact element={
+        <Suspense  fallback={<LoadingScreen />}><GearsList /></Suspense>
+      }/>
+      <Route path='/gears/:id' exact element={
+        <Suspense  fallback={<LoadingScreen />}><GearPage /></Suspense>
+      }/>
+      <Route path='/tarots' exact element={
+        <Suspense  fallback={<LoadingScreen />}><TarotsList /></Suspense>
+      }/>
+      <Route path='/events' exact element={
+        <Suspense  fallback={<LoadingScreen />}><EventsListPage /></Suspense>
+      }/>
+      <Route path='/events/:id' exact element={
+        <Suspense  fallback={<LoadingScreen />}><EventPage /></Suspense>
+      }/>
+      <Route path='/enemies' exact element={
+        <Suspense  fallback={<LoadingScreen />}><EnemiesList /></Suspense>
+      }/>
+      <Route path='/engravings' exact element={
+        <Suspense  fallback={<LoadingScreen />}><EngravingsComponent /></Suspense>
+      }/>
       {/* <Route path="/search" element={<SearchPage />} /> */}
     </Routes>
   );

@@ -9,7 +9,9 @@ function Home() {
   const [events, setEvents] = useState([])
 
   useEffect (() => {
-    Mongo.find('events',{limit: 9, sort: {"startDate": -1}})
+    Mongo.find('events',{limit: 9, sort: {"startDate": -1}, "projection": {
+      "title": 1,"id": 1, "startDate": 1, "endDate": 1
+    }})
     .then(res => {
       setEvents(res.data.documents)
     }, function(err) {
@@ -24,12 +26,12 @@ function Home() {
         <meta name="description" content="SoC Database, All Characters, Skills, Items, Stages, and Bosses Information." />
         <link rel="canonical" href='/' />
       </Helmet>
-      <h1 className='d-none'>Sword of Convallaria Wiki Homepage - Character Skills and Stats, News</h1>
+      <h1 className='d-none'>Sword of Convallaria Wiki Homepage - Character Skills and Stats, News. SoC database 鈴蘭之劍：為這和平的世界</h1>
       <div className='header-cool'>
         <IKImage
           urlEndpoint={'https://ik.imagekit.io/clouddrop/soc/'}
           path={'stage03.png'}
-          fetchpriority="high"
+          // fetchpriority="high"
           alt="Background"
           className='header-cool-bg-img'
           transformation={[{
