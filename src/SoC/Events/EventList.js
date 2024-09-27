@@ -1,31 +1,18 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import {Container} from 'react-bootstrap';
-import EventItem from './EventItem';
+import EventLoading from './EventLoading';
+const EventItem = lazy(() => import ('./EventItem'));
 
 function EventsList({side, events}) {
   
   return (
     <Container className='new-container'>
       <div className='d-flex flex-wrap'>
-        {events.length?(
-          events.map((event, i) => (
+        {events.map((event, i) => (
+          <Suspense fallback={<EventLoading />}>
             <EventItem event={event} side={side} i={i} />
-          ))
-        ):(
-          Array(9).fill().map((event, i) => (
-            <EventItem event={null} side={side} i={i} />
-          ))
-        )}
-        {/* <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} />
-        <EventItem event={null} side={side} i={1} /> */}
-
+          </Suspense>
+        ))}
       </div>
     </Container>
   )

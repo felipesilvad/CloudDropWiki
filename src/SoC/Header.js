@@ -5,8 +5,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
 // import SearchBar from './Search/SearchBar';
+// import AccountHeader from '../Accounts/AccountHeader';
 
-function HeaderComponent() {
+function HeaderComponent({userData}) {
   const char_img = require('./assets/img/menu_chars.png')
   const skills_img = require('./assets/img/menu_skills.png')
   const event_img = require('./assets/img/menu_events.png')
@@ -96,12 +97,16 @@ function HeaderComponent() {
               </div>
             </Nav.Link>
           </Nav>
-            <a target="_blank" href="https://ko-fi.com/clouddropwiki" rel="noreferrer">
-              <Image loading="lazy" className='discord-img m-1'  src={kofi} alt="kofi" width="521" height="101"/>
-            </a>
-            <a target="_blank" href="https://discord.gg/S3F95TpyMW" rel="noreferrer">
-              <Image loading="lazy" className='discord-img m-1' src={discord} alt="discord" width="521" height="101"/>
-            </a>
+          
+          <a target="_blank" href="https://ko-fi.com/clouddropwiki" rel="noreferrer">
+            <Image loading="lazy" className='discord-img m-1'  src={kofi} alt="kofi" width="521" height="101"/>
+          </a>
+          <a target="_blank" href="https://discord.gg/S3F95TpyMW" rel="noreferrer">
+            <Image loading="lazy" className='discord-img m-1' src={discord} alt="discord" width="521" height="101"/>
+          </a>
+
+          {/* <AccountHeader userData={userData} /> */}
+
         </Navbar.Collapse>
         
         {/* <SearchBar /> */}

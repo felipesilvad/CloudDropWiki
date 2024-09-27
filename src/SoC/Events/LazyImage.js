@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react';
 // import { Image } from 'react-bootstrap';
 import { Image } from 'cloudinary-react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+// import { preload } from 'react-dom';
 
 const LazyImageEvent = ({publicID, id, alt,i,width, ...props }) => {
   const [isLoaded, setIsLoaded] = useState(false);

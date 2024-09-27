@@ -65,35 +65,6 @@
   }
 }
 
-
-.event-calendar {
-  display: flex;
-  flex-direction: column;
-  overflow-x: auto;
-  width: 100%;
-  margin: 20px;
-}
-
-.timeline {
-  position: relative;
-}
-
-.days {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #ccc;
-  background-color: #f9f9f9;
-  padding-bottom: 5px;
-}
-
-.day {
-  width: calc(100% / 30); /* Adjust for the number of days in the month */
-  text-align: center;
-  font-size: 12px;
-  border-right: 1px solid #ccc;
-  padding: 0 5px;
-}
-
 .event-row {
   position: relative;
   height: 40px; /* Adjust height to fit your needs */
@@ -162,4 +133,90 @@
   -moz-animation: flickerAnimation 1s infinite;
   -o-animation: flickerAnimation 1s infinite;
    animation: flickerAnimation 1s infinite;
+}
+
+.events-calendar {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  background-color: darken($dark, 2);
+  color: #f5f5f5;
+  padding: 0.5rem 0;
+  border-radius: 10px;
+}
+
+.calendar-scrollable {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 0.5rem;
+}
+
+.calendar-header {
+  display: grid;
+  gap: 5px;
+  border-bottom: 2px solid $light;
+  padding-bottom: 10px;
+  position: sticky;
+  top: 0;
+  // background-color: darken($dark, 2);
+}
+
+.calendar-day {
+  text-align: center;
+  padding: 10px;
+  background-color: $light;
+  border-radius: 5px;
+  position: relative;
+  color: #ccc;
+}
+
+.today {
+  border-left: 2px solid $highlight;
+  color: #fff;
+  font-weight: bold;
+}
+
+.calendar-events {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.event-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(66, 135, 245, 0.3);
+  // border: 1px solid #4287f5;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  overflow: hidden;
+}
+
+.event-content {
+  padding: 0.2rem;
+  font-size: 1rem;
+  line-height: 1px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif!important;
+  margin-bottom: -2px;
+  text-shadow: 1px -1px 4px rgba(0, 0, 0, 1);
+}
+
+::-webkit-scrollbar {
+  height: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lighten($dark,40);
+  border-radius: 5px;
+}
+
+.banner-img {
+  height: 58px;
+  margin-right: 0.5rem;
 }

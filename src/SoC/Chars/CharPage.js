@@ -135,7 +135,7 @@ function CharPage() {
     <Container className='char-container py-2'>
       <Helmet>
         <title>{capitalize(id.replace('-', ' '))} | Sword of Convallaria Wiki - Build, Skill Recommendations & more</title>
-        <meta name="description" content={`${capitalize(id.replace('-', ' '))} Skills Recommendations and Priority, Recommended Gear, Tarots, Weapons, and Trinkets. Stats comparison and Trait Detail. - SoC Wiki Database`} />
+        <meta name="description" content={`${capitalize(id.replaceAll('-', ' '))} Skills Recommendations and Priority, Recommended Gear, Tarots, Weapons, and Trinkets. Stats comparison and Trait Detail. - SoC Wiki Database`} />
         <link rel="canonical" href={`/chars/${id}`} />
       </Helmet>
       <h1 className='d-none'>{char&&(char.name)} | Sword of Convallaria Wiki - Build, Skill Recommendations & more</h1>
@@ -160,21 +160,18 @@ function CharPage() {
             
             <Col xs={9}>
               <div className='char-detail-bg'>
-
-                <CharPageName char={char} chars={chars} factions={factions} windowWidth={windowWidth} rarityOrder={rarityOrder} />
                 
+                <CharPageName char={char} chars={chars} factions={factions} windowWidth={windowWidth} rarityOrder={rarityOrder} />
+  
                 {windowWidth.current > 768 &&(
                   <CharPageDesktopFactions char={char} chars={chars} factions={factions} rarityOrder={rarityOrder} />
                 )}
-
-                
 
                 <div className='black-label-div'>
                   <h5>
                     STATS
                   </h5>
                 </div>
-
                 {char?(
                   <Row className='custom-row'>
                     <Col md={8} >

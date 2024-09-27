@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, lazy, Suspense} from 'react';
 import { Link } from 'react-router-dom';
-import LazyImageEvent from './LazyImage';
 import { dotPulse } from 'ldrs'
+import EventLoading from './EventLoading';
+const LazyImageEvent = lazy(() => import ('./LazyImage'));
 
 function EventItem({event, side, i}) {
   const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0 });
@@ -32,13 +33,10 @@ function EventItem({event, side, i}) {
   return (
     <Link key={i} to={event&&(`/events/${event.id}`)} className={`event-item ${side&&("w-100")}`}>
       <div className='event-col mt-2 mx-1'>
-        {event?(
+        <Suspense fallback={<EventLoading />}>
           <LazyImageEvent alt={`event-${i}`} i={i}
           publicID={`/events/${event.id}`} width="500" id={event.id} />
-        ):(
-          <div className="skeleton animate-flicker d-flex align-items-center justify-content-center">
-          </div>
-        )}
+        </Suspense>
         <div className='mx-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
           {event?(
             <h5 className="">{event&&(event.title)}</h5>
