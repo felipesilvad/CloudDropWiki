@@ -9,7 +9,7 @@ function EventsList({side, events}) {
     <Container className='new-container'>
       <div className='d-flex flex-wrap'>
         {events.map((event, i) => (
-          <Suspense fallback={<EventLoading />}>
+          <Suspense fallback={<EventLoading height="180px" />}>
             <EventItem event={event} side={side} i={i} />
           </Suspense>
         ))}

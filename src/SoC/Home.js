@@ -3,9 +3,12 @@ import {Helmet} from "react-helmet-async";
 import Container from 'react-bootstrap/Container';
 import Mongo from '../mango'
 import {IKImage} from 'imagekitio-react';
-import LoadingScreen from './LoadingScreen';
+import { Row, Col, Button } from 'react-bootstrap';
+// import LoadingScreen from './LoadingScreen';
+import EventLoading from './Events/EventLoading';
 const EventsList = lazy(() => import ('./Events/EventList'));
 const EventsCalendar = lazy(() => import ('./Events/EventsCalendar'));
+const CharsListItem = lazy(() => import ('./Chars/CharsListItem'));
 
 
 function Home() {
@@ -47,21 +50,39 @@ function Home() {
         </div>
       </div>
 
-      <div className='black-label-div mt-2'>
-        Events Calendar
+      <div className='events-calendar-container'>
+        
       </div>
-      <EventsCalendar events={events} />
       
-      <Container className='new-container mt-2'>
+      <Container className='skill-list-container mt-2'>
+      <Row className='custom-row'>
+        <Col md={2} className='filter-bg py-2'>
 
+          {/* <CharsListItem  /> */}
+        </Col>
+        <Col md={10}>
+          <div className='black-label-div'>
+            Latest News
+          </div>
 
-        <div className='black-label-div'>
-          Latest Events
-        </div>
+          <Suspense fallback={<EventLoading height="540px" />}>
+            <EventsList events={events} />
+            {/* <div className='d-flex flex-content-end w-100'>
+              <a href='https://forms.gle/VJUss2tM1vMfhj5C6'target="_blank" rel="noreferrer" > 
+                <Button className='footer-btn'>More</Button>
+              </a>
+            </div> */}
+          </Suspense>
 
-        <Suspense fallback={<LoadingScreen />}>
-          <EventsList events={events} />
-        </Suspense>
+          <div className='black-label-div mt-1'>
+            Events Calendar
+          </div>
+          <Suspense fallback={<EventLoading height="350px" />}>
+            <EventsCalendar events={events} />
+          </Suspense>
+        </Col>
+      </Row>
+        
         
       </Container>
 
