@@ -8,15 +8,24 @@ import { Row, Col, Button } from 'react-bootstrap';
 import EventLoading from './Events/EventLoading';
 const EventsList = lazy(() => import ('./Events/EventList'));
 const EventsCalendar = lazy(() => import ('./Events/EventsCalendar'));
-const CharsListItem = lazy(() => import ('./Chars/CharsListItem'));
+const CharsListItemRow = lazy(() => import ('./Chars/CharsListItemRow'));
 
 
 function Home() {
   const [events, setEvents] = useState([])
-
+  const popularChars = [
+    {name: "Gloria", rarity: "Legendary", role: "Watcher", slug: "gloria"},
+    {name: "Acambe", rarity: "Legendary", role: "Destroyer", slug: "acambe"},
+    {name: "Cocoa", rarity: "Legendary", role: "Defender", slug: "cocoa"},
+    {name: "Rawiyah", rarity: "Legendary", role: "Defender", slug: "rawiyah"},
+    {name: "Butterfly", rarity: "Epic", role: "Defender", slug: "butterfly"},
+    {name: "Faycal", rarity: "Legendary", role: "Watcher", slug: "faycal"},
+    {name: "Momo", rarity: "Legendary", role: "Destroyer", slug: "momo"},
+    {name: "Crimson Falcon", rarity: "Epic", role: "Watcher", slug: "crimson-falcon"},
+  ]
   useEffect (() => {
     Mongo.find('events',{limit: 9, sort: {"startDate": -1}, "projection": {
-      "title": 1,"id": 1, "startDate": 1, "endDate": 1, "color": 1
+      "title": 1,"id": 1, "startDate": 1, "endDate": 1, "color": 1, "type": 1
     }})
     .then(res => {
       setEvents(res.data.documents)
@@ -49,17 +58,9 @@ function Home() {
         <div className='overlay-dark'>
         </div>
       </div>
-
-      <div className='events-calendar-container'>
-        
-      </div>
       
       <Container className='skill-list-container mt-2'>
       <Row className='custom-row'>
-        <Col md={2} className='filter-bg py-2'>
-
-          {/* <CharsListItem  /> */}
-        </Col>
         <Col md={10}>
           <div className='black-label-div'>
             Latest News
@@ -81,6 +82,14 @@ function Home() {
             <EventsCalendar events={events} />
           </Suspense>
         </Col>
+              <Col md={2} className='filter-bg py-2'>
+                <div className='black-label-div'>
+                  Popular Characters
+                </div>
+                {popularChars.map(char => (
+                  <CharsListItemRow  char={char}  />
+                ))}
+              </Col>
       </Row>
         
         

@@ -33,6 +33,9 @@ function EventItem({event, side, i}) {
   return (
     <Link key={i} to={event&&(`/events/${event.id}`)} className={`event-item ${side&&("w-100")}`}>
       <div className='event-col mt-2 mx-1'>
+        <div className='event-container'>
+          <div className={`news-tag ${event.type}-tag`}>{event.type}</div>
+        </div>
         <Suspense fallback={<EventLoading />}>
           <LazyImageEvent alt={`event-${i}`} i={i}
           publicID={`/events/${event.id}`} width="500" id={event.id} />

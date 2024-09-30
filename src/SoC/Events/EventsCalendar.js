@@ -34,6 +34,23 @@ const EventsCalendar = ({ events }) => {
       // Centraliza o scroll com base na posição do dia atual
       calendarRef.current.scrollLeft = todayPosition - calendarWidth / 2;
     }
+    const handleWheelScroll = (e) => {
+      if (calendarRef.current) {
+        e.preventDefault(); // Impede o scroll vertical
+        calendarRef.current.scrollLeft += e.deltaY; // Scroll horizontal com base no deltaY
+      }
+    };
+
+    const calendarElement = calendarRef.current;
+    if (calendarElement) {
+      calendarElement.addEventListener('wheel', handleWheelScroll);
+    }
+
+    return () => {
+      if (calendarElement) {
+        calendarElement.removeEventListener('wheel', handleWheelScroll);
+      }
+    };
   }, []);
 
   // Função para calcular a posição inicial e a largura do evento no calendário
@@ -46,6 +63,7 @@ const EventsCalendar = ({ events }) => {
 
     return { startIdx, duration };
   };
+  
 
   return (
     <div className="events-calendar">
@@ -60,6 +78,7 @@ const EventsCalendar = ({ events }) => {
               key={index}
               ref={isSameDay(day, today) ? todayRef : null} // Define ref no dia de hoje
               className={`calendar-day ${isSameDay(day, today) ? 'today' : ''}`}
+              width="auto" height="auto" 
             >
               {format(day, 'MMM dd')}
             </div>

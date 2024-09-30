@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import {Helmet} from "react-helmet";
 import {Container,Overlay} from 'react-bootstrap';
-import CharsListItem from './CharsListItem';
-import CharsListItemRow from './CharsListItemRow';
+import EventLoading from '../Events/EventLoading';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Mongo from '../../mango'
+const CharsListItem = lazy(() => import ('./CharsListItem'));
+const CharsListItemRow = lazy(() => import ('./CharsListItemRow'));
 
 function CharsList() {
   const [chars, setChars] = useState([])
@@ -91,56 +92,56 @@ function CharsList() {
 
       {/* MOBILE SIDEBAR */}
       <div className="sidebar">
-          <div className='side-bar-filter text-center' ref={targetRarities} onClick={() => handleShowRarities()}>
-            <img
-              src={require('../assets/img/stage_Epic.png')}
-              alt="Roles"
-              className="sidebar-icon"
-            />
-            {(showRarities)? (
-              <IoIosArrowBack />
-            ):(
-              <IoIosArrowForward />
-            )}
-            <label className='side-bar-filter-label side-bar-roles'>Rarity</label>
-          </div>
+        <div className='side-bar-filter text-center' ref={targetRarities} onClick={() => handleShowRarities()}>
+          <img
+            src={require('../assets/img/stage_Epic.png')}
+            alt="Roles"
+            className="sidebar-icon"
+          />
+          {(showRarities)? (
+            <IoIosArrowBack />
+          ):(
+            <IoIosArrowForward />
+          )}
+          <label className='side-bar-filter-label side-bar-roles'>Rarity</label>
+        </div>
 
-          <Overlay target={targetRarities.current} show={showRarities} placement="right">
-            {({
-              placement: _placement,
-              arrowProps: _arrowProps,
-              show: _showRarities,
-              popper: _popper,
-              hasDoneInitialMeasure: _hasDoneInitialMeasure,
-              ...props
-            }) => (
-              <div
-                {...props}
-                style={{
-                  ...props.style,
-                }}
-                className='side-bar-popover'
-              >
-                {rarityOrder.map(rarity => (
-                  <img
-                    key={rarity}
-                    alt={rarity}
-                    src={require(`../assets/img/stage_${rarity}.png`)}
-                    style={{
-                      width: '30px',
-                      marginLeft: '5px',
-                      cursor: 'pointer',
-                      opacity: activeRarities.includes(rarity) ? '1' : '0.6',
-                    }}
-                    onClick={(activeRarities===rarity)?
-                      (() => setActiveRarities('')):
-                      (() => setActiveRarities(rarity))
-                    }
-                  />
-                ))}
-              </div>
-            )}
-          </Overlay>
+        <Overlay target={targetRarities.current} show={showRarities} placement="right">
+          {({
+            placement: _placement,
+            arrowProps: _arrowProps,
+            show: _showRarities,
+            popper: _popper,
+            hasDoneInitialMeasure: _hasDoneInitialMeasure,
+            ...props
+          }) => (
+            <div
+              {...props}
+              style={{
+                ...props.style,
+              }}
+              className='side-bar-popover'
+            >
+              {rarityOrder.map(rarity => (
+                <img
+                  key={rarity}
+                  alt={rarity}
+                  src={require(`../assets/img/stage_${rarity}.png`)}
+                  style={{
+                    width: '30px',
+                    marginLeft: '5px',
+                    cursor: 'pointer',
+                    opacity: activeRarities.includes(rarity) ? '1' : '0.6',
+                  }}
+                  onClick={(activeRarities===rarity)?
+                    (() => setActiveRarities('')):
+                    (() => setActiveRarities(rarity))
+                  }
+                />
+              ))}
+            </div>
+          )}
+        </Overlay>
 
         <div className='side-bar-filter text-center' ref={targetRoles} onClick={() => handleShowRoles()}>
           <img
@@ -328,13 +329,17 @@ function CharsList() {
         {(windowWidth.current < 768) ? (
           <div className='char-list-div'>
             {chars&&(filteredChars.map(char => (
-              <CharsListItemRow char={char} />
+              <Suspense fallback={<EventLoading height="4rem" />}>
+                <CharsListItemRow char={char} />
+              </Suspense>
             )))}
           </div>
         ):(
           <div className='char-list-div d-flex justify-content-around flex-wrap'>
             {chars&&(filteredChars.map(char => (
-              <CharsListItem char={char} />
+              <Suspense fallback={<EventLoading height="4rem" />}>
+                <CharsListItem char={char} />
+              </Suspense>
             )))}
           </div>
         )}

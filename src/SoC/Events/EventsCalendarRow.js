@@ -4,13 +4,16 @@ import {IKImage} from 'imagekitio-react';
 const EventsCalendarRow = ({index, event, startIdx, duration}) => {
   // const [imageExists, setImageExists] = useState(null);
 
+  
   return (
     <div
       key={index}
       className="event-row"
       style={{
         gridColumn: `${startIdx + 1} / span ${duration}`,
-        backgroundColor: event.color
+        borderColor: event.color
+        // backgroundColor: 
+        // backgroundImage: `linear-gradient(to right, ${event.color}, ${event.color}50)`
       }}
     >
       <div className="event-content">
