@@ -1,9 +1,13 @@
 import React from 'react';
 
-function EventLoading() {
+function EventLoading({key, height}) {
 
   return (
-    <div className="skeleton animate-flicker d-flex align-items-center justify-content-center">
+    <div 
+      key={key} 
+      className="skeleton animate-flicker d-flex align-items-center justify-content-center"
+      style={{height: height}}
+    >
     </div>
   );
 }

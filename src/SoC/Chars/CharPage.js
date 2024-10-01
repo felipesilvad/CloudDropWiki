@@ -134,7 +134,7 @@ function CharPage() {
   return (
     <Container className='char-container py-2'>
       <Helmet>
-        <title>{capitalize(id.replace('-', ' '))} | Sword of Convallaria Wiki - Build, Skill Recommendations & more</title>
+        <title>{capitalize(id.replaceAll('-', ' '))} | Sword of Convallaria Wiki - Build, Skill Recommendations & more</title>
         <meta name="description" content={`${capitalize(id.replaceAll('-', ' '))} Skills Recommendations and Priority, Recommended Gear, Tarots, Weapons, and Trinkets. Stats comparison and Trait Detail. - SoC Wiki Database`} />
         <link rel="canonical" href={`/chars/${id}`} />
       </Helmet>

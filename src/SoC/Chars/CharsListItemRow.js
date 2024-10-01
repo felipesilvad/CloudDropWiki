@@ -8,7 +8,7 @@ function CharsListItemRow({char}) {
  
   if (char) {
     return (
-      <div className='char-row' style={{
+      <div key={char.slug} className='char-row' style={{
           background: `url(${require(`../assets/img/row-bg-${char.rarity}.png`)
           }) no-repeat left center`
         }}>

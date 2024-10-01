@@ -328,16 +328,16 @@ function CharsList() {
         
         {(windowWidth.current < 768) ? (
           <div className='char-list-div'>
-            {chars&&(filteredChars.map(char => (
-              <Suspense fallback={<EventLoading height="4rem" />}>
+            {chars&&(filteredChars.map((char, i) => (
+              <Suspense fallback={<EventLoading height="4rem" key={i} />}>
                 <CharsListItemRow char={char} />
               </Suspense>
             )))}
           </div>
         ):(
           <div className='char-list-div d-flex justify-content-around flex-wrap'>
-            {chars&&(filteredChars.map(char => (
-              <Suspense fallback={<EventLoading height="4rem" />}>
+            {chars&&(filteredChars.map((char, i) => (
+              <Suspense fallback={<EventLoading height="4rem" key={i} />}>
                 <CharsListItem char={char} />
               </Suspense>
             )))}
