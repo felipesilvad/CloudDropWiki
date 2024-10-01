@@ -13,7 +13,7 @@ const CharsListItemRow = lazy(() => import ('./Chars/CharsListItemRow'));
 function Home() {
   const [events, setEvents] = useState([])
   const [currentEvents, setCurrentEvents] = useState([])
-  const currentTime = new Date().toJSON()
+  const currentTime = new Date()
   const windowWidth = useRef(window.innerWidth);
 
   const popularChars = [
@@ -35,7 +35,7 @@ function Home() {
     }, function(err) {
       console.log(err);
     })
-    Mongo.find('events',{filter: {"endDate": { $gt: currentTime}}})
+    Mongo.find('events',{filter: {"startDate": { $lt: currentTime}}})
     .then(res => {
       console.log(res.data.documents)
     }, function(err) {
