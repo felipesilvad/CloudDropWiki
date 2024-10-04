@@ -11,7 +11,7 @@ function EventsList({side, events,windowWidth}) {
       <Container className='new-container'>
         <div className='d-flex flex-wrap'>
           {events.map((event, i) => (
-            <Suspense key={i} fallback={<EventLoading key={i} height="200px" />}>
+            <Suspense key={i} fallback={<EventLoading key={i} height="500px" />}>
               <EventItem event={event} side={side} i={i} />
             </Suspense>
           ))}
@@ -22,7 +22,7 @@ function EventsList({side, events,windowWidth}) {
       return (
       <>
         {events.map((event, i) => (
-          <Suspense key={i} fallback={<EventLoading key={i} height="180px" />}>
+          <Suspense key={i} fallback={<EventLoading key={i} height="920px" />}>
             <EventItemMobile event={event} side={side} i={i} />
           </Suspense>
         ))}

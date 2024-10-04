@@ -3,19 +3,26 @@ import {Helmet} from "react-helmet-async";
 import Container from 'react-bootstrap/Container';
 import Mongo from '../mango'
 import {IKImage} from 'imagekitio-react';
-import { Row, Col} from 'react-bootstrap';
-// import LoadingScreen from './LoadingScreen';
+import {subDays} from 'date-fns';
+import {Row,Col} from 'react-bootstrap';
 import EventLoading from './Events/EventLoading';
-const EventsList = lazy(() => import ('./Events/EventList'));
+import CharListBg from './assets/img/row-bg-Legendary.webp'
+import EventsList from './Events/EventList';
+// const EventsList = lazy(() => import ('./Events/EventList'));
 const EventsCalendar = lazy(() => import ('./Events/EventsCalendar'));
 const CharsListItemRow = lazy(() => import ('./Chars/CharsListItemRow'));
+const EventCurrent = lazy(() => import ('./Events/EventCurrent'));
+
 
 function Home() {
   const [events, setEvents] = useState([])
-  const [currentEvents, setCurrentEvents] = useState([])
-  const currentTime = new Date()
+  const [showCN, setShowCN] = useState(false)
+  // const [notPulledCN, setNotPulledCN] = useState(true)
+  const today = new Date();
+  const currentTime = today.toISOString();
+  const startDate = subDays(today, 14).toISOString();
   const windowWidth = useRef(window.innerWidth);
-
+  
   const popularChars = [
     {name: "Gloria", rarity: "Legendary", role: "Watcher", slug: "gloria"},
     {name: "Acambe", rarity: "Legendary", role: "Destroyer", slug: "acambe"},
@@ -26,22 +33,42 @@ function Home() {
     {name: "Momo", rarity: "Legendary", role: "Destroyer", slug: "momo"},
     {name: "Crimson Falcon", rarity: "Epic", role: "Watcher", slug: "crimson-falcon"},
   ]
+
   useEffect (() => {
-    Mongo.find('events',{limit: 9, sort: {"startDate": -1}, "projection": {
+    Mongo.find('events',{limit: 15, sort: {"startDate": -1}, "projection": {
       "title": 1,"id": 1, "startDate": 1, "endDate": 1, "color": 1, "type": 1
-    }})
+    }, 
+    // filter: {"type": {$ne: "CN/TW News"}}
+  })
     .then(res => {
       setEvents(res.data.documents)
     }, function(err) {
       console.log(err);
     })
-    Mongo.find('events',{filter: {"startDate": { $lt: currentTime}}})
-    .then(res => {
-      console.log(res.data.documents)
-    }, function(err) {
-      console.log(err);
-    })
+    // Mongo.find('events',{filter: {"startDate": { $lt: currentTime}}})
+    // .then(res => {
+    //   console.log(res.data.documents)
+    // }, function(err) {
+    //   console.log(err);
+    // })
+    const preloadImage = new Image();
+    preloadImage.src = CharListBg;
   }, [])
+  
+  // useEffect (() => {
+  //   if (showCN&&notPulledCN) {
+  //     Mongo.find('events',{limit: 12, sort: {"startDate": -1}, "projection": {
+  //       "title": 1,"id": 1, "startDate": 1, "endDate": 1, "color": 1, "type": 1
+  //     }})
+  //     .then(res => {
+  //       setEvents(res.data.documents)
+  //       setNotPulledCN(false)
+  //       console.log("pulled")
+  //     }, function(err) {
+  //       console.log(err);
+  //     })
+  //   }
+  // }, [showCN])
     
   return (
     <>
@@ -74,31 +101,66 @@ function Home() {
           <div className='black-label-div'>
             Latest News
           </div>
+          
+          {windowWidth.current < 768&&(
+            <div className='d-flex checkbox-div justify-content-end mb-2 px-2'>
+              <input
+                type="checkbox"
+                className='cn-checkbox'
+                checked={showCN}
+                onChange={() => setShowCN(!showCN)}
+              />
+              Show CN/TW News
+            </div>
+          )}
 
-          <Suspense fallback={<EventLoading height="540px" />}>
-            <EventsList windowWidth={windowWidth} events={events} />
-          </Suspense>
+          {/* <Suspense fallback={<EventLoading height="540px" />}> */}
+            <EventsList windowWidth={windowWidth} events={events.filter(event => showCN?(true):(event.type!=="CN/TW News")).slice(0,9)} />
+          {/* </Suspense> */}
 
           <div className='black-label-div mt-1'>
             Events Calendar
           </div>
           <Suspense fallback={<EventLoading height="350px" />}>
-            <EventsCalendar events={events} />
+            <EventsCalendar events={events.filter(event => (
+              event.endDate!==""&&(
+                event.endDate>(startDate.split(".")[0]+"Z")
+              )
+            ))} />
           </Suspense>
         </Col>
         <Col md={2} className='filter-bg py-2'>
-          <div className='black-label-div Event-tag'>Current Events</div>
-
-          {currentEvents.filter(e=> e.type === "Event").map(event=> (
-            <div className=''>
-              {event.title}
+          {windowWidth.current > 768&&(
+            <div className='d-flex checkbox-div justify-content-end mb-2 px-2'>
+              <input
+                type="checkbox"
+                className='cn-checkbox'
+                checked={showCN}
+                onChange={() => setShowCN(!showCN)}
+              />
+              Show CN/TW News
             </div>
+          )}
+
+          <div className='black-label-div my-1 Event-tag'>Current Events</div>
+          {events.filter(e => (e.endDate>(currentTime.split(".")[0]+"Z")&&e.type === "Event")).map(event =>(
+            <Suspense fallback={<EventLoading height="80px" />}>
+              <EventCurrent event={event} />
+            </Suspense>
           ))}
+
+          <div className='black-label-div my-1 Summon-tag'>Current Summons</div>
+          {events.filter(e => (e.endDate>(currentTime.split(".")[0]+"Z")&&e.type === "Summon")).map(event =>(
+            <Suspense fallback={<EventLoading height="80px" />}>
+              <EventCurrent event={event} />
+            </Suspense>
+          ))}
+
           <div className='black-label-div'>
             Popular Characters
           </div>
           {popularChars.map(char => (
-            <CharsListItemRow  char={char}  />
+            <CharsListItemRow char={char} bgImg={CharListBg}  />
           ))}
         </Col>
       </Row>

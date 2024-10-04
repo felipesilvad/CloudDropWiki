@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 import Mongo from '../../mango'
 import { Col, Container, Row } from 'react-bootstrap';
@@ -12,6 +12,7 @@ function EventPage() {
   const [event, setEvent] = useState()
   const [events, setEvents] = useState([])
   const [matches, setMatches] = useState([])
+  const windowWidth = useRef(window.innerWidth);
 
   useEffect(() => {
     Mongo.find('events',{limit: 1, filter: {"id": id}})
@@ -94,7 +95,7 @@ function EventPage() {
             <div className='black-label-div'>
               Other Events
             </div>
-            <EventsList side={true} events={events} />
+            <EventsList side={true} events={events} windowWidth={windowWidth} />
           </Col>
         </Row>
         

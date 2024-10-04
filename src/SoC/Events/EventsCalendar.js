@@ -8,6 +8,11 @@ const EventsCalendar = ({ events }) => {
   const startDate = subDays(today, 14);
   const endDate = addDays(today, 14);
 
+  Date.prototype.addHours = function(h) {
+    this.setTime(this.getTime() + (h*60*60*1000));
+    return this;
+  }
+
   // Gera todos os dias do calendário
   const generateCalendarDays = (start, end) => {
     const days = [];
@@ -92,10 +97,9 @@ const EventsCalendar = ({ events }) => {
         >
           {events.map((event, index) => {
             const { startIdx, duration } = calculateEventPosition(
-              new Date(event.startDate),
-              new Date(event.endDate)
+              new Date(event.startDate).addHours(26),
+              new Date(event.endDate).addHours(16)
             );
-
             return (
               <Suspense fallback={<LoadingScreen />}>
                 <EventsCalendarRow index={index} event={event} startIdx={startIdx} duration={duration} />

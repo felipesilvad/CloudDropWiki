@@ -18,6 +18,11 @@
   }
 }
 
+.event-item-mobile {
+  width: 100%;
+  min-height: 100px;
+}
+
 .event-col {
   background-color: $light;
   border-radius: 0.25rem;
@@ -269,4 +274,26 @@
 
 .Community-tag {
   background-color: #27AE60;
+}
+
+.CNTWNews-tag {
+  background-color: #ca3232;
+}
+.Notice-tag {
+  background-color: #7eb894;
+}
+
+.cn-checkbox {
+  accent-color: #ca3232;
+  width: 1rem;
+  margin: 0 0.2rem;
+}
+
+.checkbox-div {
+  font-size: 1rem;
+  background-color: rgba($lighter, 0.6);
+  border-radius: 0.2rem;
+  text-transform: uppercase;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: italic;
 }

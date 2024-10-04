@@ -4,6 +4,8 @@ import {Container,Overlay} from 'react-bootstrap';
 import EventLoading from '../Events/EventLoading';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Mongo from '../../mango'
+import CharListBg from '../assets/img/row-bg-Legendary.webp'
+
 const CharsListItem = lazy(() => import ('./CharsListItem'));
 const CharsListItemRow = lazy(() => import ('./CharsListItemRow'));
 
@@ -13,7 +15,9 @@ function CharsList() {
   const windowWidth = useRef(window.innerWidth);
 
   useEffect (() => {
-    Mongo.find('chars', {sort: {"name":1}})
+    Mongo.find('chars', {sort: {"name":1}, "projection": {
+      "name": 1,"slug": 1, "role": 1, "rarity": 1, "factions": 1
+    }})
     .then(res => {
       setChars(res.data.documents)
     }).catch(err => console.warn(err));
@@ -22,6 +26,9 @@ function CharsList() {
     .then(res => {
       setFactions(res.data.documents)
     }, function(err) {console.log(err);})
+
+    const preloadImage = new Image();
+    preloadImage.src = CharListBg;
   }, [])
 
   const roleOrder = ['Watcher', 'Destroyer', 'Seeker', 'Defender', 'Breaker'];
@@ -328,19 +335,19 @@ function CharsList() {
         
         {(windowWidth.current < 768) ? (
           <div className='char-list-div'>
-            {chars&&(filteredChars.map((char, i) => (
+            {filteredChars.map((char, i) => (
               <Suspense fallback={<EventLoading height="4rem" key={i} />}>
-                <CharsListItemRow char={char} />
+                <CharsListItemRow bgImg={CharListBg} char={char} />
               </Suspense>
-            )))}
+            ))}
           </div>
         ):(
           <div className='char-list-div d-flex justify-content-around flex-wrap'>
-            {chars&&(filteredChars.map((char, i) => (
+            {filteredChars.map((char, i) => (
               <Suspense fallback={<EventLoading height="4rem" key={i} />}>
                 <CharsListItem char={char} />
               </Suspense>
-            )))}
+            ))}
           </div>
         )}
         

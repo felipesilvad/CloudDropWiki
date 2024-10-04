@@ -44,7 +44,7 @@ function CharPageSkillTree({
       </div>
 
       <div className='d-flex justify-content-around flex-wrap m-1 bg-lighter'>
-      <Form.Check // prettier-ignore
+      <Form.Check
         type="switch"
         id="custom-switch"
         label="Show Skill Recomendations"

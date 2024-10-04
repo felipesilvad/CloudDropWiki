@@ -29,7 +29,7 @@ const LazyImageEvent = ({publicID, id, alt,i,width, ...props }) => {
         />
       ):(
         <LazyLoadImage
-          alt={`at`}
+          alt={`event-img`}
           height={`auto`}
           src={`https://res.cloudinary.com/cdwiki/image/upload/c_scale,w_${width}/v1/events/${id}`}
           width={width}

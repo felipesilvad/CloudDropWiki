@@ -31,8 +31,8 @@ function EventItemMobile({event, side, i}) {
   }, [event]);
 
   return (
-    <Link key={i} to={event&&(`/events/${event.id}`)} className={`event-item ${side&&("w-100")}`}>
-      <div className='event-col mt-2 mx-1 d-flex'>
+    <Link key={i} to={event&&(`/events/${event.id}`)} className={`event-item-mobile ${side&&("w-100")}`}>
+      <div className='event-col event-item-mobile mt-2 mx-1 d-flex'>
         <div className='w-50'>
           <Suspense fallback={<EventLoading />}>
             <LazyImageEvent alt={`event-${i}`} i={i}
@@ -41,7 +41,7 @@ function EventItemMobile({event, side, i}) {
         </div>
         <div className='w-50'>
           <div className='d-flex justify-content-end'>
-            <div className={`news-tag-mobile ${event.type}-tag`}>{event.type}</div>
+            <div className={`news-tag-mobile ${event.type.replace(" ", "").replace("/", "")}-tag`}>{event.type}</div>
           </div>
           <div className='mx-2'>
             {event?(

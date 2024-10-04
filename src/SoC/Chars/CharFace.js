@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function CharFace({char}) {
-  const face = `https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/chars%2F${char.slug}_face.png?alt=media`
+  const face = `https://ik.imagekit.io/clouddrop/soc/tr:w-120/chars/${char.slug}_face.png`
   const bg = require(`../assets/img/face_bg_${char.rarity}.png`)
   const border = require(`../assets/img/face_border_${char.rarity}.png`)
  
@@ -11,11 +12,11 @@ function CharFace({char}) {
     return (
       <Link to={`/chars/${char.slug}`} key={char.slug} id={char.slug} target="_blank" >
         <div class="char-face-container m-1">
-          <img alt="bg" width={"auto"} height={"auto"} src={bg} class="char-face background" />
+          <LazyLoadImage alt="bg" width={"auto"} height={"auto"} src={bg} class="char-face background" />
           <div className='char-face-img-container'>
-            <img alt="face" width={"auto"} height={"auto"} src={face}  class="char-face-img foreground" />
+            <LazyLoadImage alt="face" width={"auto"} height={"auto"} src={face}  class="char-face-img foreground" />
           </div>
-          <img alt="border" width={"auto"} height={"auto"}  src={border}  class="char-face char-face-border" />
+          <LazyLoadImage alt="border" width={"auto"} height={"auto"}  src={border}  class="char-face char-face-border" />
         </div>
         <Tooltip anchorSelect={`#${char.slug}`} place="bottom-end">
           {char.name}
