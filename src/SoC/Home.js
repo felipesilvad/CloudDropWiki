@@ -150,11 +150,17 @@ function Home() {
           ))}
 
           <div className='black-label-div my-1 Summon-tag'>Current Summons</div>
-          {events.filter(e => (e.endDate>(currentTime.split(".")[0]+"Z")&&e.type === "Summon")).map(event =>(
-            <Suspense fallback={<EventLoading height="80px" />}>
-              <EventCurrent event={event} />
-            </Suspense>
-          ))}
+            {events.filter(e => (e.endDate>(currentTime.split(".")[0]+"Z")&&e.startDate<(currentTime.split(".")[0]+"Z")&&e.type === "Summon")).map(event =>(
+              <Suspense fallback={<EventLoading height="80px" />}>
+                <EventCurrent event={event} />
+              </Suspense>
+            ))}
+            Upcoming:
+            {events.filter(e => (e.startDate>(currentTime.split(".")[0]+"Z")&&e.type === "Summon")).map(event =>(
+              <Suspense fallback={<EventLoading height="80px" />}>
+                <EventCurrent event={event} />
+              </Suspense>
+            ))}
 
           <div className='black-label-div'>
             Popular Characters

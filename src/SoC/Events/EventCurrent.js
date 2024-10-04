@@ -6,7 +6,7 @@ import {IKImage} from 'imagekitio-react';
 function EventCurrent({event}) {
   const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0 });
   const today = new Date();
-  // const startDate = new Date(event?(event.startDate):(today));
+  const startDate = new Date(event?(event.startDate):(today));
   const endDate = new Date(event?(event.endDate):(today));
 
   Date.prototype.addHours = function(h) {
@@ -41,7 +41,15 @@ function EventCurrent({event}) {
         height="40"
       />
       <h6 className='mx-1 event-item-time mt-2'>
-        {timeRemaining.days}D {timeRemaining.hours}H left
+        {(startDate>today)?(
+          <>
+            {startDate.addHours(4).toLocaleString()}
+          </>
+        ):(
+          <>
+            {timeRemaining.days}D {timeRemaining.hours}H left
+          </>
+        )}
       </h6>
     </Link>
   );
