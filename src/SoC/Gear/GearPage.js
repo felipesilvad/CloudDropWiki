@@ -74,7 +74,7 @@ function GearPage() {
 
                 <div className='trait-div d-flex align-items-center mx-1'>
                   <div className='trait-title d-flex align-items-center'>
-                    <div class="trait-img-container m-1">
+                    <div className="trait-img-container m-1">
                       <Image src={bg} alt='bg' className="trait-img background" />
                       <Image src={gear_img} alt='gear_img'  className="trait-img foreground" />
                       <Image src={border} alt='border'  className="trait-img char-face-border" />

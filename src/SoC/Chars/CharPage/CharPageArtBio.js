@@ -28,8 +28,10 @@ function CharPageArtBio({slug, biography, cv_cn, cv_jp, title}) {
           <p className='char-bio-txt' dangerouslySetInnerHTML={{__html: biography}}></p>
         </div>
       ):(
-        <Image src={sprite} 
-        alt={slug+"_sprite_idle"} width={"auto"} height={"auto"} class="pixel-bio"/>
+        <>
+          <Image src={sprite} 
+          alt={slug+"_sprite_idle"} width={"auto"} height={"auto"} className="pixel-bio"/>
+        </>
       )}
     </Col>
   );

@@ -5,7 +5,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Image } from 'react-bootstrap';
 // import SearchBar from './Search/SearchBar';
-// import AccountHeader from '../Accounts/AccountHeader';
+import AccountHeader from './accounts/AccountHeader';
+import SignIn from './accounts/SignIn';
 
 function HeaderComponent({userData}) {
   const char_img = require('./assets/img/menu_chars.png')
@@ -105,9 +106,12 @@ function HeaderComponent({userData}) {
             <Image loading="lazy" className='discord-img m-1' src={discord} alt="discord" width="521" height="101"/>
           </a>
 
-          {/* <AccountHeader userData={userData} /> */}
+          {userData ?
+          <AccountHeader userData={userData}  /> 
+          : <SignIn />
+          }
 
-        </Navbar.Collapse>
+          </Navbar.Collapse>
         
         {/* <SearchBar /> */}
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function CharsListItemRow({char, bgImg}) {
-  const sprite = `https://ik.imagekit.io/clouddrop/soc/tr:w-60/chars/${char.slug}.gif`
+  const sprite = `https://ik.imagekit.io/clouddrop/soc/tr:w-100/chars/${char.slug}.gif`
   const role = `https://ik.imagekit.io/clouddrop/soc/tr:w-30/roles/${char.role}.png`
  
   return (

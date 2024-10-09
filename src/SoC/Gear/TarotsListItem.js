@@ -14,7 +14,7 @@ function TarotsListItem({tarot, sideMenu, compact}) {
 
             <div className='trait-div d-flex align-items-center mx-1'>
               <div className='trait-title d-flex align-items-center'>
-                <div class="trait-img-container m-1"
+                <div className="trait-img-container m-1"
                 onClick={() =>  navigator.clipboard.writeText(tarot.slug)}>
                   <Image src={tarot_img} alt='tarot_img'  className="trait-img" />
                 </div>

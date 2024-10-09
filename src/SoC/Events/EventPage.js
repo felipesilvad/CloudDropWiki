@@ -1,13 +1,16 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, lazy, Suspense} from 'react';
 import {useParams} from 'react-router-dom';
 import Mongo from '../../mango'
 import { Col, Container, Row, Image } from 'react-bootstrap';
-import EventsList from './EventList';
-import CharsListItemRow from '../Chars/CharsListItemRow';
 import {Helmet} from "react-helmet-async";
+import EventLoading from './EventLoading';
+
+const EventsList = lazy(() => import ('./EventList.js'));
+const CharsListItemRow = lazy(() => import ('../Chars/CharsListItemRow'));
+const CommentSection = lazy(() => import ('../accounts/CommentSection'));
 
 
-function EventPage() {
+function EventPage({userData}) {
   const id = useParams().id
   const [event, setEvent] = useState()
   const [events, setEvents] = useState([])
@@ -69,7 +72,7 @@ function EventPage() {
               </div>
 
               <div className='m-1 mt-2 d-flex justify-content-center align-items-middle text-center'>
-                <h1 class="h5">{event.title}</h1>
+                <h1 className="h5">{event.title}</h1>
               </div>
 
               <div dangerouslySetInnerHTML={{__html: event.content}}></div>
@@ -81,7 +84,9 @@ function EventPage() {
                   <div className='d-flex flex-row'>
                     {matches.map(match => (
                       <div className='event-item'>
-                        <CharsListItemRow char={match} />
+                        <Suspense fallback={<EventLoading height="120px" />}>
+                          <CharsListItemRow char={match} />
+                        </Suspense>
                       </div>
                     ))}
                   </div>
@@ -89,15 +94,22 @@ function EventPage() {
               )}
               
             </div>
+
+            <Suspense fallback={<EventLoading height="350px" />}>
+              <CommentSection userData={userData} />
+            </Suspense>
           </Col>
+
+
           <Col md={3}>
             <div className='black-label-div'>
               Other Events
             </div>
-            <EventsList side={true} events={events} windowWidth={windowWidth} />
+            <Suspense fallback={<EventLoading height="350px" />}>
+              <EventsList side={true} events={events} windowWidth={windowWidth} />
+            </Suspense>
           </Col>
         </Row>
-        
       </Container>
     );
   }

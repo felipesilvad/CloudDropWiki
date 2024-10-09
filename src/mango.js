@@ -94,30 +94,42 @@ class Mongo {
     // });
   }
 
-  // static async insert(collection, documents) {
-  //   let createdAt = new Date().toJSON();
-  //   let updatedAt = createdAt;
-  //   documents = documents.map((d) => ({ ...d, createdAt, updatedAt }));
+  static async insert(collection, data) {
+    let createdAt = new Date().toJSON();
 
-  //   return fetch(Mongo.#apiUrl("insertMany"), {
-  //     method: "POST",
-  //     headers: Mongo.#authHeaders(),
-  //     body: JSON.stringify({
-  //       dataSource: "lwd",
-  //       database: "lwd",
-  //       collection,
-  //       documents,
-  //     }),
-  //   }).then(async (response) => {
-  //     if (response.ok) {
-  //       return response.json();
-  //     } else {
-  //       let error = await response.json();
-  //       console.error(`Mongo.insert: ${error}`);
-  //       throw error;
-  //     }
-  //   });
-  // }
+    return axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/insertOne",
+      data: {
+        "collection":collection,
+        "database":"soc",
+        "dataSource":"Sword",
+        "document": {
+          "createdAt": createdAt,
+          ...data
+        }
+      }
+    })
+  }
+
+  static async update(collection, id, data) {
+    let updatedAt = new Date().toJSON();
+
+    
+    return axios({method: 'post',url: "https://sa-east-1.aws.data.mongodb-api.com/app/data-wzzmwsl/endpoint/data/v1/action/updateOne",
+      data: {
+        "dataSource": "Sword",
+        "database": "soc",
+        "collection": collection,
+        "filter": {
+          "_id": { "$oid": id}
+        },
+        "update": {
+          "$set": {
+            "updatedAt": updatedAt,
+            ...data
+          }
+        }
+    }})
+  }
 
   // static async update(collection, filter, update) {
   //   if (filter._id) filter._id = { $oid: filter._id };

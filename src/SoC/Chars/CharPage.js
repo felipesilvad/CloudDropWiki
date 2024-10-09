@@ -325,7 +325,7 @@ function CharPage() {
                 {!showTarots&&char.tarot_rec&&(charTarots.length>0&&(char.tarot_rec.map(rec => (
                   charTarots.filter(x => x.slug === rec).length>0&&(
                     <div className='trait-title d-flex align-items-center'>
-                      <div class="trait-img-container m-1" >
+                      <div className="trait-img-container m-1" >
                         <Image src={`https://firebasestorage.googleapis.com/v0/b/cdwiki-73e46.appspot.com/o/tarot%2F${charTarots.filter(x=> x.slug===rec)[0].img}.png?alt=media`}
                         alt='tarot_img' className="trait-img" />
                       </div>

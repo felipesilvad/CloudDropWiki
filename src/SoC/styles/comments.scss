@@ -1,0 +1,85 @@
+.comment-section {
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.comments-list {
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  background-color: $mid;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.2rem;
+  border: 1px solid $light;
+  border-left: 4px solid $lighter;
+}
+
+.comment-item p {
+  margin: 0;
+}
+
+.comment-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-input textarea {
+  background-color: $mid!important;
+  padding: 10px!important;
+  border-radius: 5px!important;
+  color: #f0f0f0!important;
+  margin-bottom: 10px!important;
+  resize: none;
+}
+
+.comment-input textarea::placeholder {
+  color: #888;
+}
+
+.comment-input button {
+  background-color: #c2b67e; /* Destaque */
+  color: #1e1e1e;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-input button:hover {
+  background-color: #a69e6a;
+}
+
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  font-weight: bold;
+  color: $gold;
+  margin-bottom: 5px;
+}
+
+.reply{
+  margin-top: -1rem;
+  color: lighten($lighter, 20);
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 0.9rem;
+  font-family: "Roboto", sans-serif!important;
+}
+
+.reply-section {
+  margin-left: 0.5rem;
+}

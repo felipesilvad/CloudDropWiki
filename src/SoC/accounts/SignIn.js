@@ -1,13 +1,15 @@
 import React, {useState,useEffect} from 'react';
-import {auth,firestore} from '../firebase';
+import {auth,firestore} from '../../firebase';
 import firebase from 'firebase/compat/app';
 import {query,collection,onSnapshot,where} from "firebase/firestore";
 import {Image,Modal,Button,Form,Alert,Row,Col} from 'react-bootstrap';
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
-import LoadingScreen from '../SoC/LoadingScreen';
-import Mongo from '../mango'
+import LoadingScreen from '../LoadingScreen';
+import Mongo from '../../mango'
 import {IKImage} from 'imagekitio-react';
 import PicsSelector from './PicsSelector';
+import { FaSignInAlt } from "react-icons/fa";
+import { Tooltip } from 'react-tooltip'
 
 function SignIn() {
   const [users, setUsers] = useState('')
@@ -24,8 +26,8 @@ function SignIn() {
     });
   }, [])
 
-  const selectImage = (id) => {
-    setSelectedPic(id)
+  const selectImage = (value) => {
+    setSelectedPic(value)
   }
   
   const [signUp, setSignUp] = useState(false)
@@ -61,6 +63,8 @@ function SignIn() {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        setError(errorMessage.replace("Firebase: ", ""))
+        setLoading(false)
       });
   }
 
@@ -116,7 +120,14 @@ function SignIn() {
 
   return (
     <>
-      <Button className="sign-in-btn my-3" onClick={handleShow}>Sign in</Button>
+
+      <Button className="sign-in-btn my-3 d-flex align-items-center" id='#sign-in' onClick={handleShow}>
+        <FaSignInAlt />
+      </Button>
+      <Tooltip anchorSelect={`#sign-in`} place="bottom-end">
+        Sign In
+      </Tooltip>
+
 
       <Modal show={show} onHide={handleClose}>
         {loading&&(
@@ -160,6 +171,7 @@ function SignIn() {
                 Sign Up
               </Button>
             </Modal.Footer>
+
           </>):(<>
             <Modal.Body>
               <Form.Group id="email">

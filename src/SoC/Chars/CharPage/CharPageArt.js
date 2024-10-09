@@ -13,7 +13,7 @@ function CharPageArt({rarity, slug, biography, cv_cn, cv_jp, title}) {
         </h5>
       </div>
       
-      <div className='ligter-bg'>
+      <div className='black-bg p-1'>
         <Row>
           <CharPageArtSkins rarity={rarity} slug={slug} />
           <CharPageArtBio slug={slug} biography={biography} cv_cn={cv_cn} cv_jp={cv_jp} title={title} />

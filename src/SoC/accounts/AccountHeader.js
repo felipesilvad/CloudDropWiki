@@ -5,8 +5,6 @@ import {Dropdown,Modal,Button,Image} from 'react-bootstrap';
 import SignOut from './SignOut';
 // import ChatMessagePP from '../Chat/ChatMessagePP';
 // import ChangePP from './ChangePP';
-import { BiSolidGift } from "react-icons/bi";
-import {IKImage} from 'imagekitio-react';
 
 function AccountHeader({userData}) {
 
@@ -49,34 +47,23 @@ function AccountHeader({userData}) {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle className='profile-dropdown m-2' id="dropdown-basic">
+      <Dropdown.Toggle className='profile-dropdown' id="dropdown-basic">
         {userData&&(
           // <ChatMessagePP id={userData.profilePic} header={true} />
           // <img className={`profile-img ${header&&("profile-img-header")}`} src={profilePic.url} />
-          <IKImage
-            urlEndpoint={'https://ik.imagekit.io/clouddrop/soc/'}
-            path={`chars/${userData.profilePic}.png`}
-            alt={`${userData.profilePic}`} key={`${userData.profilePic}`}
-            transformation={[
-              {
-                height: 105,  // Height of the cropped area
-                width: 105,   // Width of the cropped area
-                cropMode: 'extract', // Extracts the area bas ed on width and height
-                x: 68,        // X-coordinate from where the cropping starts
-                y: 15,       // Y-coordinate from where the cropping starts
-              },
-            ]}
-            width={"105"} height={"105"} 
-            className={`profile-img`}
+          <Image
+            src={userData.profilePic}
+            alt={`profile-pic`}
+            width={"40"} height={"40"} 
+            className={`account-img`}
           />
         )}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu className='account-dropdown'>
         {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
         <Dropdown.Item href="#/action-2">Another action</Dropdown.Item> */}
         {/* <ChangePP userID={user.uid}/> */}
-        {userData.profilePic}
         <SignOut />
       </Dropdown.Menu>
     </Dropdown>

@@ -1,14 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import {Col} from 'react-bootstrap';
 import {IKImage} from 'imagekitio-react';
+import { trio } from 'ldrs'
 
 function CharPageArtSkins({rarity, slug}) {
   const [art, setArt] = useState('Main');
+  trio.register()
 
   useEffect(() => {
     if (rarity === "Legendary") {setArt("Awaken")}
     else {setArt("Main")}
   }, [rarity]);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+  const handleImageLoad = () => {
+    setIsLoaded(true);
+  };
+
   
   return (
     <Col md={8} >
@@ -35,8 +43,13 @@ function CharPageArtSkins({rarity, slug}) {
             height="auto"
             loading='lazy'
             fetchPriority='low'
+            onLoad={handleImageLoad}
           />
-          {/* <Image className='art-img' src={awaken} alt={slug+"_awaken_art"} width={"auto"} height={"auto"} /> */}
+          {!isLoaded&&(
+            <div className='d-flex jsutify-content-center align-items-center'>
+              <l-trio size="40" stroke="3" speed="1" color="white" ></l-trio>
+            </div>
+          )}
         </div>
       )}
       {(art==="Main")&&(

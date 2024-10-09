@@ -65,15 +65,21 @@
   background-color: lighten($lighter, 8);
 }
 
-// .profile-img {
-//   width: 40px;
-//   height: 40px;
-//   border-radius: 50%;
-//   margin: 2px 5px;
-// }
+.account-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin: 2px 5px;
+  border: 2px solid #cebd92;
+}
 
-// .profile-img-header {
-//   @media only screen and (min-width: $lg) {
-//     margin-top: 0.6rem;
-//   }
-// }
+.profile-dropdown {
+  background-color: rgba($color: #000000, $alpha: 0)!important;
+  border: none!important;
+  padding: 0!important;
+}
+
+.account-dropdown {
+  color: white!important;
+  background-color: $light!important;
+}

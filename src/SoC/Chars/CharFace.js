@@ -11,12 +11,12 @@ function CharFace({char}) {
   if (char) {
     return (
       <Link to={`/chars/${char.slug}`} key={char.slug} id={char.slug} target="_blank" >
-        <div class="char-face-container m-1">
-          <LazyLoadImage alt="bg" width={"auto"} height={"auto"} src={bg} class="char-face background" />
+        <div className="char-face-container m-1">
+          <LazyLoadImage alt="bg" width={"auto"} height={"auto"} src={bg} className="char-face background" />
           <div className='char-face-img-container'>
-            <LazyLoadImage alt="face" width={"auto"} height={"auto"} src={face}  class="char-face-img foreground" />
+            <LazyLoadImage alt="face" width={"auto"} height={"auto"} src={face}  className="char-face-img foreground" />
           </div>
-          <LazyLoadImage alt="border" width={"auto"} height={"auto"}  src={border}  class="char-face char-face-border" />
+          <LazyLoadImage alt="border" width={"auto"} height={"auto"}  src={border}  className="char-face char-face-border" />
         </div>
         <Tooltip anchorSelect={`#${char.slug}`} place="bottom-end">
           {char.name}

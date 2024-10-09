@@ -15,7 +15,7 @@ const TarotsList = lazy(() => import ('./SoC/Gear/TarotList'));
 const EnemiesList = lazy(() => import ('./SoC/Stages/EnemiesList'));
 const EngravingsComponent = lazy(() => import ('./SoC/Gear/EngravingsComponent'));
 
-function Router() {
+function Router({userData}) {
   return (
     <Routes>
       <Route path='/' exact element={
@@ -49,7 +49,7 @@ function Router() {
         <Suspense  fallback={<LoadingScreen />}><EventsListPage /></Suspense>
       }/>
       <Route path='/events/:id' exact element={
-        <Suspense  fallback={<LoadingScreen />}><EventPage /></Suspense>
+        <Suspense  fallback={<LoadingScreen />}><EventPage userData={userData} /></Suspense>
       }/>
       <Route path='/enemies' exact element={
         <Suspense  fallback={<LoadingScreen />}><EnemiesList /></Suspense>

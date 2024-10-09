@@ -845,16 +845,17 @@
 
 }
 
-.char-bio-txt {
-  // text-align: justify;
-}
-
 .pixel-bio {
   float: left;
   margin: 0;
   width: 8rem;
   height: auto;
   position: absolute;
+}
+
+.black-bg {
+  background-color: rgba($mid, 0.7);
+  border-radius: 0.5rem;
 }
 
 .skill-modal {
